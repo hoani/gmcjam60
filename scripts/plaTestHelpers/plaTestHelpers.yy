@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"plaTestHelpers",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"plaTestHelpers",
+  "parent":{
+    "name":"platform",
+    "path":"folders/Engines/platform.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

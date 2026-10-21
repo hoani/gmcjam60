@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"geoVec2",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"geoVec2",
+  "parent":{
+    "name":"geometry",
+    "path":"folders/Engines/geometry.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

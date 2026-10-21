@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"txt_TestHelpers",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"txt_TestHelpers",
+  "parent":{
+    "name":"text",
+    "path":"folders/Engines/text.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

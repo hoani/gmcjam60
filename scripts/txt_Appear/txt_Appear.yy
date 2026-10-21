@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"txt_Appear",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"txt_Appear",
+  "parent":{
+    "name":"text",
+    "path":"folders/Engines/text.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

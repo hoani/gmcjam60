@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"intOption",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"intOption",
+  "parent":{
+    "name":"interaction",
+    "path":"folders/Engines/interaction.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

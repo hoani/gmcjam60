@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"uiTextbox",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"uiTextbox",
+  "parent":{
+    "name":"ui",
+    "path":"folders/Engines/ui.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"intSequence",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"intSequence",
+  "parent":{
+    "name":"interaction",
+    "path":"folders/Engines/interaction.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

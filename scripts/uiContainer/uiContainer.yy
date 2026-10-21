@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"uiContainer",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"uiContainer",
+  "parent":{
+    "name":"ui",
+    "path":"folders/Engines/ui.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

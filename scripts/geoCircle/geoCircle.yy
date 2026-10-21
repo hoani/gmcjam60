@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"geoCircle",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"geoCircle",
+  "parent":{
+    "name":"geometry",
+    "path":"folders/Engines/geometry.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"geoLine",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"geoLine",
+  "parent":{
+    "name":"geometry",
+    "path":"folders/Engines/geometry.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

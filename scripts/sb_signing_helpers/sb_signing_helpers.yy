@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"sb_signing_helpers",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"sb_signing_helpers",
+  "parent":{
+    "name":"util",
+    "path":"folders/scoreboat/util.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

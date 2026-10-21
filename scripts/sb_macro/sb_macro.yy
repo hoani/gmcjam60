@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"sb_macro",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"sb_macro",
+  "parent":{
+    "name":"util",
+    "path":"folders/scoreboat/util.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

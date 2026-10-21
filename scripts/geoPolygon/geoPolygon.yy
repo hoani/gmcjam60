@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"geoPolygon",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"geoPolygon",
+  "parent":{
+    "name":"geometry",
+    "path":"folders/Engines/geometry.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"plaFloor",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"plaFloor",
+  "parent":{
+    "name":"platform",
+    "path":"folders/Engines/platform.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

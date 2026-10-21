@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"uiSelector",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"uiSelector",
+  "parent":{
+    "name":"ui",
+    "path":"folders/Engines/ui.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

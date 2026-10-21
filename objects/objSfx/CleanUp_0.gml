@@ -1,0 +1,2 @@
+sfx.Cleanup()
+delete sfx

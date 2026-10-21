@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"scrTestSuite",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"scrTestSuite",
+  "parent":{
+    "name":"TestSuite",
+    "path":"folders/TestSuite.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

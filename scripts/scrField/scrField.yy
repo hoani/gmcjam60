@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"scrField",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"scrField",
+  "parent":{
+    "name":"utilities",
+    "path":"folders/Scripts/utilities.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

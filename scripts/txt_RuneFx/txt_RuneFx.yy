@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"txt_RuneFx",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"txt_RuneFx",
+  "parent":{
+    "name":"text",
+    "path":"folders/Engines/text.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

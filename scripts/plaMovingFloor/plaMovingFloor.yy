@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"plaMovingFloor",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"plaMovingFloor",
+  "parent":{
+    "name":"platform",
+    "path":"folders/Engines/platform.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"evt_Conditions",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"evt_Conditions",
+  "parent":{
+    "name":"events",
+    "path":"folders/Engines/events.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

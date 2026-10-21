@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"intTestHelpers",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"intTestHelpers",
+  "parent":{
+    "name":"interaction",
+    "path":"folders/Engines/interaction.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

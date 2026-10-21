@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"struct_VerrificTreeNode",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"struct_VerrificTreeNode",
+  "parent":{
+    "name":"Runtime",
+    "path":"folders/Extensions/Alphish/Verrific/Runtime.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

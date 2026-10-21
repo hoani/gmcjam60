@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"scrSurface",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"scrSurface",
+  "parent":{
+    "name":"drawing",
+    "path":"folders/Scripts/utilities/drawing.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"aud_Music",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"aud_Music",
+  "parent":{
+    "name":"audio",
+    "path":"folders/Engines/audio.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

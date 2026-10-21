@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"scr_sb_player",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"scr_sb_player",
+  "parent":{
+    "name":"scripts",
+    "path":"folders/scoreboat/scripts.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

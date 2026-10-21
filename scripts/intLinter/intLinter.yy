@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"intLinter",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"intLinter",
+  "parent":{
+    "name":"interaction",
+    "path":"folders/Engines/interaction.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

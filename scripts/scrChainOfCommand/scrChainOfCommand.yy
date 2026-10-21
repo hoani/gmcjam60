@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"scrChainOfCommand",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"scrChainOfCommand",
+  "parent":{
+    "name":"utilities",
+    "path":"folders/Scripts/utilities.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}
