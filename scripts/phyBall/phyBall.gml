@@ -25,6 +25,8 @@ function MaterialBall() constructor {
 function BallDraw() : MaterialDraw() constructor {
     static Placement = function(ctx) {
         with (ctx) {
+            draw_line(c.x, c.y-8, c.x, c.y+8)
+            draw_line(c.x-8, c.y, c.x+8, c.y)
             draw_circle(c.x, c.y, r, true)
         }
     }

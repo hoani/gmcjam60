@@ -1,4 +1,9 @@
- /// Create a geometry line
+function PointsLine(p0, p1) {
+    return new Line(p0.x, p0.y, p1.x, p1.y)
+}
+
+
+/// Create a geometry line
 /// @arg {Real} x0 - start x
 /// @arg {Real} y0 - start y
 /// @arg {Real} x1 - end x
@@ -11,6 +16,9 @@ function Line(_x0, _y0, _x1, _y1) constructor {
     
     static Shape = "Line"
     
+    static Center = function(){
+        return p0.Add(p1).Multiply(0.5)
+    }
     
     static Direction = function(){
         return delta.Direction()

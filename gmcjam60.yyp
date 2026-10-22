@@ -156,6 +156,7 @@
     {"id":{"name":"intSequenceLinter","path":"scripts/intSequenceLinter/intSequenceLinter.yy",},},
     {"id":{"name":"intTestHelpers","path":"scripts/intTestHelpers/intTestHelpers.yy",},},
     {"id":{"name":"phyBall","path":"scripts/phyBall/phyBall.yy",},},
+    {"id":{"name":"phyBeam","path":"scripts/phyBeam/phyBeam.yy",},},
     {"id":{"name":"phyBlock","path":"scripts/phyBlock/phyBlock.yy",},},
     {"id":{"name":"phyBox","path":"scripts/phyBox/phyBox.yy",},},
     {"id":{"name":"phyDynamic","path":"scripts/phyDynamic/phyDynamic.yy",},},
