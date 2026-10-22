@@ -1,8 +1,8 @@
 event_inherited()
 
 
-var mx = round(MouseX/grid)*grid
-var my = round(MouseY/grid)*grid
+var mx = clipToGrid(MouseX)
+var my = clipToGrid(MouseY)
 
 if mouse_check_button_pressed(mb_left) {
     if placement == noone {

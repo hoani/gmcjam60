@@ -100,7 +100,7 @@ function Vec2(_x = 0.0, _y = 0.0) constructor{
         if d == 0 {
             x = dist
             y = 0
-            return
+            return self
         }
         x = dist * x / d
         y = dist * y / d
@@ -110,10 +110,10 @@ function Vec2(_x = 0.0, _y = 0.0) constructor{
     // Clamps assuming this point is on an infinite line including the segment p0, p1
     static Clamp = function(p0, p1) {
         if p0.x == p1.x {
-            return new Vec2(x, clamp(y, p0.y, p1.y))
+            return new Vec2(x, clamp(y, min(p0.y, p1.y), max(p0.y, p1.y)))
         }
         if (p0.y == p1.y) {
-            return new Vec2(clamp(x, p0.x, p1.x), y)
+            return new Vec2(clamp(x, min(p0.x, p1.x), max(p0.x, p1.x)), y)
         }
         if p0.x > p1.x {
             var px = p1
@@ -159,7 +159,7 @@ function Vec2Tests(_run, _method) : VerrificMethodTest(_run, _method) constructo
         for (var i = 0; i<360; i++) {
             var dir = i;
             var v = DirectionToVec2(i);
-            assert_that(angle_difference(v.Direction(), dir) < 1/64, $"direction of ({v.x}, {v.y}) does not match {dir}");
+            assert_that(abs(angle_difference(v.Direction(), dir)) < 1/64, $"direction of ({v.x}, {v.y}) does not match {dir}");
         }
     }
 }

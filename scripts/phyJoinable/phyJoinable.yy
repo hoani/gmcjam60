@@ -5,8 +5,8 @@
   "isDnD":false,
   "name":"phyJoinable",
   "parent":{
-    "name":"body",
-    "path":"folders/Engines/physics/body.yy",
+    "name":"join",
+    "path":"folders/Engines/physics/join.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

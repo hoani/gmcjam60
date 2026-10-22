@@ -1,4 +1,4 @@
-function PhyBodyBall(_c, _radius = 32, _draw) : PhyBodyMaterial(_draw) constructor {
+function BallBody(_c, _radius = 32, _draw) : MaterialBody(_draw) constructor {
     dynamic = new BodyDynamic()
     circle = new Circle(_c, _radius)
     
@@ -58,8 +58,8 @@ function BallPlacement(_draw) : MaterialPlacement(_draw) constructor {
                 o = c.Subtract(new Vec2(x, y))
                 r = o.Distance()
                 
-                if r < 32 {
-                    r = 32
+                if r < 16 {
+                    r = 16
                 }
                 break;
             case PlaceDrag:
@@ -88,7 +88,7 @@ function BallPlacement(_draw) : MaterialPlacement(_draw) constructor {
             Friction(1).
             LinearDamping(0.125).
             Bullet().
-            Apply(c.x, c.y, new PhyBodyBall(c, r, draw))
+            Apply(c.x, c.y, new BallBody(c, r, draw))
     }
 }
 

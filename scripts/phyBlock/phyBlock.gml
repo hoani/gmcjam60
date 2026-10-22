@@ -1,4 +1,4 @@
-function PhyBodyBlock(_c, _p, _draw) : PhyBodyMaterial(_draw) constructor {
+function BlockBody(_c, _p, _draw) : MaterialBody(_draw) constructor {
     c = _c
     p = _p
 }
@@ -31,7 +31,7 @@ function BlockPlacement(draw) : RectanglePlacement(draw) constructor {
         return PolygonFixture(c, p).
             Static().
             Restitution(0.25).
-            Apply(c.x, c.y, new PhyBodyBlock(c, p, draw))
+            Apply(c.x, c.y, new BlockBody(c, p, draw))
        
     }
 }
@@ -40,8 +40,8 @@ function BlockPlacement(draw) : RectanglePlacement(draw) constructor {
 function BlockDraw() : MaterialDraw() constructor {
     static Placement = function(ctx) {
         with (ctx) {
-            draw_circle(c.x, c.y, 3, true)
-            draw_circle(lp.x, lp.y, 5, true)
+            ctx.DrawPoints()
+                
             var p = Rectangle(c, width, height,  dir);
             DrawPolygonOutline(c, p.points, 2, c_white)
         }
@@ -56,70 +56,93 @@ function BlockDraw() : MaterialDraw() constructor {
 
 
 function RectanglePlacement(_draw = new MaterialDraw()) : MaterialPlacement(_draw) constructor {
-    static PlaceCenter = 0
-    static PlaceWidth = 1
-    static PlaceHeight = 2
-    static PlaceDrag = 3
+    static PlaceA = 0
+    static PlaceB = 1
+    static PlaceDrag = 2
+    static PlaceRotate = 3
     
+    a = new Vec2()
+    b = new Vec2()
     c = new Vec2()
-    dir = 0
-    width = 32
-    height = 32
     o = new Vec2()
-    lp = new Vec2()
+    dir = 0
+    dirZero = 0
+    width = 32
+    height = 16
     
-    s = new State(PlaceCenter)
+    s = new State(PlaceA)
     
     static Drag = function(x, y) {
         switch s.Get() {
-            case PlaceCenter:
-                c = new Vec2(x, y)
+            case PlaceA:
+                a = new Vec2(x, y)
+                c = new Vec2(a.x + width/2, a.y + height/2)
                 break;
-            case PlaceWidth:
-                lp = new Vec2(x, y)
-                var delta = c.Subtract(lp)
-                width = delta.Distance()*2
-                dir = delta.Direction()
-                DebugMessage($"dir {dir}")
+            case PlaceB:
+                b = new Vec2(x, y)
+                c = a.Add(b).Multiply(0.5)
+                var delta = c.Subtract(a)
+                width = abs(delta.x)*2
+                height = abs(delta.y)*2
                 
-                if width < 32 {
-                    width = 32
+                if width < 16 {
+                    width = 16
+                    c.x = a.x + width/2
                 }
-                break;
-            case PlaceHeight:
-                var po = new Vec2(x, y)
-                o = c.Subtract(po)
-                
-                var line = new Line(c.x, c.y, lp.x, lp.y)
-                height = po.Subtract(line.ClosestPointInfinite(po)).Distance()*2
-                if height < 32 {
-                    height = 32
+                if height < 16 {
+                    height = 16
+                    c.y = a.y + height/2
                 }
+                o = c.Subtract(b)
                 break;
             case PlaceDrag:
                 c = (new Vec2(x, y)).Add(o)
+                dirZero = (new Vec2(x, y)).Subtract(c).Direction()
                 break;
+            case PlaceRotate:
+                dir = (new Vec2(x, y)).Subtract(c).Direction() - dirZero
+                break;
+            
         }
     }
     
     static Confirm = function(x, y) {
         Drag(x, y)
         switch s.Get() {
-            case PlaceCenter:
-                s.Set(PlaceWidth)
+            case PlaceA:
+                s.Set(PlaceB)
                 return noone
-            case PlaceWidth:
-                s.Set(PlaceHeight)
-                return noone
-            case PlaceHeight:
+            case PlaceB:
                 s.Set(PlaceDrag)
                 return noone
             case PlaceDrag:
+                s.Set(PlaceRotate)
+                return noone
+            case PlaceRotate:
                 return _Place()
         }
     }
     
     static _Place = function() {
         DebugError("Missing Place Method")
+    }
+    
+    static DrawPoints = function() {
+        switch s.Get() {
+            case PlaceA:
+                draw_circle(a.x, a.y, 5, true);
+                break
+            case PlaceB:
+                draw_circle(a.x, a.y, 3, true);
+                draw_circle(b.x, b.y, 5, true);
+                break
+            case PlaceDrag:
+                draw_line(c.x, c.y-8, c.x, c.y+8)
+                draw_line(c.x-8, c.y, c.x+8, c.y)
+                break
+            case PlaceRotate:
+                draw_circle(c.x, c.y, 6, true);
+                break
+        }
     }
 }

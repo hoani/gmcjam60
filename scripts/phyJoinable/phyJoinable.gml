@@ -1,11 +1,20 @@
-function phyBodyJoinable(){
-    joins = []
+
+
+function Joinable(_delegate=noone) constructor {
+    delegate = _delegate
     
-    static Cleanup = function() {
-        for (var _i = 0; _i < array_length(joins); _i++) {
-        	if instance_exists(joins[_i]) {
-        		instance_destroy(joins[_i])
-        	}
+    
+    static CanJoin = function(o) {
+        if delegate != noone {
+            return delegate.CanJoin(o)
         }
+        return false
+    }
+    
+    static GetJoinShape = function(o, shape) {
+        if delegate != noone {
+            return delegate.GetJoinShape(o, shape)
+        }
+        return new JoinCandidate(JOIN_TYPE_WELD, false, new Vec2(0, 0))
     }
 }

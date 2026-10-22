@@ -1,4 +1,4 @@
-function PhyBodyBox(_c, _p, draw) : PhyBodyMaterial(draw) constructor {
+function BoxBody(_c, _p, draw) : MaterialBody(draw) constructor {
     c = _c
     p = _p
 }
@@ -16,8 +16,7 @@ function MaterialBox() constructor {
 function BoxDraw() : MaterialDraw() constructor {
     static Placement = function(ctx) {
         with (ctx) {
-            draw_circle(c.x, c.y, 3, true)
-            draw_circle(lp.x, lp.y, 5, true)
+            ctx.DrawPoints()
             var p = Rectangle(c, width, height,  dir);
             DrawPolygonOutline(c, p.points, 2, c_white)
         }
@@ -39,6 +38,6 @@ function BoxPlacement(draw) : RectanglePlacement(draw) constructor {
             Friction(0.2).
             Restitution(0.25).
             Bullet().
-            Apply(c.x, c.y, new PhyBodyBox(c, p, draw))
+            Apply(c.x, c.y, new BoxBody(c, p, draw))
     }
 }

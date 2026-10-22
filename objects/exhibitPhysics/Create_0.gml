@@ -20,9 +20,16 @@ pStart = new Vec2()
 
 mBlock = new MaterialBlock()
 
-mBlock.Place(64, 480, 920, 512)
+
 
 placement = noone
 
 grid = 16
+gridOffset = 8
 
+function clipToGrid(in) {
+    return gridOffset + round((in-gridOffset)/grid)*grid
+}
+
+
+mBlock.Place(clipToGrid(64), clipToGrid(480), clipToGrid(920), clipToGrid(512))

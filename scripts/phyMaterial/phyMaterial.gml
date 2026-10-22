@@ -1,5 +1,7 @@
-function PhyBodyMaterial(_draw) constructor {
+function MaterialBody(_draw, _joinable=noone) : Joinable(_joinable) constructor {
     draw = _draw
+    joins = []
+    
     static PreUpdate = function(ctx) {
     }
     
@@ -8,6 +10,16 @@ function PhyBodyMaterial(_draw) constructor {
     
     static Draw = function(ctx) {
         draw.Build(ctx)
+    }
+    
+    static Cleanup = function() {
+        static _JoinableCleanup = function() {
+            for (var _i = 0; _i < array_length(joins); _i++) {
+            	if instance_exists(joins[_i]) {
+            		instance_destroy(joins[_i])
+            	}
+            }
+        }
     }
 }
 
@@ -85,4 +97,5 @@ function MaterialDraw() constructor {
         BuildJoins(ctx)
     }
 }
+
 

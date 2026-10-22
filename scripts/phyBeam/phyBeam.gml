@@ -1,4 +1,4 @@
-function PhyBodyBeam(_line, draw) : PhyBodyMaterial(draw) constructor {
+function BeamBody(_line, draw) : MaterialBody(draw) constructor {
     line = _line
 }
 
@@ -29,6 +29,28 @@ function BeamDraw() : MaterialDraw() constructor {
 }
 
 
+function BeamJoiner(_line) : Joinable() constructor {
+    line = _line
+    
+    static CanJoin = function(o) {
+        o.GetJoinShape(self, line)
+        return false
+    }
+    
+    static GetJoinShape = function(o, shape) {
+        switch(shape.Shape) {
+            case "Line":
+                
+        }
+        if delegate != noone {
+            return delegate.GetJoinShape(o, shape)
+        }
+        return new JoinCandidate(JOIN_TYPE_WELD, false, new Vec2(0, 0))
+    }
+}
+
+
+
 function BeamPlacement(_draw) : MaterialPlacement(_draw) constructor {
     PlaceA = 0
     PlaceB = 1
@@ -52,8 +74,8 @@ function BeamPlacement(_draw) : MaterialPlacement(_draw) constructor {
                 o = a.Subtract(b)
                 d = o.Distance()
                 
-                if d < 32 {
-                    d = 32
+                if d < 16 {
+                    d = 16
                     o.SetDistance(d)
                     b = a.Subtract(o)
                 }
@@ -92,7 +114,7 @@ function BeamPlacement(_draw) : MaterialPlacement(_draw) constructor {
             Friction(0.2).
             Restitution(0.75).
             Bullet().
-            Apply(c.x, c.y, new PhyBodyBeam(line, draw))
+            Apply(c.x, c.y, new BeamBody(line, draw))
     }
 }
 
