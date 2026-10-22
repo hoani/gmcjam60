@@ -1,3 +1,18 @@
+function PhyBodyMaterial(_draw) constructor {
+    draw = _draw
+    static PreUpdate = function(ctx) {
+    }
+    
+    static Update = function(ctx) {
+    }
+    
+    static Draw = function(ctx) {
+        draw.Build(ctx)
+    }
+}
+
+
+
 function Material() constructor {
     static Placement = function() {
         DebugError("material has no placement property")
@@ -22,7 +37,9 @@ function Material() constructor {
 }
 
 
-function Placement() constructor {
+function MaterialPlacement(_draw)  constructor {
+    draw = _draw
+    
     static Valid = function() {
         return false;
     }
@@ -36,4 +53,36 @@ function Placement() constructor {
     static Confirm = function(x, y) {
         return false
     }
+    
+    static Draw = function() {
+        draw.Placement(self)
+    }
 }
+
+
+
+function MaterialDraw() constructor {
+    static Placement = function(ctx) {
+    }
+    
+    static Build = function(ctx) {
+        with (ctx) {
+            physics_draw_debug()
+        }
+    }
+    
+    static BuildJoins = function(ctx) {
+        with (ctx) {
+            physics_draw_debug()
+        }
+    }
+    
+    static Play = function(ctx) {
+        Build(ctx)
+    }
+    
+    static PlayJoins = function(ctx) {
+        BuildJoins(ctx)
+    }
+}
+

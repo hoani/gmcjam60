@@ -1,26 +1,15 @@
-function PhyBodyBlock(_c, _p) constructor {
+function PhyBodyBlock(_c, _p, _draw) : PhyBodyMaterial(_draw) constructor {
     c = _c
     p = _p
-    static PreUpdate = function(ctx) {
-    }
-    
-    static Update = function(ctx) {
-    }
-    
-    static Draw = function(ctx) {
-        with(ctx) {
-            physics_draw_debug()
-        }
-    }
-    
 }
 
 
 
 function MaterialBlock() constructor {
+    draw = new BlockDraw()
     
     static Placement = function() {
-        return new BlockPlacement()
+        return new BlockPlacement(draw)
     }
     
     static Place = function(_x0, _y0, _x1, _y1) {
@@ -36,19 +25,37 @@ function MaterialBlock() constructor {
 }
 
 
-function BlockPlacement() : RectanglePlacement() constructor {
+function BlockPlacement(draw) : RectanglePlacement(draw) constructor {
     static _Place = function() {
         var p = Rectangle(c, width, height, dir);
         return PolygonFixture(c, p).
             Static().
             Restitution(0.25).
-            Apply(c.x, c.y, new PhyBodyBlock(c, p))
+            Apply(c.x, c.y, new PhyBodyBlock(c, p, draw))
        
     }
 }
 
 
-function RectanglePlacement() : Placement() constructor {
+function BlockDraw() : MaterialDraw() constructor {
+    static Placement = function(ctx) {
+        with (ctx) {
+            draw_circle(c.x, c.y, 3, true)
+            draw_circle(lp.x, lp.y, 5, true)
+            var p = Rectangle(c, width, height,  dir);
+            DrawPolygonOutline(c, p.points, 2, c_white)
+        }
+    }
+    
+    static Build = function(ctx) {
+        with (ctx) {
+            physics_draw_debug()
+        }
+    }
+}
+
+
+function RectanglePlacement(_draw = new MaterialDraw()) : MaterialPlacement(_draw) constructor {
     static PlaceCenter = 0
     static PlaceWidth = 1
     static PlaceHeight = 2
@@ -114,12 +121,5 @@ function RectanglePlacement() : Placement() constructor {
     
     static _Place = function() {
         DebugError("Missing Place Method")
-    }
-    
-    static Draw = function() {
-        draw_circle(c.x, c.y, 3, true)
-        draw_circle(lp.x, lp.y, 5, true)
-        var p = Rectangle(c, width, height,  dir);
-        DrawPolygonOutline(c, p.points, 2, c_white)
     }
 }

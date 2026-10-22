@@ -1,4 +1,4 @@
-function PhyBodyBall(_c, _radius = 32) constructor {
+function PhyBodyBall(_c, _radius = 32, _draw) : PhyBodyMaterial(_draw) constructor {
     dynamic = new BodyDynamic()
     circle = new Circle(_c, _radius)
     
@@ -10,25 +10,33 @@ function PhyBodyBall(_c, _radius = 32) constructor {
         circle.center.x = ctx.x
         circle.center.y = ctx.y
     }
-    
-    static Draw = function(ctx) {
-        var _c = c_white;
-        draw_circle_color(ctx.x, ctx.y, circle.radius, _c, _c, true)		
-    }
-    
 }
 
 
 
 function MaterialBall() constructor {
-    
+    draw = new BallDraw()
     static Placement = function() {
-        return new BallPlacement()
+        return new BallPlacement(draw)
     }
 }
 
 
-function BallPlacement() constructor {
+function BallDraw() : MaterialDraw() constructor {
+    static Placement = function(ctx) {
+        with (ctx) {
+            draw_circle(c.x, c.y, r, true)
+        }
+    }
+    
+    static Build = function(ctx) {
+        var _c = c_white;
+        draw_circle_color(ctx.x, ctx.y, ctx.body.circle.radius, _c, _c, true)
+    }
+}
+
+
+function BallPlacement(_draw) : MaterialPlacement(_draw) constructor {
     PlaceInner = 0
     PlaceOuter = 1
     PlaceDrag = 2
@@ -78,12 +86,7 @@ function BallPlacement() constructor {
             Friction(1).
             LinearDamping(0.125).
             Bullet().
-            Apply(c.x, c.y, new PhyBodyBall(c, r))
-    }
-    
-    static Draw = function() {
-        
-        draw_circle(c.x, c.y, r, true)
+            Apply(c.x, c.y, new PhyBodyBall(c, r, draw))
     }
 }
 
