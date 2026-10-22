@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"phyDynamic",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"phyDynamic",
+  "parent":{
+    "name":"body",
+    "path":"folders/Engines/physics/body.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

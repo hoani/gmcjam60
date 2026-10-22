@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"phyMaterial",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"phyMaterial",
+  "parent":{
+    "name":"material",
+    "path":"folders/Engines/physics/material.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

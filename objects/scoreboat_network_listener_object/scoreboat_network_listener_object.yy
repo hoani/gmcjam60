@@ -11,7 +11,7 @@
   "overriddenProperties":[],
   "parent":{
     "name":"scoreboat",
-    "path":"folders/scoreboat.yy",
+    "path":"folders/Extensions/scoreboat.yy",
   },
   "parentObjectId":null,
   "persistent":true,

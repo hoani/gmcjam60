@@ -6,7 +6,7 @@
   "name":"scr_sb_file",
   "parent":{
     "name":"scripts",
-    "path":"folders/scoreboat/scripts.yy",
+    "path":"folders/Extensions/scoreboat/scripts.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

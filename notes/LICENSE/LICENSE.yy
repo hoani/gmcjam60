@@ -4,7 +4,7 @@
   "name":"LICENSE",
   "parent":{
     "name":"JujuAdams_hashing_functions",
-    "path":"folders/scoreboat/lib/JujuAdams_hashing_functions.yy",
+    "path":"folders/Extensions/scoreboat/lib/JujuAdams_hashing_functions.yy",
   },
   "resourceType":"GMNotes",
   "resourceVersion":"2.0",

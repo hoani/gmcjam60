@@ -6,7 +6,7 @@
   "name":"sb_encoding_helpers",
   "parent":{
     "name":"util",
-    "path":"folders/scoreboat/util.yy",
+    "path":"folders/Extensions/scoreboat/util.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"phyWorld",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"phyWorld",
+  "parent":{
+    "name":"physics",
+    "path":"folders/Engines/physics.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"phyJoinable",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"phyJoinable",
+  "parent":{
+    "name":"body",
+    "path":"folders/Engines/physics/body.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

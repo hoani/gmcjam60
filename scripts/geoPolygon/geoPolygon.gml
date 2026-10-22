@@ -3,6 +3,7 @@
 function Polygon(_points) constructor {
     points = []
     lines = []
+    concave = undefined
     
     static Shape = "Polygon"
 
@@ -19,6 +20,12 @@ function Polygon(_points) constructor {
         var p0 = points[i]
         var p1 = points[(i + 1) % array_length(points)]
         array_push(lines, new Line(p0.x, p0.y, p1.x, p1.y))
+    }
+    
+    if array_length(points) > 2 {
+        if !Clockwise(points[0], points[1], points[2]) {
+            points = array_reverse(points)
+        }
     }
 
 
@@ -140,6 +147,18 @@ function PolygonTests(_run, _method) : VerrificMethodTest(_run, _method) constru
         
         array_foreach(testCases, function(tc){
             assert_that(tc.poly.ClosestPoint(tc.p).IsEqual(tc.expect), $"{tc.name}, expected {tc.expect.Str()}, got {tc.poly.ClosestPoint(tc.p)}")
+        })
+    }
+    
+    
+    static should_make_polygons_clockwise = function() {
+        testCases = [
+            { name: "ccw", poly: new Polygon([[0, 0], [0, 2], [2, 2], [2, 0]]) },
+            { name: "cw", poly: new Polygon([[0, 0], [0, 2], [-2, 2], [-2, 0]]) },
+        ]
+        
+        array_foreach(testCases, function(tc){
+            assert_is_true(Clockwise(tc.poly.points[0], tc.poly.points[1], tc.poly.points[2]), $"{tc.name}, {tc.poly.Str()} is counter clockwise")
         })
     }
 }

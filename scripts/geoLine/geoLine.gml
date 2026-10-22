@@ -29,7 +29,7 @@ function Line(_x0, _y0, _x1, _y1) constructor {
             return false;
         }
         if o.Shape == "Line" {
-            return Ccw(p0, p1, o.p0) != Ccw(p0, p1, o.p1) && Ccw(o.p0, o.p1, p0) != Ccw(o.p0, o.p1, p1)
+            return Clockwise(p0, p1, o.p0) != Clockwise(p0, p1, o.p1) && Clockwise(o.p0, o.p1, p0) != Clockwise(o.p0, o.p1, p1)
         }
         if o.Shape == "Polygon" {
             return o.Intersect(self)
@@ -59,8 +59,10 @@ function Line(_x0, _y0, _x1, _y1) constructor {
 } 
 
 
-// Determines if three points are arranged in a counter clockwise manner.
-function Ccw(a, b, c) {
+// Determines if three points are arranged in a clockwise manner.
+// Note: the original algorithm calls this counterclockwise, but gamemaker has y pointing down.
+//       it actually makes no difference to the algorithm
+function Clockwise(a, b, c) {
     return (c.y - a.y)*(b.x - a.x) > (b.y - a.y)*(c.x - a.x)
 }
 
