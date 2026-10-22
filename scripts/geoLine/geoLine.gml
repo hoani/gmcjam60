@@ -40,15 +40,20 @@ function Line(_x0, _y0, _x1, _y1) constructor {
         return false
     }
     
-
-    static ClosestPoint = function(p) {
+    static ClosestPointInfinite = function(p) {
         var uab = delta.Unit();
         var d = p.Subtract(p0).Dot(uab);
         
         // Closest point assuming our line is infinite
-        var pinf = p0.Add(uab.Multiply(d));
-        
-        return pinf.Clamp(p0, p1)
+        return p0.Add(uab.Multiply(d));
+    }
+
+    static ClosestPoint = function(p) {
+        return ClosestPointInfinite(p).Clamp(p0, p1)
+    }
+    
+     static ClosestEdgePoint = function(p) {
+        return ClosestPoint(p)
     }
     
     static Str = function() {

@@ -75,6 +75,10 @@ function Polygon(_points) constructor {
             return p
         }
         
+        return ClosestEdgePoint(p)
+    }
+    
+    static ClosestEdgePoint = function(p) {
         var candidate = points[0];
         var cd2 = candidate.Subtract(p).Distance2()
         for (var i = 0; i<array_length(lines); i++) {

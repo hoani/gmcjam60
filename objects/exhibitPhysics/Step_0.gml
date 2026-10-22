@@ -1,12 +1,19 @@
 event_inherited()
 
 if mouse_check_button_pressed(mb_left) {
-    pStart.x = MouseX
-    pStart.y = MouseY
+    if placement == noone {
+        placement = materials[active].Placement()
+    }
+}
+
+if placement != noone {
+    placement.Drag(MouseX, MouseY)
 }
 
 if mouse_check_button_released(mb_left) {
-    materials[active].Place(pStart.x, pStart.y, MouseX, MouseY)
+    if placement.Confirm(MouseX, MouseY) != noone {
+        placement = noone
+    }
 } 
 
 if keyboard_check(vk_enter) {

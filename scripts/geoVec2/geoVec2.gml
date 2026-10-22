@@ -84,6 +84,15 @@ function Vec2(_x = 0.0, _y = 0.0) constructor{
         var d = Distance()
         x = d * dcos(dir)
         y = d * -dsin(dir)
+        return self
+    }
+    
+    static Rotate = function(angle) {
+        var d = Distance()
+        angle += Direction()
+        x = d * dcos(angle)
+        y = d * -dsin(angle)
+        return self
     }
     
     static SetDistance = function(dist) {
@@ -95,6 +104,7 @@ function Vec2(_x = 0.0, _y = 0.0) constructor{
         }
         x = dist * x / d
         y = dist * y / d
+        return self
     }
     
     // Clamps assuming this point is on an infinite line including the segment p0, p1

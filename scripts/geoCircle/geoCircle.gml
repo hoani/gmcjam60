@@ -1,5 +1,4 @@
 /// Create a geometry circle
-/// @arg {array} points - can be array of arrays, ie/ [[x0, y0], [x1, y1]...] or of Vec2s [p0, p1, ... etc]
 function Circle(_center, _radius) constructor {
     center = _center
     radius = _radius
@@ -36,8 +35,17 @@ function Circle(_center, _radius) constructor {
             return p
         }
         
+        return ClosestEdgePoint(p)
+    }
+    
+    static ClosestEdgePoint = function(p) {
+        if (p.IsEqual(center)) {
+            return p.Add(0, -radius)
+        }
+        
         return center.Add(p.Subtract(center).Unit().Multiply(radius))
     }
+    
     
     static Str = function() {
         return $"({center.Str()}, r {radius})"

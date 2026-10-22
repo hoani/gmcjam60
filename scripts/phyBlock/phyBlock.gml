@@ -1,4 +1,5 @@
-function PhyBodyBlock(_p) constructor {
+function PhyBodyBlock(_c, _p) constructor {
+    c = _c
     p = _p
     static PreUpdate = function(ctx) {
     }
@@ -17,47 +18,108 @@ function PhyBodyBlock(_p) constructor {
 
 
 function MaterialBlock() constructor {
-    static LineEndTrim = 1;
+    
+    static Placement = function() {
+        return new BlockPlacement()
+    }
     
     static Place = function(_x0, _y0, _x1, _y1) {
-        var _fix = physics_fixture_create();
-       	var _x = (_x0 + _x1)/2;
-       	var _y = (_y0 + _y1)/2;
-       	var _dir = point_direction(_x0, _y0, _x1, _y1) 
-       	var _length = point_distance(_x0, _y0, _x1, _y1)       	
-        var _width = 32
+        var p = new BlockPlacement()
+       	p.c.x = (_x0 + _x1)/2;
+       	p.c.y = (_y0 + _y1)/2;
+       	p.dir = 0
+       	p.width = _x1 - _x0  	
+        p.height = _y1 - _y0
        	
-       	var _l2 = (_length/2) - LineEndTrim;
-        var _w2 = 16;
-        
-        var c = new Vec2((_x0 + _x1)/2, (_y0 + _y1)/2)
-        
-        var p = Rectangle(c, _length, _width, _dir);
-        
+        return p._Place()
+    }
+}
+
+
+function BlockPlacement() : RectanglePlacement() constructor {
+    static _Place = function() {
+        var p = Rectangle(c, width, height, dir);
         return PolygonFixture(c, p).
             Static().
             Restitution(0.25).
-            Apply(_x, _y, new PhyBodyBlock(p))
+            Apply(c.x, c.y, new PhyBodyBlock(c, p))
        
-       	//physics_fixture_set_polygon_shape(_fix);
-       	//physics_fixture_add_point(_fix, -_l2, -_w2)
-       	//physics_fixture_add_point(_fix, _l2, -_w2)
-       	//physics_fixture_add_point(_fix, _l2, _w2)
-       	//physics_fixture_add_point(_fix, -_l2, _w2)
-       
-       	//physics_fixture_set_density(_fix, 0);
-       	//physics_fixture_set_restitution(_fix, 0.25);
-        //physics_fixture_set_collision_group(_fix, PhyCollisionMain);
-       	//
-       	//
-       	//var _inst = InstanceCreate(_x, _y, objPhyMaterial, {body: new PhyBodyBlock(_length, _w2*2)})
-       	//physics_fixture_bind(_fix, _inst);
-       	//physics_fixture_delete(_fix);
-       	////_inst.phy_rotation = -_dir
-       	//_inst.phy_fixed_rotation = true;
-       	//
-       	//_inst.phy_bullet = false;
-        //
-        //return _inst
+    }
+}
+
+
+function RectanglePlacement() : Placement() constructor {
+    static PlaceCenter = 0
+    static PlaceWidth = 1
+    static PlaceHeight = 2
+    static PlaceDrag = 3
+    
+    c = new Vec2()
+    dir = 0
+    width = 32
+    height = 32
+    o = new Vec2()
+    lp = new Vec2()
+    
+    s = new State(PlaceCenter)
+    
+    static Drag = function(x, y) {
+        switch s.Get() {
+            case PlaceCenter:
+                c = new Vec2(x, y)
+                break;
+            case PlaceWidth:
+                lp = new Vec2(x, y)
+                var delta = c.Subtract(lp)
+                width = delta.Distance()*2
+                dir = delta.Direction()
+                DebugMessage($"dir {dir}")
+                
+                if width < 32 {
+                    width = 32
+                }
+                break;
+            case PlaceHeight:
+                var po = new Vec2(x, y)
+                o = c.Subtract(po)
+                
+                var line = new Line(c.x, c.y, lp.x, lp.y)
+                height = po.Subtract(line.ClosestPointInfinite(po)).Distance()*2
+                if height < 32 {
+                    height = 32
+                }
+                break;
+            case PlaceDrag:
+                c = (new Vec2(x, y)).Add(o)
+                break;
+        }
+    }
+    
+    static Confirm = function(x, y) {
+        Drag(x, y)
+        switch s.Get() {
+            case PlaceCenter:
+                s.Set(PlaceWidth)
+                return noone
+            case PlaceWidth:
+                s.Set(PlaceHeight)
+                return noone
+            case PlaceHeight:
+                s.Set(PlaceDrag)
+                return noone
+            case PlaceDrag:
+                return _Place()
+        }
+    }
+    
+    static _Place = function() {
+        DebugError("Missing Place Method")
+    }
+    
+    static Draw = function() {
+        draw_circle(c.x, c.y, 3, true)
+        draw_circle(lp.x, lp.y, 5, true)
+        var p = Rectangle(c, width, height,  dir);
+        DrawPolygonOutline(c, p.points, 2, c_white)
     }
 }
