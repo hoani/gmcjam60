@@ -1,4 +1,4 @@
-function MaterialBody(_draw, _joinable=noone) : Joinable(_joinable) constructor {
+function MaterialBody(_draw) : Joinable() constructor {
     draw = _draw
     joins = []
     
@@ -51,6 +51,7 @@ function Material() constructor {
 
 function MaterialPlacement(_draw)  constructor {
     draw = _draw
+    joinCandidates = []
     
     static Valid = function() {
         return false;
@@ -68,6 +69,34 @@ function MaterialPlacement(_draw)  constructor {
     
     static Draw = function() {
         draw.Placement(self)
+        DrawJoins()
+    }
+    
+    static _Shape = function() {
+        return noone
+    }
+    
+    static UpdateJoins = function() {
+        joinCandidates = []
+        if _Shape() == noone {
+            return
+        }
+        with(objPhyMaterial) {
+            var j = body.GetJoin(other._Shape())
+            if j.success {
+                array_push(other.joinCandidates, j.With(self))
+            }
+            
+        }
+    }
+    
+    static DrawJoins = function() {
+        for (var i = 0; i< array_length(joinCandidates); i++) {
+            var j = joinCandidates[i]
+            draw_set_colour(c_lime)
+            draw_circle(j.pos.x, j.pos.y, 5, true)
+            draw_set_colour(c_white)
+        }
     }
 }
 

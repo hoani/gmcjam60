@@ -18,6 +18,7 @@ function PhyFixture() constructor {
     bullet = false
     isStatic = false
     rotation = 0
+    joinCandidates = []
     
     
     static Apply = function(_x, _y, body) {
@@ -28,6 +29,18 @@ function PhyFixture() constructor {
         inst.phy_bullet = bullet
         inst.phy_fixed_rotation = isStatic
         inst.phy_rotation = -rotation
+        
+        for (var i = 0; i < array_length(joinCandidates); i++) {
+            var j = joinCandidates[i];
+            if !j.success {
+                continue
+            }
+            switch j.which {
+                case JOIN_TYPE_WELD:
+                    new PhyWeld(inst, j.who, j.pos) // Note: self registering
+                    break;
+            }
+        }
         
         return inst
     }
@@ -88,6 +101,11 @@ function PhyFixture() constructor {
     
     static Rotation = function(val) {
         rotation = val
+        return self
+    }
+    
+    static JoinCandidates = function(val) {
+        joinCandidates = val
         return self
     }
     

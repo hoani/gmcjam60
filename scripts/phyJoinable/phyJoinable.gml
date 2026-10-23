@@ -1,20 +1,14 @@
 
 
 function Joinable(_delegate=noone) constructor {
-    delegate = _delegate
+    joinDelegate = _delegate
     
-    
-    static CanJoin = function(o) {
-        if delegate != noone {
-            return delegate.CanJoin(o)
-        }
-        return false
-    }
-    
-    static GetJoinShape = function(o, shape) {
-        if delegate != noone {
-            return delegate.GetJoinShape(o, shape)
+    static GetJoin = function(shape) {
+        if joinDelegate != noone {
+            return joinDelegate.GetJoin(shape)
         }
         return new JoinCandidate(JOIN_TYPE_WELD, false, new Vec2(0, 0))
     }
 }
+
+

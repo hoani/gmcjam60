@@ -35,9 +35,7 @@ function PhysicsWorld(_gravity = 9.8, _maxYSpd = 8, _pixelsPerMeter = 128) const
     }
     
     static DestroyWorld = function() {
-       	instance_destroy(objPhyJoint)
-       	instance_destroy(objPhyJoinable)
+       	instance_destroy(objPhyJoin)
        	instance_destroy(objPhyMaterial)
-       	instance_destroy(objPhyDynamic)
     }
 }

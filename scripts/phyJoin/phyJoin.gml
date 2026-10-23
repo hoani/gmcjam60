@@ -1,58 +1,55 @@
-#macro JOIN_TYPE_WELD 0
-#macro JOIN_TYPE_REV 1
-#macro JOIN_TYPE_PRISMATIC 2
 
-#macro BUILD_JOINT_DISTANCE 16
 
-function JoinCandidate(_which, _success, _pos) constructor {
-    which = _which
-    success = _success
+
+function PhyJoin(_pos) constructor {
+    inst = noone
+    join = -1
+    type = JOIN_TYPE_WELD
+    startPos = _pos
     pos = _pos
-}
-
-
-function JoinablePoints(_pos, _point) {
-    return _point.Subtract(pos).Distance2() < BUILD_JOINT_DISTANCE * BUILD_JOINT_DISTANCE;
-}
-
-
-function JoinPointRevolution(_pos, _point) {
-	return new JoinCandidate(JOIN_TYPE_REV, JoinablePoints(_pos, _point), _point)
-}
-
-
-function JoinPointRing(_circle, _pos) {
-    var _ring = new Ring(new Vec2(_inst.x, _inst.y), _circle.radius);
-    var _point = _ring.ClosestPoint(_pos);
-	
-	return new JoinCandidate(JOIN_TYPE_WELD, JoinablePoints(_pos, _point), _point)
-}
-
-
-function JoinPointLine(_shape, _pos) {
-	var _point = _shape.ClosestPoint(_pos);
-	return new JoinCandidate(JOIN_TYPE_WELD, JoinablePoints(_pos, _point), _point)
-}
-
-function JoinPointShape(_shape, _pos) {
-	var _point = _shape.ClosestEdgePoint(_pos);
-	
-	if JoinablePoints(_pos, _point) {
-		return new JoinCandidate(JOIN_TYPE_WELD, true, _point)
-	}
+    anchor = new Vec2()
+    strain = 0
     
-	return new JoinCandidate(JOIN_TYPE_WELD, _shape.Contains(_pos), _pos);
-}
-
-
-function JoinPointCircle(_circle, _pos) {
-	if JoinablePoints(_circle.center, _pos) {
-        return new JoinCandidate(JOIN_TYPE_WELD, true, _circle.center)
+    static JoinStainLimit = 1
+    
+    
+    static Cleanup = function() {
+        physics_joint_delete(join)
     }
     
-	return JoinPointShape(_circle, _pos)
-}
-
-function JoinPointNoOp(_shape, _pos) {
-	return new JoinCandidate(JOIN_TYPE_WELD, false, new Vector2(0, 0))
+    static Register = function(bodies=[]) {
+        var j = self;
+        inst = InstanceCreate(pos.x, pos.y, objPhyJoin, {
+      		join: j,
+      	})
+        anchor = new Vec2(physics_joint_get_value(join, phy_joint_anchor_1_x), physics_joint_get_value(join, phy_joint_anchor_1_y))
+        
+        for (var i = 0; i<array_length(bodies); i++) {
+            array_push(bodies[i].body.joins, inst)
+        }
+    }
+    
+    
+    static EndStep = function() {
+        inst.x = inst.xstart + physics_joint_get_value(join, phy_joint_anchor_1_x) -anchor.x
+        inst.y = inst.ystart + physics_joint_get_value(join, phy_joint_anchor_1_y) -anchor.y
+        
+        inst.image_angle = physics_joint_get_value(join, phy_joint_angle)
+        
+        strain = CalculateStrain();
+       	if (strain >= JoinStainLimit){
+       		OnBreak(join)
+            with (inst) {
+                instance_destroy()
+            }
+       		return
+       	}
+    }
+    
+    static CalculateStrain = function() {
+        return 0;
+    }
+    
+    static OnBreak = function() {
+    }
 }

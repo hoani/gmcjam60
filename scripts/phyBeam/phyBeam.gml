@@ -1,5 +1,6 @@
 function BeamBody(_line, draw) : MaterialBody(draw) constructor {
     line = _line
+    joinDelegate = new BeamJoiner(_line)
 }
 
 
@@ -32,20 +33,11 @@ function BeamDraw() : MaterialDraw() constructor {
 function BeamJoiner(_line) : Joinable() constructor {
     line = _line
     
-    static CanJoin = function(o) {
-        o.GetJoinShape(self, line)
-        return false
-    }
-    
-    static GetJoinShape = function(o, shape) {
-        switch(shape.Shape) {
-            case "Line":
-                
-        }
-        if delegate != noone {
-            return delegate.GetJoinShape(o, shape)
-        }
-        return new JoinCandidate(JOIN_TYPE_WELD, false, new Vec2(0, 0))
+    static GetJoin = function(shape) {
+        var p1 = shape.ClosestPointShape(line)
+        var p0 = line.ClosestPoint(p1)
+        
+        return new JoinCandidate(JOIN_TYPE_WELD, true, p0)
     }
 }
 
@@ -84,6 +76,7 @@ function BeamPlacement(_draw) : MaterialPlacement(_draw) constructor {
                 o = a.Subtract(b)
                 b = new Vec2(x, y)
                 a = b.Add(o)
+                UpdateJoins()
                 break;
         }
     }
@@ -102,6 +95,10 @@ function BeamPlacement(_draw) : MaterialPlacement(_draw) constructor {
         }
     }
     
+    static _Shape = function() {
+        return PointsLine(a, b)
+    }
+    
     static _Place = function() {
         var line = PointsLine(a, b)
         
@@ -109,11 +106,12 @@ function BeamPlacement(_draw) : MaterialPlacement(_draw) constructor {
         var dir = line.Direction()
 
        	var p = Rectangle(c, d, 4, dir);
-        return PolygonFixture(c, p).
+        var inst = PolygonFixture(c, p).
             Density(0.125).
             Friction(0.2).
             Restitution(0.75).
             Bullet().
+            JoinCandidates(joinCandidates).
             Apply(c.x, c.y, new BeamBody(line, draw))
     }
 }
