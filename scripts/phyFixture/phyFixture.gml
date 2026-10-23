@@ -39,6 +39,9 @@ function PhyFixture() constructor {
                 case JOIN_TYPE_WELD:
                     new PhyWeld(inst, j.who, j.pos) // Note: self registering
                     break;
+                case JOIN_TYPE_REV:
+                    new PhyRevolute(inst, j.who, j.pos)
+                    break
             }
         }
         

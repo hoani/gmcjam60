@@ -1,9 +1,10 @@
 function BoxBody(_c, _p, draw) : MaterialBody(draw) constructor {
     c = _c
     p = _p
+    joinDelegate = new BoxJoiner(p)
 }
 
-
+function BoxJoiner(_polygon) : EdgeWeldJoiner(_polygon) constructor { }
 
 function MaterialBox() constructor {
     draw = new BoxDraw()
@@ -38,6 +39,7 @@ function BoxPlacement(draw) : RectanglePlacement(draw) constructor {
             Friction(0.2).
             Restitution(0.25).
             Bullet().
+            JoinCandidates(joinCandidates).
             Apply(c.x, c.y, new BoxBody(c, p, draw))
     }
 }

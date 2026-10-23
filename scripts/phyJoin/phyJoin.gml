@@ -19,9 +19,7 @@ function PhyJoin(_pos) constructor {
     
     static Register = function(bodies=[]) {
         var j = self;
-        inst = InstanceCreate(pos.x, pos.y, objPhyJoin, {
-      		join: j,
-      	})
+        inst = InstanceCreate(pos.x, pos.y, objPhyJoin, { join: j })
         anchor = new Vec2(physics_joint_get_value(join, phy_joint_anchor_1_x), physics_joint_get_value(join, phy_joint_anchor_1_y))
         
         for (var i = 0; i<array_length(bodies); i++) {
@@ -44,6 +42,19 @@ function PhyJoin(_pos) constructor {
             }
        		return
        	}
+    }
+    
+    static GetJoinLine = function() {
+        var _x1 = physics_joint_get_value(join, phy_joint_anchor_1_x)
+       	var _y1 = physics_joint_get_value(join, phy_joint_anchor_1_y)
+       	var _x2 = physics_joint_get_value(join, phy_joint_anchor_2_x)
+       	var _y2 = physics_joint_get_value(join, phy_joint_anchor_2_y)
+       
+       	return new Line(_x1, _y1, _x2, _y2)
+    }
+    
+    static GetJoinDistance = function() {
+        return GetJoinLine().Distance()
     }
     
     static CalculateStrain = function() {

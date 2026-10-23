@@ -1,9 +1,10 @@
 function BlockBody(_c, _p, _draw) : MaterialBody(_draw) constructor {
     c = _c
     p = _p
+    joinDelegate = new BlockJoiner(p)
 }
 
-
+function BlockJoiner(_polygon) : EdgeWeldJoiner(_polygon) constructor { }
 
 function MaterialBlock() constructor {
     draw = new BlockDraw()
@@ -31,6 +32,7 @@ function BlockPlacement(draw) : RectanglePlacement(draw) constructor {
         return PolygonFixture(c, p).
             Static().
             Restitution(0.25).
+            JoinCandidates(joinCandidates).
             Apply(c.x, c.y, new BlockBody(c, p, draw))
        
     }
@@ -53,6 +55,9 @@ function BlockDraw() : MaterialDraw() constructor {
         }
     }
 }
+
+
+
 
 
 function RectanglePlacement(_draw = new MaterialDraw()) : MaterialPlacement(_draw) constructor {
@@ -116,15 +121,21 @@ function RectanglePlacement(_draw = new MaterialDraw()) : MaterialPlacement(_dra
                 s.Set(PlaceDrag)
                 return noone
             case PlaceDrag:
+                UpdateJoins()
                 s.Set(PlaceRotate)
                 return noone
             case PlaceRotate:
+                UpdateJoins()
                 return _Place()
         }
     }
     
     static _Place = function() {
         DebugError("Missing Place Method")
+    }
+    
+    static _Shape = function() {
+        return Rectangle(c, width, height,  dir)
     }
     
     static DrawPoints = function() {

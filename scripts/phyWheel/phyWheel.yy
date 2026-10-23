@@ -1,12 +1,12 @@
 {
   "$GMScript":"v1",
-  "%Name":"phyJoinable",
+  "%Name":"phyWheel",
   "isCompatibility":false,
   "isDnD":false,
-  "name":"phyJoinable",
+  "name":"phyWheel",
   "parent":{
-    "name":"join",
-    "path":"folders/Engines/physics/join.yy",
+    "name":"material",
+    "path":"folders/Engines/physics/material.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

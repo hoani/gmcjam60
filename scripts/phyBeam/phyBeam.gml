@@ -33,11 +33,9 @@ function BeamDraw() : MaterialDraw() constructor {
 function BeamJoiner(_line) : Joinable() constructor {
     line = _line
     
-    static GetJoin = function(shape) {
+    static GetJoin = function(type, shape) {
         var p1 = shape.ClosestPointShape(line)
-        var p0 = line.ClosestPoint(p1)
-        
-        return new JoinCandidate(JOIN_TYPE_WELD, true, p0)
+        return JoinPointLine(line, p1, type)
     }
 }
 

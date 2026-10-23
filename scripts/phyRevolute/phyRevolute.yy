@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"phyRevolute",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"phyRevolute",
+  "parent":{
+    "name":"join",
+    "path":"folders/Engines/physics/join.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

@@ -76,17 +76,21 @@ function MaterialPlacement(_draw)  constructor {
         return noone
     }
     
+    static _Type = function() {
+        return JOIN_TYPE_WELD
+    }
+    
     static UpdateJoins = function() {
         joinCandidates = []
         if _Shape() == noone {
             return
         }
+        
         with(objPhyMaterial) {
-            var j = body.GetJoin(other._Shape())
+            var j = body.GetJoin(other._Type(), other._Shape())
             if j.success {
                 array_push(other.joinCandidates, j.With(self))
             }
-            
         }
     }
     

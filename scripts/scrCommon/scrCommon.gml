@@ -32,6 +32,15 @@ function WrapIndex(i, len) {
 }
 
 
+function Clip(value, increment=1, offset = 0) {
+    return offset + round((value-offset)/increment)*increment
+}
+
+function ClipClamp(value, increment, minValue=value, maxValue=value, offset=0) {
+    return clamp(Clip(value, increment, offset), minValue, maxValue) 
+}
+
+
 function CommonTests(_run, _method) : VerrificMethodTest(_run, _method) constructor {
     static test_subject="Common Tests"
     

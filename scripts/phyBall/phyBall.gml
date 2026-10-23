@@ -1,6 +1,7 @@
 function BallBody(_c, _radius = 32, _draw) : MaterialBody(_draw) constructor {
     dynamic = new BodyDynamic()
     circle = new Circle(_c, _radius)
+    joinDelegate = new BallJoiner(circle)
     
     static PreUpdate = function(ctx) {
         dynamic.PreUpdate(ctx)
@@ -12,7 +13,7 @@ function BallBody(_c, _radius = 32, _draw) : MaterialBody(_draw) constructor {
     }
 }
 
-
+function BallJoiner(_circle) : EdgeWeldJoiner(_circle) constructor { }
 
 function MaterialBall() constructor {
     draw = new BallDraw()
@@ -38,6 +39,8 @@ function BallDraw() : MaterialDraw() constructor {
 }
 
 
+
+
 function BallPlacement(_draw) : MaterialPlacement(_draw) constructor {
     PlaceInner = 0
     PlaceOuter = 1
@@ -50,6 +53,7 @@ function BallPlacement(_draw) : MaterialPlacement(_draw) constructor {
     s = new State(PlaceInner)
     
     static Drag = function(x, y) {
+        UpdateJoins()
         switch s.Get() {
             case PlaceInner:
                 c = new Vec2(x, y)
@@ -64,6 +68,7 @@ function BallPlacement(_draw) : MaterialPlacement(_draw) constructor {
                 break;
             case PlaceDrag:
                 c = (new Vec2(x, y)).Add(o)
+                break
         }
     }
     
@@ -81,6 +86,10 @@ function BallPlacement(_draw) : MaterialPlacement(_draw) constructor {
         }
     }
     
+    static _Shape = function() {
+        return new Circle(c, r)
+    }
+    
     static _Place = function() {
        	return CircleFixture(r).
             Density(0.5).
@@ -88,6 +97,7 @@ function BallPlacement(_draw) : MaterialPlacement(_draw) constructor {
             Friction(1).
             LinearDamping(0.125).
             Bullet().
+            JoinCandidates(joinCandidates).
             Apply(c.x, c.y, new BallBody(c, r, draw))
     }
 }

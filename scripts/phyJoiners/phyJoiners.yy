@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"phyJoiners",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"phyJoiners",
+  "parent":{
+    "name":"join",
+    "path":"folders/Engines/physics/join.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

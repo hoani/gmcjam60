@@ -7,8 +7,9 @@ world = new PhysicsWorld()
 
 active = 0
 materials = [
-    new MaterialBall(),
+    new MaterialWheel(),
     new MaterialBeam(),
+    new MaterialBall(),
     new MaterialBlock(),
     new MaterialBox(),
     
@@ -28,7 +29,7 @@ grid = 16
 gridOffset = 8
 
 function clipToGrid(in) {
-    return gridOffset + round((in-gridOffset)/grid)*grid
+    return Clip(in, grid, gridOffset)
 }
 
 
