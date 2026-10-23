@@ -17,6 +17,7 @@ function MaterialFactory() constructor {
         new MaterialBox(),
         new MaterialBall(),
         new MaterialWheel(),
+        new MaterialEgg(),
     ]
     
     static PlaceEncoded = function(b64enc) {

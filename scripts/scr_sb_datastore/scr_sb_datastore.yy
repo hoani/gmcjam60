@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"scr_sb_datastore",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"scr_sb_datastore",
+  "parent":{
+    "name":"scripts",
+    "path":"folders/Extensions/scoreboat/scripts.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

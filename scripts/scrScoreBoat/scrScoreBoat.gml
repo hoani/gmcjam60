@@ -61,4 +61,5 @@ function _ScoreBoatHandler() constructor {
         var path = $"/{userId}/level"
         return sb_file_download_string(levelsBucket, path, _success, _fail)
     }
+    
 }

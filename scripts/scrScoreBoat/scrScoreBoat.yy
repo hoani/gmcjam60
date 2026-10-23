@@ -1,9 +1,9 @@
 {
   "$GMScript":"v1",
-  "%Name":"scrOnline",
+  "%Name":"scrScoreBoat",
   "isCompatibility":false,
   "isDnD":false,
-  "name":"scrOnline",
+  "name":"scrScoreBoat",
   "parent":{
     "name":"Online",
     "path":"folders/Scripts/Online.yy",

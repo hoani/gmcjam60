@@ -1,7 +1,7 @@
 
 // The library's version. A released package has its own here, such as "1.2.0";
 // a copy built from source says "dev".
-#macro SB_VERSION "0.2.0"
+#macro SB_VERSION "0.3.0"
 
 // Where Scoreboat is. A released package points at the hosted service.
 /// @ignore
