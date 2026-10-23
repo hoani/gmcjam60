@@ -51,19 +51,34 @@ function Material() constructor {
 
 function MaterialPlacement(_draw)  constructor {
     draw = _draw
+    points = []
     joinCandidates = []
+    index = MATERIAL_UNKNOWN
     
     static Valid = function() {
         return false;
     }
     
     static Reset = function() {
+        points = []
+        joinCandidates = []
+        _Reset()
     }
+    
+    static _Reset = function() {
+    }
+    
     
     static Drag = function(x, y) {
     }
     
     static Confirm = function(x, y) {
+        Drag(x, y)
+        array_push(points, new Vec2(x, y))
+        return _Confirm(x, y)
+    }
+    
+    static _Confirm = function(x, y) {
         return false
     }
     
@@ -102,6 +117,10 @@ function MaterialPlacement(_draw)  constructor {
             draw_set_colour(c_white)
         }
     }
+    
+    static Encode = function() {
+        return EncodePlacement(index, points)
+    }
 }
 
 
@@ -130,5 +149,8 @@ function MaterialDraw() constructor {
         BuildJoins(ctx)
     }
 }
+
+
+
 
 

@@ -32,6 +32,8 @@ function BoxDraw() : MaterialDraw() constructor {
 
 
 function BoxPlacement(draw) : RectanglePlacement(draw) constructor {
+    index = MATERIAL_BOX
+    
     static _Place = function() {
         var p = Rectangle(c, width, height, dir);
         return PolygonFixture(c, p).

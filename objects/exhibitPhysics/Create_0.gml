@@ -4,6 +4,7 @@ name = "Physics"
 
 world = new PhysicsWorld()
 
+assembly = new PhyAssembly(world)
 
 active = 0
 materials = [
@@ -12,7 +13,6 @@ materials = [
     new MaterialBall(),
     new MaterialBlock(),
     new MaterialBox(),
-    
 ]
 
 
@@ -33,4 +33,11 @@ function clipToGrid(in) {
 }
 
 
-mBlock.Place(clipToGrid(64), clipToGrid(480), clipToGrid(920), clipToGrid(512))
+var p = mBlock.Placement() 
+    
+p.Confirm(clipToGrid(64), clipToGrid(480)) 
+p.Confirm(clipToGrid(920), clipToGrid(512))
+p.Confirm(clipToGrid(920), clipToGrid(512))
+p.Confirm(clipToGrid(920), clipToGrid(512))
+
+assembly.base = [p.Encode()]

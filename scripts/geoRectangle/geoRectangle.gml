@@ -21,8 +21,6 @@ function RectangleTests(_run, _method) : VerrificMethodTest(_run, _method) const
     
     static test_subject="Rectangle Tests"
     
-
-    
     static should_make_polygon = function() {
         testCases = [
             { name: "simple", rec: Rectangle(new Vec2(1, 1), 4, 2, 0), expect: new Polygon([[-1, 0], [3, 0], [3, 2], [-1, 2]]) },
@@ -38,5 +36,4 @@ function RectangleTests(_run, _method) : VerrificMethodTest(_run, _method) const
             assert_equal(tc.rec.Str(), tc.expect.Str(), $"{tc.name} {tc.rec.Str()} != {tc.expect.Str()}")
         })
     }
-    
 }

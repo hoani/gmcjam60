@@ -12,21 +12,12 @@ function MaterialBlock() constructor {
     static Placement = function() {
         return new BlockPlacement(draw)
     }
-    
-    static Place = function(_x0, _y0, _x1, _y1) {
-        var p = new BlockPlacement()
-       	p.c.x = (_x0 + _x1)/2;
-       	p.c.y = (_y0 + _y1)/2;
-       	p.dir = 0
-       	p.width = _x1 - _x0  	
-        p.height = _y1 - _y0
-       	
-        return p._Place()
-    }
 }
 
 
 function BlockPlacement(draw) : RectanglePlacement(draw) constructor {
+    index = MATERIAL_BLOCK
+    
     static _Place = function() {
         var p = Rectangle(c, width, height, dir);
         return PolygonFixture(c, p).
@@ -34,7 +25,6 @@ function BlockPlacement(draw) : RectanglePlacement(draw) constructor {
             Restitution(0.25).
             JoinCandidates(joinCandidates).
             Apply(c.x, c.y, new BlockBody(c, p, draw))
-       
     }
 }
 
@@ -78,6 +68,7 @@ function RectanglePlacement(_draw = new MaterialDraw()) : MaterialPlacement(_dra
     s = new State(PlaceA)
     
     static Drag = function(x, y) {
+        UpdateJoins()
         switch s.Get() {
             case PlaceA:
                 a = new Vec2(x, y)
@@ -111,8 +102,7 @@ function RectanglePlacement(_draw = new MaterialDraw()) : MaterialPlacement(_dra
         }
     }
     
-    static Confirm = function(x, y) {
-        Drag(x, y)
+    static _Confirm = function(x, y) {
         switch s.Get() {
             case PlaceA:
                 s.Set(PlaceB)
@@ -121,11 +111,9 @@ function RectanglePlacement(_draw = new MaterialDraw()) : MaterialPlacement(_dra
                 s.Set(PlaceDrag)
                 return noone
             case PlaceDrag:
-                UpdateJoins()
                 s.Set(PlaceRotate)
                 return noone
             case PlaceRotate:
-                UpdateJoins()
                 return _Place()
         }
     }

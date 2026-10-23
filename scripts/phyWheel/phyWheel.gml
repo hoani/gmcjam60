@@ -58,6 +58,7 @@ function WheelDraw() : MaterialDraw() constructor {
 
 
 function WheelPlacement(_draw) : MaterialPlacement(_draw) constructor {
+    index = MATERIAL_WHEEL
     PlaceInner = 0
     PlaceOuter = 1
     PlaceDrag = 2
@@ -84,8 +85,7 @@ function WheelPlacement(_draw) : MaterialPlacement(_draw) constructor {
         }
     }
     
-    static Confirm = function(x, y) {
-        Drag(x, y)
+    static _Confirm = function(x, y) {
         switch s.Get() {
             case PlaceInner:
                 s.Set(PlaceOuter)

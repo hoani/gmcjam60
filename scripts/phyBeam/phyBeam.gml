@@ -42,6 +42,7 @@ function BeamJoiner(_line) : Joinable() constructor {
 
 
 function BeamPlacement(_draw) : MaterialPlacement(_draw) constructor {
+    index = MATERIAL_BEAM
     PlaceA = 0
     PlaceB = 1
     PlaceDrag = 2
@@ -79,8 +80,7 @@ function BeamPlacement(_draw) : MaterialPlacement(_draw) constructor {
         }
     }
     
-    static Confirm = function(x, y) {
-        Drag(x, y)
+    static _Confirm = function(x, y) {
         switch s.Get() {
             case PlaceA:
                 s.Set(PlaceB)
@@ -104,7 +104,7 @@ function BeamPlacement(_draw) : MaterialPlacement(_draw) constructor {
         var dir = line.Direction()
 
        	var p = Rectangle(c, d, 4, dir);
-        var inst = PolygonFixture(c, p).
+        return PolygonFixture(c, p).
             Density(0.125).
             Friction(0.2).
             Restitution(0.75).

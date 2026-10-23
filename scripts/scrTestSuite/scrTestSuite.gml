@@ -8,7 +8,8 @@ function TestableSuite() : VerrificSuiteGroup("All tests") constructor {
         add_methods_from(Vec2Tests);
         add_methods_from(ChainOfCommandTests)        
         add_methods_from(SaverTests)
-        add_methods_from(RunnerTests)
+        add_methods_from(RunnerTests)        
+        add_methods_from(HistoryTests)
     }
     
     with (add_group("Interaction Engine")) {
@@ -46,4 +47,10 @@ function TestableSuite() : VerrificSuiteGroup("All tests") constructor {
         }
     }
     
+    with (add_group("Physics Engine")) {
+        tc = PhysicsEngineTestCases()
+        for (var i = 0; i<array_length(tc); i++) {
+            add_methods_from(tc[i])
+        }
+    }
 }

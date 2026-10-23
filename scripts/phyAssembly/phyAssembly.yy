@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"phyAssembly",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"phyAssembly",
+  "parent":{
+    "name":"physics",
+    "path":"folders/Engines/physics.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

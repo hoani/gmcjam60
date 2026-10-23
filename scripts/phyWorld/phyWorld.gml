@@ -29,12 +29,12 @@ function PhysicsWorld(_gravity = 9.8, _maxYSpd = 8, _pixelsPerMeter = 128) const
         physics_pause_enable(paused)
     }
     
-    static ResetWorld = function() {
-        DestroyWorld()
+    static Reset = function() {
+        Destroy()
         NewWorld()
     }
     
-    static DestroyWorld = function() {
+    static Destroy = function() {
        	instance_destroy(objPhyJoin)
        	instance_destroy(objPhyMaterial)
     }
