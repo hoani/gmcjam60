@@ -1,6 +1,16 @@
+function MaterialBodyDynamic(_draw) : MaterialBody(_draw) constructor {
+    dynamic = new BodyDynamic()
+    
+    static PreUpdate = function(ctx) {
+        dynamic.PreUpdate(ctx)
+    }
+}
+
+
 function MaterialBody(_draw) : Joinable() constructor {
     draw = _draw
     joins = []
+    dynamic = noone;
     
     static PreUpdate = function(ctx) {
     }

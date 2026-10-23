@@ -1,0 +1,1 @@
+impulseDetect.Register(other)

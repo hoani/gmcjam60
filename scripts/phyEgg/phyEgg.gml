@@ -1,0 +1,81 @@
+function EggBody(_c, _r, _draw) : MaterialBodyDynamic(_draw) constructor {
+    circle = new Circle(_c, _r)
+    
+    static Update = function(ctx) {
+        circle.center.x = ctx.x
+        circle.center.y = ctx.y
+    }
+}
+
+function MaterialEgg() constructor {
+    draw = new EggDraw()
+    static Placement = function() {
+        return new EggPlacement(draw)
+    }
+}
+
+
+function EggDraw() : MaterialDraw() constructor {
+    static Placement = function(ctx) {
+        with (ctx) {
+            draw_sprite(sprPhyEgg, 0, c.x, c.y)
+        }
+    }
+    
+    static Build = function(ctx) {
+        with(ctx) {
+            draw_sprite_ext(sprPhyEgg, 0, x, y, 1, 1, image_angle, c_white, 1)
+        }
+    }
+}
+
+
+
+
+function EggPlacement(_draw) : MaterialPlacement(_draw) constructor {
+    index = MATERIAL_EGG
+    PlaceDrag = 0
+    
+    c = new Vec2()
+    r = 64
+    
+    s = new State(PlaceDrag)
+    
+    static Drag = function(x, y) {
+        switch s.Get() {
+            case PlaceDrag:
+               c = new Vec2(x, y)
+                break
+        }
+    }
+    
+    static _Confirm = function(x, y) {
+        switch s.Get() {
+            case PlaceDrag:
+                return _Place()
+        }
+    }
+    
+    static _Shape = function() {
+        return new Circle(c, r)
+    }
+    
+    static _Place = function() {
+       	var inst = CircleFixture(24).
+            Offset(0, 8).
+            Density(0.5).
+            Restitution(0.125).
+            Friction(1).
+            LinearDamping(0.125).
+            Bullet().
+            Breakable().
+            Apply(c.x, c.y, new EggBody(c, r, draw))
+        
+        var p = new Polygon([[-24, 8], [24, 8], [8, -24], [-8, -24]])
+        
+        CircleFixture(16).Offset(0, -8).Density(0.25).AppendTo(inst)
+        CircleFixture(14).Offset(0, 16).Density(0.75).AppendTo(inst)
+        //PolygonFixture(new Vec2(0, 0), p).AppendTo(inst)
+    }
+}
+

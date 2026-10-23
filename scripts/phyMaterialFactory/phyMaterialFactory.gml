@@ -5,7 +5,8 @@
 #macro MATERIAL_BOX (MATERIAL_BLOCK + 1)
 #macro MATERIAL_BALL (MATERIAL_BOX + 1)
 #macro MATERIAL_WHEEL (MATERIAL_BALL + 1)
-#macro MATERIAL_TOTAL (MATERIAL_WHEEL + 1)
+#macro MATERIAL_EGG (MATERIAL_WHEEL + 1)
+#macro MATERIAL_TOTAL (MATERIAL_EGG + 1)
 
 
 function MaterialFactory() constructor {

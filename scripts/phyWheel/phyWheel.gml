@@ -1,11 +1,6 @@
-function WheelBody(_c, _radius = 32, _draw) : MaterialBody(_draw) constructor {
-    dynamic = new BodyDynamic()
+function WheelBody(_c, _radius = 32, _draw) : MaterialBodyDynamic(_draw) constructor {
     circle = new Circle(_c, _radius)
     joinDelegate = new WheelJoiner(circle)
-    
-    static PreUpdate = function(ctx) {
-        dynamic.PreUpdate(ctx)
-    }
     
     static Update = function(ctx) {
         circle.center.x = ctx.x
@@ -25,8 +20,6 @@ function WheelJoiner(_circle) : Joinable() constructor {
         return JoinPointEdge(circle, shape.ClosestPointShape(circle), type)
     }
 }
-
-
 
 
 function MaterialWheel() constructor {
@@ -53,8 +46,6 @@ function WheelDraw() : MaterialDraw() constructor {
         draw_circle_color(ctx.x, ctx.y, ctx.body.circle.radius/2, _c, _c, true)
     }
 }
-
-
 
 
 function WheelPlacement(_draw) : MaterialPlacement(_draw) constructor {

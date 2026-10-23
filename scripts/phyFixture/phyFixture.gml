@@ -19,12 +19,19 @@ function PhyFixture() constructor {
     isStatic = false
     rotation = 0
     joinCandidates = []
+    offset = new Vec2()
+    object = objPhyMaterial
+    
+    // Call this if the instance already exists and has a fixture
+    static AppendTo = function(inst) {
+        physics_fixture_bind_ext(f, inst, offset.x, offset.y);
+       	physics_fixture_delete(f);
+    }
     
     
     static Apply = function(_x, _y, body) {
-        var inst = InstanceCreate(_x, _y, objPhyMaterial, {body: body})
-        physics_fixture_bind(f, inst);
-       	physics_fixture_delete(f);
+        var inst = InstanceCreate(_x, _y, object, {body: body})
+        AppendTo(inst)
 
         inst.phy_bullet = bullet
         inst.phy_fixed_rotation = isStatic
@@ -48,6 +55,11 @@ function PhyFixture() constructor {
         return inst
     }
     
+    static Breakable = function() {
+        object = objPhyBreakable
+        return self
+    }
+    
     static Circle = function(radius) {
         physics_fixture_set_circle_shape(f, radius);
         return self
@@ -59,6 +71,12 @@ function PhyFixture() constructor {
             var p = polygon.points[i].Subtract(c)
             physics_fixture_add_point(f, p.x, p.y)
         }
+        return self
+    }
+    
+    static Offset = function(_x, _y) {
+        offset.x = _x
+        offset.y = _y
         return self
     }
     

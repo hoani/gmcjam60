@@ -1,11 +1,6 @@
-function BallBody(_c, _radius = 32, _draw) : MaterialBody(_draw) constructor {
-    dynamic = new BodyDynamic()
+function BallBody(_c, _radius = 32, _draw) : MaterialBodyDynamic(_draw) constructor {
     circle = new Circle(_c, _radius)
     joinDelegate = new BallJoiner(circle)
-    
-    static PreUpdate = function(ctx) {
-        dynamic.PreUpdate(ctx)
-    }
     
     static Update = function(ctx) {
         circle.center.x = ctx.x

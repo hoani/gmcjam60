@@ -38,3 +38,21 @@ if keyboard_check_pressed(ord("X")) {
     assembly.Redo()
 }
 
+
+if keyboard_check_pressed(ord("N")) {
+    ScoreBoat().UploadLevel(assembly.EncodeFull()).success(function(_info){
+        DebugMessage("File Uploaded")
+    }).fail(function(_info){
+        DebugMessage("Failed to Upload")
+    })
+}
+
+if keyboard_check_pressed(ord("M")) {
+    ScoreBoat().DownloadLevel().success(function(_file){
+        DebugMessage("Level downloaded")
+        assembly.LoadBase(_file.text)
+    }).fail(function(_info){
+        DebugMessage("Failed to Upload")
+    })
+}
+

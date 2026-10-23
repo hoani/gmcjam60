@@ -1,4 +1,4 @@
-function BoxBody(_c, _p, draw) : MaterialBody(draw) constructor {
+function BoxBody(_c, _p, draw) : MaterialBodyDynamic(draw) constructor {
     c = _c
     p = _p
     joinDelegate = new BoxJoiner(p)

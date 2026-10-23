@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"phyImpulse",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"phyImpulse",
+  "parent":{
+    "name":"body",
+    "path":"folders/Engines/physics/body.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

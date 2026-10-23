@@ -21,6 +21,18 @@ function PhyAssembly(_world) constructor {
       	}
         history.Add(Encode())
     }
+    
+    
+    static EncodeFull = function() {
+        var full = array_concat(base, parts)
+        var partsEnc = json_stringify(full);
+	
+       	var _payload = {
+       		parts: partsEnc,
+       		hash: md5_string_utf8(partsEnc)
+       	}
+	   return base64_encode(json_stringify(_payload));
+    }
 
     static Encode = function() {
         var partsEnc = json_stringify(parts);
@@ -72,6 +84,15 @@ function PhyAssembly(_world) constructor {
         }
     }
     
+    static LoadBase = function(encoded) {
+        base = []
+        parts = []
+        Reset()
+        if encoded == "" {
+            return;
+        }
+        base = Load(encoded)
+    }
     
     static CanUndo = function() {
         return history.CanUndo()

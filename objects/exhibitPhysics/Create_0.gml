@@ -8,6 +8,7 @@ assembly = new PhyAssembly(world)
 
 active = 0
 materials = [
+    new MaterialEgg(),
     new MaterialWheel(),
     new MaterialBeam(),
     new MaterialBall(),
@@ -21,6 +22,7 @@ pStart = new Vec2()
 
 mBlock = new MaterialBlock()
 
+ScoreBoat().Login()
 
 
 placement = noone

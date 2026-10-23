@@ -1,4 +1,4 @@
-function BeamBody(_line, draw) : MaterialBody(draw) constructor {
+function BeamBody(_line, draw) : MaterialBodyDynamic(draw) constructor {
     line = _line
     joinDelegate = new BeamJoiner(_line)
 }

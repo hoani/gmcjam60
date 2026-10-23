@@ -10,7 +10,7 @@ name = "Scoreboat V" + SB_VERSION
 step = 0;
 
 
-sb_init("8xvgXd2", "uejwbGmvN2VX8IhG", "NKkGVKBpyc38c83HMhqxs_FaEZ5QwtVU8BdmhNb7rUI")
+ScoreBoat().Login()
         .success(function(_info) {
             show_debug_message("Scoreboat is ready");
         })

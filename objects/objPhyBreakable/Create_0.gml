@@ -1,0 +1,1 @@
+impulseDetect = new PhyImpulse(self);
