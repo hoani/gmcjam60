@@ -5,7 +5,7 @@ function WheelBody(_c, _radius = 32, _draw) : MaterialBodyDynamic(_draw) constru
     shape = new Circle(_c, _radius)
     joinDelegate = new WheelJoiner(shape)
     
-    static Update = function(ctx) {
+    static _Update = function(ctx) {
         shape.center.x = ctx.x
         shape.center.y = ctx.y
     }

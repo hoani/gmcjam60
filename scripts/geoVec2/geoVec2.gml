@@ -22,6 +22,10 @@ function Vec2(_x = 0.0, _y = 0.0) constructor{
         return new Vec2(x + o.x, y + o.y)
     }
     
+    static Copy = function() {
+        return new Vec2(x, y)
+    }
+    
     static Subtract = function(o) {
         return new Vec2(x - o.x, y - o.y)
     }

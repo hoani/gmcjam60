@@ -94,6 +94,11 @@ function MaterialBody(_draw) : Joinable() constructor {
     }
 }
 
+function CommonOutOfBounds() {
+    InstanceCreate(phy_position_x, phy_position_y, objOutOfRing, {spd: new Vec2(phy_speed_x, phy_speed_y)})
+    instance_destroy()
+}
+
 
 
 function Material() constructor {

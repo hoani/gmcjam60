@@ -109,6 +109,7 @@
     {"id":{"name":"objExhibit","path":"objects/objExhibit/objExhibit.yy",},},
     {"id":{"name":"objGame","path":"objects/objGame/objGame.yy",},},
     {"id":{"name":"objKeeper","path":"objects/objKeeper/objKeeper.yy",},},
+    {"id":{"name":"objOutOfRing","path":"objects/objOutOfRing/objOutOfRing.yy",},},
     {"id":{"name":"objParticles","path":"objects/objParticles/objParticles.yy",},},
     {"id":{"name":"objParticleTester","path":"objects/objParticleTester/objParticleTester.yy",},},
     {"id":{"name":"objPhyBreakable","path":"objects/objPhyBreakable/objPhyBreakable.yy",},},

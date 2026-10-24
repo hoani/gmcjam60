@@ -26,5 +26,5 @@ OnImpulse = function(impulse) {
 
 OnOutOfBounds = function() {
     notifier.OnOutOfBounds()
-    instance_destroy()
+    CommonOutOfBounds()
 }

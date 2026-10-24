@@ -1,3 +1,1 @@
-OnOutOfBounds = function() {
-    instance_destroy()
-}
+OnOutOfBounds = CommonOutOfBounds
