@@ -4,14 +4,10 @@ function EncodePlacement(index, points){
         array_push(_points, points[i].x, points[i].y)
     }
     var spec = { index: index, points: _points };
-    var jsenc = json_stringify(spec)
-    return base64_encode(jsenc)
+    return spec
 }
 
-function DecodePlacement(b64enc) {
-    var jsenc = base64_decode(b64enc);
-    var data = json_parse(jsenc)
-    
+function DecodePlacement(data) {
     var points = []
     for (var i = 0; i<array_length(data.points); i+=2) {
         array_push(points, new Vec2(data.points[i], data.points[i + 1]))

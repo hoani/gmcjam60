@@ -9,17 +9,19 @@ function PhyAssembly(_world) constructor {
     static Add = function(spec) {
         array_push(parts, spec.Encode())
         history.Add(Encode())
+        DebugMessage($"Stored {string_length(history.current)} bytes {array_length(parts)} into history")
     }
     
     static Delete = function(spec) {
         var enc = spec.Encode()
         for (var i = 0; i < array_length(parts); i++) {
-            if parts[i] == enc {
+            if json_stringify(parts[i]) == json_stringify(enc) {
       			array_delete(parts, i, 1);
-      			return
+      			break
       		}
       	}
         history.Add(Encode())
+        DebugMessage($"Stored {string_length(history.current)} bytes {array_length(parts)} into history")
     }
     
     
@@ -45,14 +47,17 @@ function PhyAssembly(_world) constructor {
     }
     
     
-    static Load = function (b64Enc) {
+    static Load = function (b64Enc, deletable=true) {
         var data = Decode(b64Enc)
         if !struct_exists(data, "parts") {
             return false
         }
         var _parts = json_parse(data.parts)
         for (var i = 0; i < array_length(_parts); i++) {
-            factory.PlaceEncoded(_parts[i])
+            var inst = factory.PlaceEncoded(_parts[i])
+            if deletable {
+                inst.body.SetDeletable()
+            }
         }
         return _parts
     }
@@ -109,7 +114,7 @@ function PhyAssembly(_world) constructor {
         if encoded == "" {
             return;
         }
-        parts = Load(encoded)
+        parts = Load(encoded, true)
     }
     
     static Undo = function() {
@@ -118,7 +123,7 @@ function PhyAssembly(_world) constructor {
         if encoded == "" {
             return;
         }
-        parts = Load(encoded)
+        parts = Load(encoded, true)
     }
     
     static Redo = function() {
@@ -127,7 +132,7 @@ function PhyAssembly(_world) constructor {
         if encoded == "" {
             return;
         }
-        parts = Load(encoded)
+        parts = Load(encoded, true)
     }
 }
 

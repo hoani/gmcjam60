@@ -1,6 +1,6 @@
 {
   "$GMSprite":"v2",
-  "%Name":"sprPhysicsGrid",
+  "%Name":"sprBlueprint",
   "bboxMode":0,
   "bbox_bottom":159,
   "bbox_left":0,
@@ -13,6 +13,7 @@
   "For3D":false,
   "frames":[
     {"$GMSpriteFrame":"v1","%Name":"ce46e513-2c0a-433d-8ec8-3fe19856b45a","name":"ce46e513-2c0a-433d-8ec8-3fe19856b45a","resourceType":"GMSpriteFrame","resourceVersion":"2.0",},
+    {"$GMSpriteFrame":"v1","%Name":"71f8120b-49d2-4ccf-b89c-46e626af3294","name":"71f8120b-49d2-4ccf-b89c-46e626af3294","resourceType":"GMSpriteFrame","resourceVersion":"2.0",},
   ],
   "gridX":0,
   "gridY":0,
@@ -22,7 +23,7 @@
     {"$GMImageLayer":"","%Name":"32d694de-f6d7-4c27-b0fc-e7e8c7232833","blendMode":0,"displayName":"default","isLocked":false,"name":"32d694de-f6d7-4c27-b0fc-e7e8c7232833","opacity":100.0,"resourceType":"GMImageLayer","resourceVersion":"2.0","visible":true,},
     {"$GMImageLayer":"","%Name":"ea3e8d2f-c904-4339-bd16-fb9d0a624efa","blendMode":0,"displayName":"Layer 1","isLocked":false,"name":"ea3e8d2f-c904-4339-bd16-fb9d0a624efa","opacity":100.0,"resourceType":"GMImageLayer","resourceVersion":"2.0","visible":true,},
   ],
-  "name":"sprPhysicsGrid",
+  "name":"sprBlueprint",
   "nineSlice":{
     "$GMNineSliceData":"",
     "bottom":40,
@@ -45,15 +46,15 @@
   },
   "origin":0,
   "parent":{
-    "name":"Spr",
-    "path":"folders/Engines/physics/Spr.yy",
+    "name":"Sprites",
+    "path":"folders/Sprites.yy",
   },
   "preMultiplyAlpha":false,
   "resourceType":"GMSprite",
   "resourceVersion":"2.0",
   "sequence":{
     "$GMSequence":"v1",
-    "%Name":"sprPhysicsGrid",
+    "%Name":"sprBlueprint",
     "autoRecord":true,
     "backdropHeight":768,
     "backdropImageOpacity":0.5,
@@ -69,7 +70,7 @@
     },
     "eventStubScript":null,
     "eventToFunction":{},
-    "length":1.0,
+    "length":2.0,
     "lockOrigin":false,
     "moments":{
       "$KeyframeStore<MomentsEventKeyframe>":"",
@@ -77,9 +78,9 @@
       "resourceType":"KeyframeStore<MomentsEventKeyframe>",
       "resourceVersion":"2.0",
     },
-    "name":"sprPhysicsGrid",
+    "name":"sprBlueprint",
     "playback":1,
-    "playbackSpeed":30.0,
+    "playbackSpeed":0.0,
     "playbackSpeedType":0,
     "resourceType":"GMSequence",
     "resourceVersion":"2.0",
@@ -89,8 +90,11 @@
     "tracks":[
       {"$GMSpriteFramesTrack":"","builtinName":0,"events":[],"inheritsTrackColour":true,"interpolation":1,"isCreationTrack":false,"keyframes":{"$KeyframeStore<SpriteFrameKeyframe>":"","Keyframes":[
             {"$Keyframe<SpriteFrameKeyframe>":"","Channels":{
-                "0":{"$SpriteFrameKeyframe":"","Id":{"name":"ce46e513-2c0a-433d-8ec8-3fe19856b45a","path":"sprites/sprPhysicsGrid/sprPhysicsGrid.yy",},"resourceType":"SpriteFrameKeyframe","resourceVersion":"2.0",},
+                "0":{"$SpriteFrameKeyframe":"","Id":{"name":"ce46e513-2c0a-433d-8ec8-3fe19856b45a","path":"sprites/sprBlueprint/sprBlueprint.yy",},"resourceType":"SpriteFrameKeyframe","resourceVersion":"2.0",},
               },"Disabled":false,"id":"c082b64a-aa4f-4d07-9687-1f816e8fcc27","IsCreationKey":false,"Key":0.0,"Length":1.0,"resourceType":"Keyframe<SpriteFrameKeyframe>","resourceVersion":"2.0","Stretch":false,},
+            {"$Keyframe<SpriteFrameKeyframe>":"","Channels":{
+                "0":{"$SpriteFrameKeyframe":"","Id":{"name":"71f8120b-49d2-4ccf-b89c-46e626af3294","path":"sprites/sprBlueprint/sprBlueprint.yy",},"resourceType":"SpriteFrameKeyframe","resourceVersion":"2.0",},
+              },"Disabled":false,"id":"1fa56c3f-c6d2-4fce-960b-7e4d6abcf403","IsCreationKey":false,"Key":1.0,"Length":1.0,"resourceType":"Keyframe<SpriteFrameKeyframe>","resourceVersion":"2.0","Stretch":false,},
           ],"resourceType":"KeyframeStore<SpriteFrameKeyframe>","resourceVersion":"2.0",},"modifiers":[],"name":"frames","resourceType":"GMSpriteFramesTrack","resourceVersion":"2.0","spriteId":null,"trackColour":0,"tracks":[],"traits":0,},
     ],
     "visibleRange":null,

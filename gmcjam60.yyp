@@ -296,13 +296,13 @@
     {"id":{"name":"spr_dust_cloud","path":"sprites/spr_dust_cloud/spr_dust_cloud.yy",},},
     {"id":{"name":"spr_dust_ground","path":"sprites/spr_dust_ground/spr_dust_ground.yy",},},
     {"id":{"name":"spr_spark","path":"sprites/spr_spark/spr_spark.yy",},},
+    {"id":{"name":"sprBlueprint","path":"sprites/sprBlueprint/sprBlueprint.yy",},},
     {"id":{"name":"sprCancel","path":"sprites/sprCancel/sprCancel.yy",},},
     {"id":{"name":"sprHelp","path":"sprites/sprHelp/sprHelp.yy",},},
     {"id":{"name":"sprHelpHover","path":"sprites/sprHelpHover/sprHelpHover.yy",},},
     {"id":{"name":"sprPhyBase","path":"sprites/sprPhyBase/sprPhyBase.yy",},},
     {"id":{"name":"sprPhyCollisionless","path":"sprites/sprPhyCollisionless/sprPhyCollisionless.yy",},},
     {"id":{"name":"sprPhyEgg","path":"sprites/sprPhyEgg/sprPhyEgg.yy",},},
-    {"id":{"name":"sprPhysicsGrid","path":"sprites/sprPhysicsGrid/sprPhysicsGrid.yy",},},
     {"id":{"name":"sprPlaBlock","path":"sprites/sprPlaBlock/sprPlaBlock.yy",},},
     {"id":{"name":"sprPlaBody","path":"sprites/sprPlaBody/sprPlaBody.yy",},},
     {"id":{"name":"sprPlaGrid","path":"sprites/sprPlaGrid/sprPlaGrid.yy",},},
@@ -324,6 +324,9 @@
     {"roomId":{"name":"rmGame","path":"rooms/rmGame/rmGame.yy",},},
     {"children":[
         {"children":[
+            {"roomId":{"name":"zooUi","path":"rooms/zooUi/zooUi.yy",},},
+          ],"groupName":"ui",},
+        {"children":[
             {"roomId":{"name":"zooPhysics","path":"rooms/zooPhysics/zooPhysics.yy",},},
           ],"groupName":"physics",},
         {"children":[
@@ -332,9 +335,6 @@
         {"children":[
             {"roomId":{"name":"zooScoreboat","path":"rooms/zooScoreboat/zooScoreboat.yy",},},
           ],"groupName":"scoreboat",},
-        {"children":[
-            {"roomId":{"name":"zooUi","path":"rooms/zooUi/zooUi.yy",},},
-          ],"groupName":"ui",},
         {"children":[
             {"roomId":{"name":"zooPlatform","path":"rooms/zooPlatform/zooPlatform.yy",},},
           ],"groupName":"platform",},

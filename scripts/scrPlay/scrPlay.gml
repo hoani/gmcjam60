@@ -62,7 +62,7 @@ function PhyPlay(_world, _onRestart) : ActiveController() constructor {
     }
     
     static OnOutOfBounds = function() {
-        if state.Get() != StatePlay {
+        if state.Get() != StatePlay && state.Get() != StateIdle {
             return
         }
         DebugMessage("You lose")

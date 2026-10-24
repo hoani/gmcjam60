@@ -175,7 +175,7 @@ function PhyBuilder(world) : ActiveController() constructor {
         
         if placement != noone {
             
-            var c = cancelling ? C_DELETE : C_WHITE;
+            var c = cancelling ? C_DELETE : C_PLACABLE;
             surface_set_target(draftSurface)
             draw_clear_alpha(c_white, 0)
             placement.Draw(c)
