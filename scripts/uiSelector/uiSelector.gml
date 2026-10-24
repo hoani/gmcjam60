@@ -1,22 +1,36 @@
-function Selectable(_text, _index) constructor {
-    content = _text.original;
-    text = _text;
+function Selectable(_texts, _index) constructor {
+    if !is_array(_texts) {
+        _texts = [_texts]
+    } 
+    contents = [];
+    for (var i = 0; i < array_length(_texts); i++) {
+        array_push(contents, _texts[i].original)
+    }
+    texts = _texts;
     index = _index;
     
     static GrowText = function() {
-        text.Set($"{ChScale(1.1)}{content}");
+        for (var i = 0; i < array_length(texts); i++) {
+            texts[i].Set($"{ChScale(1.1)}{contents[i]}");
+        }
     }
     
     static ResetText = function() {
-        text.Set(content);
+        for (var i = 0; i < array_length(texts); i++) {
+            texts[i].Set(contents[i]);
+        }
     }
     
     static Step = function() {
-        text.Step();
+        for (var i = 0; i < array_length(texts); i++) {
+            texts[i].Step();
+        }
     }
     
     static Draw = function(x, y, c=c_white) {
-        text.Draw(x, y, c);
+        for (var i = 0; i < array_length(texts); i++) {
+            texts[i].Draw(x, y, c);
+        }
     }
 }
 
@@ -30,7 +44,6 @@ function Selector(width=512, _ypos=room_height/2, _xpos = room_width/2) construc
     margin = 16
     hpad = 32
     vpad = 8
-    uid = GetUniqueId()
     onSelected = undefined;
     returns = undefined;
     hasCancel = false;
@@ -47,6 +60,7 @@ function Selector(width=512, _ypos=room_height/2, _xpos = room_width/2) construc
     font = f_test
     
     prim = new UiPrimitives()
+    
     
     static Cleanup = function() {
         sfx.Cleanup()
@@ -72,7 +86,7 @@ function Selector(width=512, _ypos=room_height/2, _xpos = room_width/2) construc
         }
         box.h = h;
         
-        var yp = ypos - (box.h)/2;
+        var yp = ypos - (box.h)/2 + margin;
         for (var i = 0; i < array_length(options); i++) {
             options[i].b.SetY(yp);
             yp += options[i].b.h + margin;
@@ -116,14 +130,25 @@ function Selector(width=512, _ypos=room_height/2, _xpos = room_width/2) construc
         hovered = i;
     } 
     
+    static Unhover = function() {
+        hovered = -1;
+    }
+    
     static _UpdateActive = function() {
 
+        var noHover = Mouse().Changed()
         for (var i = 0; i < array_length(options); i++) {
             var opt = options[i]
             opt.s.Step();
-            if (Mouse().Changed() && opt.b.Inside(MouseX, MouseY) && i != hovered) {
-                _Hover(i);
+            if (Mouse().Changed() && opt.b.Inside(MouseX, MouseY)) {
+                if i != hovered {
+                    _Hover(i);
+                }
+                noHover = false
             }
+        }
+        if noHover {
+            hovered = -1
         }
         
         if cmds.Check(CMD_UP) {
@@ -150,7 +175,6 @@ function Selector(width=512, _ypos=room_height/2, _xpos = room_width/2) construc
     
     static _UpdateSelected = function() {
         if state.mono > 60 {
-            PopControlStack()
             if is_undefined(returns) {
                 onSelected(hovered)    
             } else {
@@ -161,9 +185,6 @@ function Selector(width=512, _ypos=room_height/2, _xpos = room_width/2) construc
     
     
     static Update = function() {
-        if !IsActiveControl(uid) {
-            return
-        }
         state.Update()
         switch (state.Get()) {
             case state_appear:
@@ -179,9 +200,6 @@ function Selector(width=512, _ypos=room_height/2, _xpos = room_width/2) construc
     }
     
     static Draw = function() {
-        if !IsActiveControl(uid) {
-            return
-        }
         switch (state.Get()) {
             case state_appear:
                 _DrawAppear();
@@ -232,32 +250,64 @@ function Selector(width=512, _ypos=room_height/2, _xpos = room_width/2) construc
     }
     
     static _DrawOptHovered = function(opt) {
+        var frame = MonoSlowed(4);
+        var amount = 0.5;
+        var alpha = 1
+        
+        shader_set(shWobble);
+        shader_set_uniform_f(shader_get_uniform(shWobble, "u_frame"), frame);
+        shader_set_uniform_f(shader_get_uniform(shWobble, "u_amount"), amount);
+        
         var b = opt.b;
         var m = margin/4;
-        prim.RectangleFill(b.x0-m, b.y0-m, b.x1+m, b.y1+m, prim.fill.base)
         opt.s.Draw(b.x0 + hpad, b.y0 + vpad, C_WHITE);
-        prim.RectangleBorder(b.x0-m, b.y0-m, b.x1+m, b.y1+m, 2, prim.border.base);
+        prim.RectangleBorder(b.x0-m, b.y0-m, b.x1+m, b.y1+m, 4, prim.border.light, alpha);
         m = m+1;
-        prim.RectangleCorners(b.x0-m, b.y0-m, b.x1+m, b.y1+m, 4, 16, prim.border.base);
+        prim.RectangleCorners(b.x0-m, b.y0-m, b.x1+m, b.y1+m, 8, 16, prim.border.light, alpha);
+        
+        shader_reset()
+        
+        
     }
     
     static _DrawOptSelected = function(opt) {
+        var frame = MonoSlowed(4);
+        var amount = 0.5;
+        var alpha = 1
+        
+        shader_set(shWobble);
+        shader_set_uniform_f(shader_get_uniform(shWobble, "u_frame"), frame);
+        shader_set_uniform_f(shader_get_uniform(shWobble, "u_amount"), amount);
+        
         var b = opt.b;
         var m = margin/4;
-        prim.RectangleFill(b.x0-m, b.y0-m, b.x1+m, b.y1+m, prim.fill.light)
         opt.s.Draw(b.x0 + hpad, b.y0 + vpad, C_WHITE);
-        prim.RectangleBorder(b.x0-m, b.y0-m, b.x1+m, b.y1+m, 2, prim.border.light);
+        prim.RectangleBorder(b.x0-m, b.y0-m, b.x1+m, b.y1+m, 4, prim.border.light, alpha);
         m = m+1;
-        prim.RectangleCorners(b.x0-m, b.y0-m, b.x1+m, b.y1+m, 4, 16, prim.border.base);
+        prim.RectangleCorners(b.x0-m, b.y0-m, b.x1+m, b.y1+m, 8, 16, prim.border.light, alpha);
+        
+        
+        shader_reset()
+        
+        
     }
     
     static _DrawOptIdle = function(opt) {
+        var frame = MonoSlowed(8);
+        var amount = 1.25;
+        var alpha = 0.75
+        
+        shader_set(shWobble);
+        shader_set_uniform_f(shader_get_uniform(shWobble, "u_frame"), frame);
+        shader_set_uniform_f(shader_get_uniform(shWobble, "u_amount"), amount);
+        
         var b = opt.b;
-        prim.RectangleFill(b.x0, b.y0, b.x1, b.y1, prim.fill.dark, 7/8)
         opt.s.Draw(b.x0 + hpad, b.y0 + vpad, C_LTGRAY);
-        prim.RectangleBorder(b.x0, b.y0, b.x1, b.y1, 1, prim.border.dark);
+        prim.RectangleBorder(b.x0, b.y0, b.x1, b.y1, 2, prim.border.light, alpha);
         var m = 1;
-        prim.RectangleCorners(b.x0-m, b.y0-m, b.x1+m, b.y1+m, 3, 16, prim.border.base);
+        prim.RectangleCorners(b.x0-m, b.y0-m, b.x1+m, b.y1+m, 4, 16, prim.border.base, alpha);
+        
+        shader_reset()
     }
 }
 

@@ -1,25 +1,25 @@
 // Uses https://lospec.com/palette-list/spoozy Spoozy
 
-#macro CUiBorder #ffc118
-#macro CUiDarkBorder #ff8b18
-#macro CUiLightBorder #fffef6
+#macro CUiBorder c_ltgray
+#macro CUiDarkBorder c_gray
+#macro CUiLightBorder c_white
 #macro CUiDarkBack #160c09
 #macro CUiBack #261305
 #macro CUiLightBack  #653611
 
 function DefaultUiBorder() {
     return new UiColors(
-        #ffc118,
-        #ff8b18,
-        #fffef6
+        CUiBorder,
+        CUiDarkBorder,
+        CUiLightBorder
     )
 }
 
 function DefaultUiFill() {
     return new UiColors(
-        #160c09,
-        #261305,
-        #653611
+        CUiBack,
+        CUiDarkBack,
+        CUiLightBack
     )
 }
 

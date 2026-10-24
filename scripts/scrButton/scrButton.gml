@@ -82,6 +82,11 @@ function ButtonClass(_pos, _sprite, _onPressed) : ActiveController() constructor
             return
         }
         
+        _Draw()
+    }
+    
+    static _Draw = function() {
+        
         var frame = MonoSlowed(hovered ? 4 : 8);
         var amount = hovered ? 0.5 : 1.25;
         var alpha = hovered ? 1 : 0.75;

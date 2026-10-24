@@ -87,6 +87,7 @@
     {"id":{"name":"exhibitDatastore","path":"objects/exhibitDatastore/exhibitDatastore.yy",},},
     {"id":{"name":"exhibitField","path":"objects/exhibitField/exhibitField.yy",},},
     {"id":{"name":"exhibitLeaderboard","path":"objects/exhibitLeaderboard/exhibitLeaderboard.yy",},},
+    {"id":{"name":"exhibitNavigator","path":"objects/exhibitNavigator/exhibitNavigator.yy",},},
     {"id":{"name":"exhibitPhysics","path":"objects/exhibitPhysics/exhibitPhysics.yy",},},
     {"id":{"name":"exhibitPlatform","path":"objects/exhibitPlatform/exhibitPlatform.yy",},},
     {"id":{"name":"exhibitSelector","path":"objects/exhibitSelector/exhibitSelector.yy",},},
@@ -286,6 +287,7 @@
     {"id":{"name":"txt_Text","path":"scripts/txt_Text/txt_Text.yy",},},
     {"id":{"name":"uiConfirmDiamond","path":"scripts/uiConfirmDiamond/uiConfirmDiamond.yy",},},
     {"id":{"name":"uiContainer","path":"scripts/uiContainer/uiContainer.yy",},},
+    {"id":{"name":"uiNavigator","path":"scripts/uiNavigator/uiNavigator.yy",},},
     {"id":{"name":"uiPrimitives","path":"scripts/uiPrimitives/uiPrimitives.yy",},},
     {"id":{"name":"uiSelector","path":"scripts/uiSelector/uiSelector.yy",},},
     {"id":{"name":"uiTextbox","path":"scripts/uiTextbox/uiTextbox.yy",},},
@@ -305,6 +307,7 @@
     {"id":{"name":"sprHelpHover","path":"sprites/sprHelpHover/sprHelpHover.yy",},},
     {"id":{"name":"sprNavigateBack","path":"sprites/sprNavigateBack/sprNavigateBack.yy",},},
     {"id":{"name":"sprNavigateOnline","path":"sprites/sprNavigateOnline/sprNavigateOnline.yy",},},
+    {"id":{"name":"sprNext","path":"sprites/sprNext/sprNext.yy",},},
     {"id":{"name":"sprPhyBase","path":"sprites/sprPhyBase/sprPhyBase.yy",},},
     {"id":{"name":"sprPhyCollisionless","path":"sprites/sprPhyCollisionless/sprPhyCollisionless.yy",},},
     {"id":{"name":"sprPhyEgg","path":"sprites/sprPhyEgg/sprPhyEgg.yy",},},
@@ -314,6 +317,7 @@
     {"id":{"name":"sprPlaLedge","path":"sprites/sprPlaLedge/sprPlaLedge.yy",},},
     {"id":{"name":"sprPlaMovingBlock","path":"sprites/sprPlaMovingBlock/sprPlaMovingBlock.yy",},},
     {"id":{"name":"sprPlaMovingLedge","path":"sprites/sprPlaMovingLedge/sprPlaMovingLedge.yy",},},
+    {"id":{"name":"sprPrev","path":"sprites/sprPrev/sprPrev.yy",},},
     {"id":{"name":"sprPublish","path":"sprites/sprPublish/sprPublish.yy",},},
     {"id":{"name":"sprResult","path":"sprites/sprResult/sprResult.yy",},},
     {"id":{"name":"sprRetry","path":"sprites/sprRetry/sprRetry.yy",},},
@@ -328,7 +332,6 @@
   "resourceVersion":"2.0",
   "RoomOrderNodes":[
     {"roomId":{"name":"rm_entry","path":"rooms/rm_entry/rm_entry.yy",},},
-    {"roomId":{"name":"rmGame","path":"rooms/rmGame/rmGame.yy",},},
     {"children":[
         {"children":[
             {"roomId":{"name":"zooUi","path":"rooms/zooUi/zooUi.yy",},},
@@ -349,6 +352,7 @@
             {"roomId":{"name":"zooText","path":"rooms/zooText/zooText.yy",},},
           ],"groupName":"text",},
       ],"groupName":"zoo",},
+    {"roomId":{"name":"rmGame","path":"rooms/rmGame/rmGame.yy",},},
     {"roomId":{"name":"rmZoo","path":"rooms/rmZoo/rmZoo.yy",},},
   ],
   "templateType":"game",
