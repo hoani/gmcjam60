@@ -4,25 +4,33 @@ world = PhysicsWorld()
 world.Reset()
 
 
-var help = Help(new Vec2(16, 8), sprHelpHover, sprHelp)
+help = Help(new Vec2(16, 8), sprHelpHover, sprHelp)
 
-var start = Button(new Vec2(room_width-16, room_height-8), sprStart, function() {
+start = Button(new Vec2(room_width-16, room_height-8), sprStart, function() {
     PopControlStack()
     world.Start()
     PushControlStack(c.play.uid)
 }).HRight().VBottom()
 
+
+online = Button(new Vec2(room_width-16, 8), sprNavigateOnline, function() {
+    PopControlStack()
+    DebugMessage("Online mode TODO")
+}).HRight().VTop()
+
+
+
+
 builder = new PhyBuilder(world)
 play = new PhyPlay(world, function() {
     builder.Reset()
-    PushControlStack([c.builder.uid, c.start.uid, c.help.uid])
+    PushControlStack(builderStack)
 })
 
 title = new Title(function() {
     PopControlStack()
-    PushControlStack([c.builder.uid, c.start.uid, c.help.uid])
+    PushControlStack(builderStack)
 })
-    
 
 c = {
     play: play,
@@ -30,7 +38,11 @@ c = {
     title: title,
     start: start,
     help: help,
+    online: online
 }
+
+builderStack = [c.builder.uid, c.start.uid, c.help.uid, c.online.uid]
+titleStack = [c.title.uid, c.online.uid]
 
 StateTitle = 0
 StateBuild = 1
@@ -44,6 +56,6 @@ state = new State(StateTitle)
 window_set_size(room_width, room_height);
 surface_resize(application_surface, room_width, room_height);
 
-PushControlStack(c.title.uid)
+PushControlStack(titleStack)
 
 

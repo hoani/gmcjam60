@@ -26,10 +26,11 @@ function PhyPlay(_world, _onRestart) : ActiveController() constructor {
         onRestart()
     }).HCenter().VTop()
     
-    cancel = Button(new Vec2(room_width-16, room_height-8), sprCancel, function() {
+    cancel = Button(new Vec2(room_width-16, 8), sprNavigateBack, function() {
         PopControlStack()
-        OnOutOfBounds()
-    }).HRight().VBottom()
+        Reset()
+        onRestart()
+    }).HRight().VTop()
     
     buttons = [retry, cancel]
     

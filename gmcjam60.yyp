@@ -300,6 +300,8 @@
     {"id":{"name":"sprCancel","path":"sprites/sprCancel/sprCancel.yy",},},
     {"id":{"name":"sprHelp","path":"sprites/sprHelp/sprHelp.yy",},},
     {"id":{"name":"sprHelpHover","path":"sprites/sprHelpHover/sprHelpHover.yy",},},
+    {"id":{"name":"sprNavigateBack","path":"sprites/sprNavigateBack/sprNavigateBack.yy",},},
+    {"id":{"name":"sprNavigateOnline","path":"sprites/sprNavigateOnline/sprNavigateOnline.yy",},},
     {"id":{"name":"sprPhyBase","path":"sprites/sprPhyBase/sprPhyBase.yy",},},
     {"id":{"name":"sprPhyCollisionless","path":"sprites/sprPhyCollisionless/sprPhyCollisionless.yy",},},
     {"id":{"name":"sprPhyEgg","path":"sprites/sprPhyEgg/sprPhyEgg.yy",},},

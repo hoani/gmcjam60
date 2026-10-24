@@ -22,7 +22,7 @@ function Title(_onTrigger) : ActiveController() constructor {
     
     
     static Draw = function() {
-        if !IsActiveControl(uid) {
+        if !InControlStack(uid) {
             return
         }
         
