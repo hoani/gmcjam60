@@ -1,4 +1,7 @@
-
+#macro C_DELETE C_RED 
+#macro C_JOIN c_lime
+#macro C_PLACING C_YELLOW
+#macro C_PLACABLE C_GREEN
 
 function LineBodyDynamic(_l, _draw) : MaterialBodyDynamic(_draw) constructor {
     center = _l.p0.Add(_l.p1).Multiply(0.5)
@@ -154,8 +157,8 @@ function MaterialPlacement(_draw)  constructor {
         return false
     }
     
-    static Draw = function() {
-        draw.Placement(self)
+    static Draw = function(color=c_white) {
+        draw.Placement(self, color)
         DrawJoins()
     }
     
@@ -203,7 +206,7 @@ function MaterialPlacement(_draw)  constructor {
 
 function MaterialDraw() constructor {
     
-    static Placement = function(ctx) {
+    static Placement = function(ctx, color=c_white) {
     }
     
     static Play = function(ctx) {

@@ -41,12 +41,10 @@ function MaterialWheel() : Material() constructor {
 
 
 function WheelDraw() : MaterialDraw() constructor {
-    static Placement = function(ctx) {
-        with (ctx) {
-            DrawPlus(c, 8)
-            DrawCircleOutline(c, r)
-            DrawCircleOutline(c, r/2)
-        }
+    static Placement = function(ctx, color=c_white) {
+        DrawPlus(ctx.c, 8, 2, color)
+        DrawCircleOutline(ctx.c, ctx.r, 2, color)
+        DrawCircleOutline(ctx.c, ctx.r/2, 2, color)
     }
 }
 

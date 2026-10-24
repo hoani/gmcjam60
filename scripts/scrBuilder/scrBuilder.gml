@@ -23,6 +23,7 @@ function PhyBuilder(world) : ActiveController() constructor {
     deleting = false
     deleteCircle = new Circle(new Vec2(0, 0), 8)
     refreshAssembly = true
+    cancelling = false
     
     
     static SelectPrevious = function() {
@@ -66,7 +67,7 @@ function PhyBuilder(world) : ActiveController() constructor {
         if placement != noone {
             placement.Drag(mx, my)
             
-            if mouse_check_button_released(mb_left) {
+            if mouse_check_button_released(mb_left) && !cancelling {
                 placed = placement.Confirm(mx, my)
                 if placed != noone {
                     placed.body.SetDeletable()
@@ -74,8 +75,18 @@ function PhyBuilder(world) : ActiveController() constructor {
                     refreshAssembly = true
                     assembly.Add(placement)
                     placement = noone
-                    PopControlStack()
+                    
                 }
+            }
+            
+            if mouse_check_button_pressed(mb_right) {
+                cancelling = true
+            }
+            
+            if mouse_check_button_released(mb_right) && cancelling {
+                cancelling = false
+                placement = noone
+                PopControlStack()
             }
         }
         
@@ -129,7 +140,7 @@ function PhyBuilder(world) : ActiveController() constructor {
     
     static _DrawAssembly = function() {
         var surf = RefreshSurface(assemblySurface, room_width, room_height)
-        if assemblySurface != surf || refreshAssembly {
+        if assemblySurface != surf || refreshAssembly || deleting {
             refreshAssembly = false
             assemblySurface = surf
             surface_set_target(assemblySurface)
@@ -138,7 +149,9 @@ function PhyBuilder(world) : ActiveController() constructor {
                 self.join.Draw(self)
             }
             with (objPhyMaterial) {
-                self.placement.Draw()
+                if !body.deleteCandidate {
+                    self.placement.Draw()
+                }
             }
             surface_reset_target()
         }
@@ -160,9 +173,11 @@ function PhyBuilder(world) : ActiveController() constructor {
         draftSurface = RefreshSurface(draftSurface, room_width, room_height)
         
         if placement != noone {
+            
+            var c = cancelling ? C_DELETE : C_WHITE;
             surface_set_target(draftSurface)
             draw_clear_alpha(c_white, 0)
-            placement.Draw()
+            placement.Draw(c)
             surface_reset_target()
             
             shader_set(shWobble);
@@ -172,21 +187,41 @@ function PhyBuilder(world) : ActiveController() constructor {
             draw_surface(draftSurface, 0, 0)
             
             shader_reset()
+            return
             
-        } else {
+        } 
+        
+        if deleting {
             surface_set_target(draftSurface)
             draw_clear_alpha(c_white, 0)
-            active = (active) % array_length(materials) 
-            materials[active].Draw(MouseX, MouseY)
+            with (objPhyMaterial) {
+                if body.deleteCandidate {
+                    self.placement.Draw(C_DELETE)
+                }
+            }
             surface_reset_target()
             
-            shader_set(shSketch);
-            shader_set_uniform_f(shader_get_uniform(shSketch, "u_frame"), MonoSlowed(4));
+            shader_set(shWobble);
+            shader_set_uniform_f(shader_get_uniform(shWobble, "u_frame"), MonoSlowed(4));
+            shader_set_uniform_f(shader_get_uniform(shWobble, "u_amount"), 0.5);
             
             draw_surface(draftSurface, 0, 0)
             
             shader_reset()
         }
+        
+        surface_set_target(draftSurface)
+        draw_clear_alpha(c_white, 0)
+        active = (active) % array_length(materials) 
+        materials[active].Draw(MouseX, MouseY)
+        surface_reset_target()
+        
+        shader_set(shSketch);
+        shader_set_uniform_f(shader_get_uniform(shSketch, "u_frame"), MonoSlowed(4));
+        
+        draw_surface(draftSurface, 0, 0)
+        
+        shader_reset()
     }
     
     static ClipToGrid = function(in) {

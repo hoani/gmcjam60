@@ -22,12 +22,10 @@ function MaterialBeam() : Material() constructor {
 
 
 function BeamDraw() : MaterialDraw() constructor {
-    static Placement = function(ctx) {
-        with (ctx) {
-            DrawCircleOutline(a, 3, 2)
-            DrawCircleOutline(b, 3, 2)
-            DrawLine(a, b, 2)
-        }
+    static Placement = function(ctx, color=c_white) {
+        DrawCircleOutline(ctx.a, 3, 2, color)
+        DrawCircleOutline(ctx.b, 3, 2, color)
+        DrawLine(ctx.a, ctx.b, 2, color)
     }
 }
 
@@ -56,6 +54,7 @@ function BeamPlacement(_draw) : MaterialPlacement(_draw) constructor {
     s = new State(PlaceA)
     
     static Drag = function(x, y) {
+        UpdateJoins()
         var o;
         switch s.Get() {
             case PlaceA:
@@ -77,7 +76,6 @@ function BeamPlacement(_draw) : MaterialPlacement(_draw) constructor {
                 o = a.Subtract(b)
                 b = new Vec2(x, y)
                 a = b.Add(o)
-                UpdateJoins()
                 break;
         }
     }

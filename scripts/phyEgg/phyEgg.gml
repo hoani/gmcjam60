@@ -22,10 +22,9 @@ function MaterialEgg() : Material() constructor {
 
 
 function EggDraw() : MaterialDraw() constructor {
-    static Placement = function(ctx) {
-        with (ctx) {
-            draw_sprite(sprPhyEgg, 0, c.x, c.y)
-        }
+    static Placement = function(ctx, color=c_white) {
+        var c = ctx.c
+        draw_sprite_ext(sprPhyEgg, 0, c.x, c.y, 1, 1, 0, color, 1)
     }
     
     static Play = function(ctx) {

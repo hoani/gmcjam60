@@ -31,14 +31,12 @@ function BlockPlacement(draw) : RectanglePlacement(draw) constructor {
 
 
 function BlockDraw() : MaterialDraw() constructor {
-    static Placement = function(ctx) {
-        with (ctx) {
-            ctx.DrawPoints()
-            var p = Rectangle(c, width-5, height-5,  dir);
-            DrawPolygonOutline(c, p.points, 2, c_white)
-            p = Rectangle(c, width, height,  dir);
-            DrawPolygonOutline(c, p.points, 2, c_white)
-        }
+    static Placement = function(ctx, color=c_white) {
+        ctx.DrawPoints()
+        var p = Rectangle(ctx.c, ctx.width-5, ctx.height-5, ctx.dir);
+        DrawPolygonOutline(ctx.c, p.points, 2, color)
+        p = Rectangle(ctx.c, ctx.width, ctx.height,  ctx.dir);
+        DrawPolygonOutline(ctx.c, p.points, 2, color)
     }
 }
 

@@ -13,12 +13,10 @@ function MaterialBox() : MaterialRectangle() constructor {
 
 
 function BoxDraw() : MaterialDraw() constructor {
-    static Placement = function(ctx) {
-        with (ctx) {
-            ctx.DrawPoints()
-            var p = Rectangle(c, width, height,  dir);
-            DrawPolygonOutline(c, p.points, 2, c_white)
-        }
+    static Placement = function(ctx, color=c_white) {
+        ctx.DrawPoints()
+        var p = Rectangle(ctx.c, ctx.width, ctx.height,  ctx.dir);
+        DrawPolygonOutline(ctx.c, p.points, 2, color)
     }
 }
 
