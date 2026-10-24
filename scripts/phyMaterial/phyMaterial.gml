@@ -18,17 +18,6 @@ function PolygonBodyDynamic(_c, _p, _draw) : MaterialBodyDynamic(_draw) construc
     shape = new Polygon(_p.points)
     
     static _Update = function(ctx) {
-        //var _c = dcos(ctx.phy_rotation)
-        //var _s = dsin(ctx.phy_rotation)
-        //var local = original.points
-        //var _out = array_create(array_length(local))
-        //for (var i = 0; i < array_length(local); i++) {
-            //var _d = local[i].Subtract(center)
-            //_out[i] = new Vec2(
-                //ctx.phy_position_x + _d.x * _c - _d.y *_s, 
-                //ctx.phy_position_y + _d.x * _s + _d.y *_c
-            //)
-        //}
         shape = new Polygon(_RepositionLocalPoints(ctx, center, original.points))
     }
 }
@@ -36,7 +25,7 @@ function PolygonBodyDynamic(_c, _p, _draw) : MaterialBodyDynamic(_draw) construc
 function MaterialBodyDynamic(_draw) : MaterialBody(_draw) constructor {
     dynamic = new BodyDynamic()
     static bounds = PhysicsWorld().bounds
-    shape = noone
+    
     
     static PreUpdate = function(ctx) {
         dynamic.PreUpdate(ctx)
@@ -74,6 +63,9 @@ function MaterialBody(_draw) : Joinable() constructor {
     draw = _draw
     joins = []
     dynamic = noone;
+    deleteCandidate = false
+    deletable = false
+    shape = noone
     
     static PreUpdate = function(ctx) {
     }
@@ -83,6 +75,17 @@ function MaterialBody(_draw) : Joinable() constructor {
     
     static Draw = function(ctx) {
         draw.Build(ctx)
+    }
+    
+    static SetDeletable = function() {
+        deletable = true
+    }
+    
+    static RegisterDeleteCandidate = function(o) {
+        if shape == noone || deletable == false {
+            return
+        }
+        deleteCandidate = shape.Intersect(o)
     }
     
     static Cleanup = function() {
@@ -187,6 +190,12 @@ function MaterialPlacement(_draw)  constructor {
     
     static Encode = function() {
         return EncodePlacement(index, points)
+    }
+    
+    static Place = function() {
+        var inst = _Place() 
+        inst.placement = self // Registers self so we can delete it from assembly if needed
+        return inst
     }
 }
 

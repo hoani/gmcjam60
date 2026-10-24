@@ -95,7 +95,7 @@ function WheelPlacement(_draw) : MaterialPlacement(_draw) constructor {
                 s.Set(PlaceDrag)
                 return noone
             case PlaceDrag:
-                return _Place()
+                return Place()
         }
     }
     

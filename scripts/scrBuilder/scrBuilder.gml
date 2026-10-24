@@ -8,9 +8,6 @@ function PhyBuilder(world) : ActiveController() constructor {
     draftSurface = surface_create(room_width, room_height)
     assemblySurface = surface_create(room_width, room_height)
     
-    
-    
-
     active = 0
     materials = [
         new MaterialEgg(),
@@ -23,6 +20,9 @@ function PhyBuilder(world) : ActiveController() constructor {
     
     placement = noone
     placed = noone
+    deleting = false
+    deleteCircle = new Circle(new Vec2(0, 0), 8)
+    refreshAssembly = true
     
     
     static SelectPrevious = function() {
@@ -38,11 +38,12 @@ function PhyBuilder(world) : ActiveController() constructor {
         var mx = ClipToGrid(MouseX)
         var my = ClipToGrid(MouseY)
         
-        if placement == noone {
+        if placement == noone && deleting == false {
             if mouse_check_button_pressed(mb_left) { 
                 DebugMessage($"Placing {active}")
                 placement = materials[active].Placement()
                 PushControlStack(uid)
+                return
             }
             
             if mouse_wheel_up() {
@@ -53,18 +54,49 @@ function PhyBuilder(world) : ActiveController() constructor {
                 SelectNext()
             }
             
+            if mouse_check_button_pressed(mb_right) {
+                PushControlStack(uid)
+                deleting = true
+            }
+            
             return
         }
         
 
-        placement.Drag(mx, my)
+        if placement != noone {
+            placement.Drag(mx, my)
+            
+            if mouse_check_button_released(mb_left) {
+                placed = placement.Confirm(mx, my)
+                if placed != noone {
+                    placed.body.SetDeletable()
+                    placed = noone
+                    refreshAssembly = true
+                    assembly.Add(placement)
+                    placement = noone
+                    PopControlStack()
+                }
+            }
+        }
         
-        
-        if mouse_check_button_released(mb_left) {
-            placed = placement.Confirm(mx, my)
-            if placed != noone {
-                assembly.Add(placement)
-                placement = noone
+        if deleting {
+            deleteCircle.center.x = MouseX
+            deleteCircle.center.y = MouseY
+            
+            with(objPhyMaterial) {
+                body.RegisterDeleteCandidate(other.deleteCircle)
+            }
+            
+            if mouse_check_button_released(mb_right) {
+                deleting = false
+                with(objPhyMaterial) {
+                    if body.deleteCandidate {
+                        other.assembly.Delete(placement)
+                        instance_destroy()
+                        other.refreshAssembly = true
+                    }
+                }
+                
                 PopControlStack()
             }
         }
@@ -97,10 +129,11 @@ function PhyBuilder(world) : ActiveController() constructor {
     
     static _DrawAssembly = function() {
         var surf = RefreshSurface(assemblySurface, room_width, room_height)
-        if assemblySurface != surf || placed != noone {
-            placed = noone
+        if assemblySurface != surf || refreshAssembly {
+            refreshAssembly = false
             assemblySurface = surf
             surface_set_target(assemblySurface)
+            draw_clear_alpha(c_white, 0)
             with (objPhyMaterial) {
                 self.body.Draw(self)
             }

@@ -128,7 +128,7 @@ function RectanglePlacement(_draw = new MaterialDraw()) : MaterialPlacement(_dra
                 s.Set(PlaceDrag)
                 return noone
             case PlaceDrag:
-                return _Place()
+                return Place()
         }
     }
     

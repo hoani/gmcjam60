@@ -58,7 +58,7 @@ function EggPlacement(_draw) : MaterialPlacement(_draw) constructor {
     static _Confirm = function(x, y) {
         switch s.Get() {
             case PlaceDrag:
-                return _Place()
+                return Place()
         }
     }
     
@@ -81,7 +81,7 @@ function EggPlacement(_draw) : MaterialPlacement(_draw) constructor {
         
         CircleFixture(16).Offset(0, -8).Density(0.25).AppendTo(inst)
         CircleFixture(14).Offset(0, 16).Density(0.75).AppendTo(inst)
-        //PolygonFixture(new Vec2(0, 0), p).AppendTo(inst)
+        return inst
     }
 }
 
