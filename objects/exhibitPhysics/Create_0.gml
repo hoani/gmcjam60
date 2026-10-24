@@ -2,7 +2,8 @@ event_inherited();
 
 name = "Physics"
 
-world = new PhysicsWorld()
+world = PhysicsWorld()
+world.Reset()
 
 builder = new PhyBuilder(world)
 
@@ -18,3 +19,5 @@ p.Confirm(builder.ClipToGrid(920), builder.ClipToGrid(512))
 p.Confirm(builder.ClipToGrid(920), builder.ClipToGrid(512))
 
 builder.assembly.base = [p.Encode()]
+
+PushControlStack(builder)

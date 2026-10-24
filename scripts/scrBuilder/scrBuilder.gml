@@ -1,9 +1,12 @@
-function PhyBuilder(world) constructor {
+function PhyBuilder(world) : ActiveController() constructor {
     
     static Grid = 16
     static GridOffset = 8
     
     assembly = new PhyAssembly(world)
+    
+    draftSurface = surface_create(room_width, room_height)
+    assemblySurface = surface_create(room_width, room_height)
 
     active = 0
     materials = [
@@ -16,17 +19,18 @@ function PhyBuilder(world) constructor {
     ]
     
     placement = noone
+    placed = noone
     
     
     static SelectPrevious = function() {
-        active = (active - 1) % array_length(materials) 
+        active = (active + array_length(materials) - 1) % array_length(materials) 
     }
     
     static SelectNext = function() {
         active = (active + 1) % array_length(materials) 
     }
     
-    static Update = function() {
+    static _Update = function() {
         var mx = ClipToGrid(MouseX)
         var my = ClipToGrid(MouseY)
         
@@ -49,7 +53,8 @@ function PhyBuilder(world) constructor {
         }
         
         if mouse_check_button_released(mb_left) {
-            if placement.Confirm(mx, my) != noone {
+            placed = placement.Confirm(mx, my)
+            if placed != noone {
                 assembly.Add(placement)
                 placement = noone
             }
@@ -70,11 +75,68 @@ function PhyBuilder(world) constructor {
     
     
     static Draw = function() {
+        if PhysicsWorld().Started() {
+            return 
+        }
+        _DrawAssembly()
+        _DrawPlacement()
+    }
+    
+    static _DrawAssembly = function() {
+        var surf = RefreshSurface(assemblySurface, room_width, room_height)
+        if assemblySurface != surf || placed != noone {
+            placed = noone
+            assemblySurface = surf
+            surface_set_target(assemblySurface)
+            with (objPhyMaterial) {
+                self.body.Draw(self)
+            }
+            surface_reset_target()
+        }
+        
+        shader_set(shWobble);
+        shader_set_uniform_f(shader_get_uniform(shWobble, "u_frame"), 0);
+        shader_set_uniform_f(shader_get_uniform(shWobble, "u_amount"), 0.5);
+        
+        draw_surface(assemblySurface, 0, 0)
+        
+        shader_reset()
+        
+    }
+    
+    static _DrawPlacement = function() {
+        if !IsActiveControl(uid) {
+            return
+        }
+        draftSurface = RefreshSurface(draftSurface, room_width, room_height)
+        
         if placement != noone {
+            surface_set_target(draftSurface)
+            draw_clear_alpha(c_white, 0)
             placement.Draw()
+            surface_reset_target()
+            
+            shader_set(shWobble);
+            shader_set_uniform_f(shader_get_uniform(shWobble, "u_frame"), MonoSlowed(4));
+            shader_set_uniform_f(shader_get_uniform(shWobble, "u_amount"), 1);
+            
+            draw_surface(draftSurface, 0, 0)
+            
+            shader_reset()
+            
         } else {
+            surface_set_target(draftSurface)
+            draw_clear_alpha(c_white, 0)
             active = (active) % array_length(materials) 
             materials[active].Draw(MouseX, MouseY)
+            surface_reset_target()
+            
+            shader_set(shSketch);
+            shader_set_uniform_f(shader_get_uniform(shSketch, "u_frame"), MonoSlowed(4));
+            
+            draw_surface(draftSurface, 0, 0)
+            
+            shader_reset()
         }
     }
     

@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"scrPrimitives",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"scrPrimitives",
+  "parent":{
+    "name":"drawing",
+    "path":"folders/Scripts/utilities/drawing.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

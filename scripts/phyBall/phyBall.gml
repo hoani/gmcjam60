@@ -32,8 +32,8 @@ function BallDraw() : MaterialDraw() constructor {
     
     static Placement = function(ctx) {
         with (ctx) {
-            DrawPlus(c, 8)
-            DrawCircleOutline(c, r)
+            DrawPlus(c, 8, 2)
+            DrawCircleOutline(c, r, 2)
         }
     }
     

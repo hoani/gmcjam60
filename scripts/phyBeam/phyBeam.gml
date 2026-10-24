@@ -25,9 +25,9 @@ function MaterialBeam() : Material() constructor {
 function BeamDraw() : MaterialDraw() constructor {
     static Placement = function(ctx) {
         with (ctx) {
-            DrawCircleOutline(a, 3)
-            DrawCircleOutline(b, 3)
-            DrawLine(a, b)
+            DrawCircleOutline(a, 3, 2)
+            DrawCircleOutline(b, 3, 2)
+            DrawLine(a, b, 2)
         }
     }
     

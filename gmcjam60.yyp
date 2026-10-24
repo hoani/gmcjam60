@@ -230,6 +230,7 @@
     {"id":{"name":"scrMouse","path":"scripts/scrMouse/scrMouse.yy",},},
     {"id":{"name":"scrParticleUtils","path":"scripts/scrParticleUtils/scrParticleUtils.yy",},},
     {"id":{"name":"scrPolygon","path":"scripts/scrPolygon/scrPolygon.yy",},},
+    {"id":{"name":"scrPrimitives","path":"scripts/scrPrimitives/scrPrimitives.yy",},},
     {"id":{"name":"scrRunner","path":"scripts/scrRunner/scrRunner.yy",},},
     {"id":{"name":"scrSaver","path":"scripts/scrSaver/scrSaver.yy",},},
     {"id":{"name":"scrScoreBoat","path":"scripts/scrScoreBoat/scrScoreBoat.yy",},},
@@ -238,6 +239,7 @@
     {"id":{"name":"scrSurface","path":"scripts/scrSurface/scrSurface.yy",},},
     {"id":{"name":"scrTestSuite","path":"scripts/scrTestSuite/scrTestSuite.yy",},},
     {"id":{"name":"scrText","path":"scripts/scrText/scrText.yy",},},
+    {"id":{"name":"scrTitle","path":"scripts/scrTitle/scrTitle.yy",},},
     {"id":{"name":"scrUniqueId","path":"scripts/scrUniqueId/scrUniqueId.yy",},},
     {"id":{"name":"string_sha1","path":"scripts/string_sha1/string_sha1.yy",},},
     {"id":{"name":"string_sha256","path":"scripts/string_sha256/string_sha256.yy",},},
@@ -300,11 +302,13 @@
     {"id":{"name":"sprPlaMovingLedge","path":"sprites/sprPlaMovingLedge/sprPlaMovingLedge.yy",},},
     {"id":{"name":"sprScreenCharacter","path":"sprites/sprScreenCharacter/sprScreenCharacter.yy",},},
     {"id":{"name":"sprSymbol24","path":"sprites/sprSymbol24/sprSymbol24.yy",},},
+    {"id":{"name":"sprTitle","path":"sprites/sprTitle/sprTitle.yy",},},
   ],
   "resourceType":"GMProject",
   "resourceVersion":"2.0",
   "RoomOrderNodes":[
     {"roomId":{"name":"rm_entry","path":"rooms/rm_entry/rm_entry.yy",},},
+    {"roomId":{"name":"rmGame","path":"rooms/rmGame/rmGame.yy",},},
     {"children":[
         {"children":[
             {"roomId":{"name":"zooPhysics","path":"rooms/zooPhysics/zooPhysics.yy",},},
@@ -325,7 +329,6 @@
             {"roomId":{"name":"zooText","path":"rooms/zooText/zooText.yy",},},
           ],"groupName":"text",},
       ],"groupName":"zoo",},
-    {"roomId":{"name":"rmGame","path":"rooms/rmGame/rmGame.yy",},},
     {"roomId":{"name":"rmZoo","path":"rooms/rmZoo/rmZoo.yy",},},
   ],
   "templateType":"game",

@@ -1,9 +1,15 @@
 
+function PhysicsWorld() {
+    if !variable_global_exists("physicsWorld") {
+        global.physicsWorld = new _PhysicsWorld();
+    }
+    return global.physicsWorld
+}
 
-
-function PhysicsWorld(_gravity = 9.8, _maxYSpd = 8, _pixelsPerMeter = 128) constructor {
+function _PhysicsWorld(_gravity = 9.8, _maxYSpd = 8, _pixelsPerMeter = 128) constructor {
     gravity = _gravity
     pixelsPerMeter = _pixelsPerMeter;
+    physicsRoom = room
     
     static _init_ = function() {
         NewWorld()
@@ -17,16 +23,19 @@ function PhysicsWorld(_gravity = 9.8, _maxYSpd = 8, _pixelsPerMeter = 128) const
         physics_world_update_iterations(20);
         physics_world_update_speed(60);
         
-        camera_setup = false
-        
-        paused = true
-        physics_pause_enable(paused)
+        started = false
+        physics_pause_enable(!started)
+    }
+    
+    
+    static Started = function() {
+        return started
     }
     
     
     static Start = function() {
-        paused = false
-        physics_pause_enable(paused)
+        started = true
+        physics_pause_enable(!started)
     }
     
     static Reset = function() {

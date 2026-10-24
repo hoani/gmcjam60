@@ -43,15 +43,7 @@ function Material() constructor {
     }
     
     static Draw = function(_x, _y) {
-        shader_set(shSketch);
-        shader_set_uniform_f(shader_get_uniform(shSketch, "u_frame"), Mono());
-        
-        // Have to trick the shader into thinking a texture is present... needed because of primitives.
-        var tex = sprite_get_texture(sprPhyBase, 0); 
-        texture_set_stage(shader_get_sampler_index(shSketch, "gm_BaseTexture"), tex);
-        
         draw.Placement(_DrawContext(_x, _y))
-        shader_reset()
     }
     
     static _DrawContext = function() {
@@ -123,9 +115,7 @@ function MaterialPlacement(_draw)  constructor {
     static DrawJoins = function() {
         for (var i = 0; i< array_length(joinCandidates); i++) {
             var j = joinCandidates[i]
-            draw_set_colour(c_lime)
-            draw_circle(j.pos.x, j.pos.y, 5, true)
-            draw_set_colour(c_white)
+            DrawCircleOutline(j.pos, 5, 2, c_lime)
         }
     }
     

@@ -48,6 +48,10 @@ function Mono() {
     return global.g.mono
 }
 
+function MonoSlowed(denominator=1) {
+    return floor(global.g.mono/max(1, denominator))
+}
+
 function ControlStack() {
     return global.g.controlStack
 }

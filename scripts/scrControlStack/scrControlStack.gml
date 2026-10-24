@@ -1,4 +1,19 @@
 
+
+function ActiveController() constructor {
+    uid = GetUniqueId()
+    
+    static Update = function() {
+        if !IsActiveControl(uid) {
+            return
+        }
+        _Update()
+    }
+    
+    static _Update = function() {}
+}
+
+
 /// Provides a stack to allow objects to determine if they are active.
 /// Generally used for coordinating layered UI elements.
 function ControlStackClass() constructor {
