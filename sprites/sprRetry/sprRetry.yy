@@ -3,8 +3,8 @@
   "%Name":"sprRetry",
   "bboxMode":0,
   "bbox_bottom":62,
-  "bbox_left":27,
-  "bbox_right":157,
+  "bbox_left":0,
+  "bbox_right":223,
   "bbox_top":2,
   "collisionKind":1,
   "collisionTolerance":0,
@@ -19,6 +19,7 @@
   "height":64,
   "HTile":false,
   "layers":[
+    {"$GMImageLayer":"","%Name":"0b001a8c-fdb5-4e86-b5c0-07e909d9951c","blendMode":0,"displayName":"Layer 1","isLocked":false,"name":"0b001a8c-fdb5-4e86-b5c0-07e909d9951c","opacity":100.0,"resourceType":"GMImageLayer","resourceVersion":"2.0","visible":true,},
     {"$GMImageLayer":"","%Name":"c8517297-77ca-4fd2-81ca-8ead8c03e519","blendMode":0,"displayName":"default","isLocked":false,"name":"c8517297-77ca-4fd2-81ca-8ead8c03e519","opacity":100.0,"resourceType":"GMImageLayer","resourceVersion":"2.0","visible":true,},
   ],
   "name":"sprRetry",
@@ -86,5 +87,5 @@
   },
   "type":0,
   "VTile":false,
-  "width":180,
+  "width":224,
 }
