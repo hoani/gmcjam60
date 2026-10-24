@@ -28,7 +28,7 @@ function EggDraw() : MaterialDraw() constructor {
         }
     }
     
-    static Build = function(ctx) {
+    static Play = function(ctx) {
         with(ctx) {
             draw_sprite_ext(sprPhyEgg, 0, x, y, 1, 1, image_angle, c_white, 1)
         }

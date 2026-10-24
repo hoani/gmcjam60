@@ -29,12 +29,6 @@ function BeamDraw() : MaterialDraw() constructor {
             DrawLine(a, b, 2)
         }
     }
-    
-    static Build = function(ctx) {
-        with (ctx) {
-            physics_draw_debug()
-        }
-    }
 }
 
 

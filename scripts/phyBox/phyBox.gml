@@ -20,12 +20,6 @@ function BoxDraw() : MaterialDraw() constructor {
             DrawPolygonOutline(c, p.points, 2, c_white)
         }
     }
-    
-    static Build = function(ctx) {
-        with (ctx) {
-            physics_draw_debug()
-        }
-    }
 }
 
 

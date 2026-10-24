@@ -36,11 +36,6 @@ function BallDraw() : MaterialDraw() constructor {
             DrawCircleOutline(c, r, 2)
         }
     }
-    
-    static Build = function(ctx) {
-        var _c = c_white;
-        DrawCircleOutline(ctx.body.shape.center, ctx.body.shape.radius, 2, _c)
-    }
 }
 
 

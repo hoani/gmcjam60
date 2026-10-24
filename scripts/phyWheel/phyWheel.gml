@@ -48,13 +48,6 @@ function WheelDraw() : MaterialDraw() constructor {
             DrawCircleOutline(c, r/2)
         }
     }
-    
-    static Build = function(ctx) {
-        var c = ctx.body.shape.center
-        var r = ctx.body.shape.radius
-        DrawCircleOutline(c, r)
-        DrawCircleOutline(c, r/2)
-    }
 }
 
 

@@ -63,4 +63,8 @@ function PhyJoin(_pos) constructor {
     
     static OnBreak = function() {
     }
+    
+    static Draw = function() {
+        DrawCircleOutline(pos, 8, 2, c_lime)
+    }
 }

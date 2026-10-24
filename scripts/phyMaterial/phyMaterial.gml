@@ -74,7 +74,7 @@ function MaterialBody(_draw) : Joinable() constructor {
     }
     
     static Draw = function(ctx) {
-        draw.Build(ctx)
+        draw.Play(ctx)
     }
     
     static SetDeletable = function() {
@@ -206,14 +206,10 @@ function MaterialDraw() constructor {
     static Placement = function(ctx) {
     }
     
-    static Build = function(ctx) {
+    static Play = function(ctx) {
         with (ctx) {
             physics_draw_debug()
         }
-    }
-    
-    static Play = function(ctx) {
-        Build(ctx)
     }
 }
 

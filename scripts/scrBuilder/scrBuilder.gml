@@ -134,8 +134,11 @@ function PhyBuilder(world) : ActiveController() constructor {
             assemblySurface = surf
             surface_set_target(assemblySurface)
             draw_clear_alpha(c_white, 0)
+            with (objPhyJoin) {
+                self.join.Draw(self)
+            }
             with (objPhyMaterial) {
-                self.body.Draw(self)
+                self.placement.Draw()
             }
             surface_reset_target()
         }
