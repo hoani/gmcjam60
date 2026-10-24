@@ -1,6 +1,6 @@
 event_inherited();
 
-
+name = "Screen"
 
 text = new Text("Hello World", FontLookup(f_test))
 

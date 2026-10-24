@@ -1,1 +1,1 @@
-Game().Draw()
+builder.Draw()

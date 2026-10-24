@@ -1,3 +1,5 @@
+#macro BEAM_BASE_XOFFSET 32
+
 function BeamBody(_line, draw) : MaterialBodyDynamic(draw) constructor {
     line = _line
     joinDelegate = new BeamJoiner(_line)
@@ -5,10 +7,17 @@ function BeamBody(_line, draw) : MaterialBodyDynamic(draw) constructor {
 
 
 
-function MaterialBeam() constructor {
+function MaterialBeam() : Material() constructor {
     draw = new BeamDraw()
     static Placement = function() {
         return new BeamPlacement(draw)
+    }
+    
+    static _DrawContext = function(_x, _y) {
+        return {
+            a: new Vec2(_x, _y),
+            b: new Vec2(_x + BEAM_BASE_XOFFSET, _y),
+        }
     }
 }
 
@@ -16,9 +25,9 @@ function MaterialBeam() constructor {
 function BeamDraw() : MaterialDraw() constructor {
     static Placement = function(ctx) {
         with (ctx) {
-            draw_circle(a.x, a.y, 3, true)
-            draw_circle(b.x, b.y, 3, true)
-            draw_line(a.x, a.y, b.x, b.y)
+            DrawCircleOutline(a, 3)
+            DrawCircleOutline(b, 3)
+            DrawLine(a, b)
         }
     }
     
@@ -49,7 +58,7 @@ function BeamPlacement(_draw) : MaterialPlacement(_draw) constructor {
     
     a = new Vec2()
     b = new Vec2()
-    d = 32
+    d = BEAM_BASE_XOFFSET
     
     s = new State(PlaceA)
     

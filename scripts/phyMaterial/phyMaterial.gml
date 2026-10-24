@@ -36,25 +36,26 @@ function MaterialBody(_draw) : Joinable() constructor {
 
 
 function Material() constructor {
+    draw = MaterialDraw()
     static Placement = function() {
         DebugError("material has no placement property")
         return new Placement();
     }
     
-    static Join = function(inst0, inst1, pos0, type0, pos1, type1) {
-        return false;
+    static Draw = function(_x, _y) {
+        shader_set(shSketch);
+        shader_set_uniform_f(shader_get_uniform(shSketch, "u_frame"), Mono());
+        
+        // Have to trick the shader into thinking a texture is present... needed because of primitives.
+        var tex = sprite_get_texture(sprPhyBase, 0); 
+        texture_set_stage(shader_get_sampler_index(shSketch, "gm_BaseTexture"), tex);
+        
+        draw.Placement(_DrawContext(_x, _y))
+        shader_reset()
     }
     
-    static DrawSketch = function() {
-        DebugError("material has no drawsketch property")
-    }
-    
-    static DrawSketchJoins = function() {
-        DebugError("material has no drawsketchjoin property")
-    }
-    
-    static Draw = function(joinable, pos, detector) {
-                DebugError("material has no draw property")
+    static _DrawContext = function() {
+        return {}
     }
 }
 
@@ -136,6 +137,7 @@ function MaterialPlacement(_draw)  constructor {
 
 
 function MaterialDraw() constructor {
+    
     static Placement = function(ctx) {
     }
     
@@ -145,18 +147,8 @@ function MaterialDraw() constructor {
         }
     }
     
-    static BuildJoins = function(ctx) {
-        with (ctx) {
-            physics_draw_debug()
-        }
-    }
-    
     static Play = function(ctx) {
         Build(ctx)
-    }
-    
-    static PlayJoins = function(ctx) {
-        BuildJoins(ctx)
     }
 }
 

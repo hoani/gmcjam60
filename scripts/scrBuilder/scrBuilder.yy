@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"scrBuilder",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"scrBuilder",
+  "parent":{
+    "name":"build",
+    "path":"folders/Engines/physics/build.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

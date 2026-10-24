@@ -6,7 +6,7 @@ function BoxBody(_c, _p, draw) : MaterialBodyDynamic(draw) constructor {
 
 function BoxJoiner(_polygon) : EdgeWeldJoiner(_polygon) constructor { }
 
-function MaterialBox() constructor {
+function MaterialBox() : MaterialRectangle() constructor {
     draw = new BoxDraw()
     static Placement = function() {
         return new BoxPlacement(draw)

@@ -1,3 +1,6 @@
+#macro BLOCK_BASE_WIDTH 32
+#macro BLOCK_BASE_HEIGHT 16
+
 function BlockBody(_c, _p, _draw) : MaterialBody(_draw) constructor {
     c = _c
     p = _p
@@ -6,7 +9,7 @@ function BlockBody(_c, _p, _draw) : MaterialBody(_draw) constructor {
 
 function BlockJoiner(_polygon) : EdgeWeldJoiner(_polygon) constructor { }
 
-function MaterialBlock() constructor {
+function MaterialBlock() : MaterialRectangle() constructor {
     draw = new BlockDraw()
     
     static Placement = function() {
@@ -47,14 +50,25 @@ function BlockDraw() : MaterialDraw() constructor {
 }
 
 
-
+function MaterialRectangle() : Material() constructor {
+    static _DrawContext = function(_x, _y) {
+        return {
+            c: new Vec2(_x+BLOCK_BASE_WIDTH/2, _y+BLOCK_BASE_HEIGHT/2),
+            width: BLOCK_BASE_WIDTH,
+            height: BLOCK_BASE_HEIGHT,
+            dir: 0,
+            DrawPoints: FuncNone,
+        }
+    }
+}
 
 
 function RectanglePlacement(_draw = new MaterialDraw()) : MaterialPlacement(_draw) constructor {
     static PlaceA = 0
     static PlaceB = 1
-    static PlaceDrag = 2
-    static PlaceRotate = 3
+    static PlaceRotate = 2
+    static PlaceDrag = 3
+    
     
     a = new Vec2()
     b = new Vec2()
@@ -90,14 +104,15 @@ function RectanglePlacement(_draw = new MaterialDraw()) : MaterialPlacement(_dra
                     c.y = a.y + height/2
                 }
                 o = c.Subtract(b)
-                break;
-            case PlaceDrag:
-                c = (new Vec2(x, y)).Add(o)
                 dirZero = (new Vec2(x, y)).Subtract(c).Direction()
                 break;
             case PlaceRotate:
                 dir = (new Vec2(x, y)).Subtract(c).Direction() - dirZero
                 break;
+            case PlaceDrag:
+                c = (new Vec2(x, y)).Add(o)
+                break;
+            
             
         }
     }
@@ -108,12 +123,12 @@ function RectanglePlacement(_draw = new MaterialDraw()) : MaterialPlacement(_dra
                 s.Set(PlaceB)
                 return noone
             case PlaceB:
-                s.Set(PlaceDrag)
-                return noone
-            case PlaceDrag:
                 s.Set(PlaceRotate)
                 return noone
             case PlaceRotate:
+                s.Set(PlaceDrag)
+                return noone
+            case PlaceDrag:
                 return _Place()
         }
     }

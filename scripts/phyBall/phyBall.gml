@@ -1,4 +1,7 @@
-function BallBody(_c, _radius = 32, _draw) : MaterialBodyDynamic(_draw) constructor {
+#macro BALL_BASE_RADIUS 32
+
+
+function BallBody(_c, _radius = BALL_BASE_RADIUS, _draw) : MaterialBodyDynamic(_draw) constructor {
     circle = new Circle(_c, _radius)
     joinDelegate = new BallJoiner(circle)
     
@@ -10,20 +13,27 @@ function BallBody(_c, _radius = 32, _draw) : MaterialBodyDynamic(_draw) construc
 
 function BallJoiner(_circle) : EdgeWeldJoiner(_circle) constructor { }
 
-function MaterialBall() constructor {
+function MaterialBall() : Material() constructor {
     draw = new BallDraw()
     static Placement = function() {
         return new BallPlacement(draw)
+    }
+    
+    static _DrawContext = function(_x, _y) {
+        return {
+            c: new Vec2(_x, _y),
+            r: BALL_BASE_RADIUS,
+        }
     }
 }
 
 
 function BallDraw() : MaterialDraw() constructor {
+    
     static Placement = function(ctx) {
         with (ctx) {
-            draw_line(c.x, c.y-8, c.x, c.y+8)
-            draw_line(c.x-8, c.y, c.x+8, c.y)
-            draw_circle(c.x, c.y, r, true)
+            DrawPlus(c, 8)
+            DrawCircleOutline(c, r)
         }
     }
     
@@ -44,7 +54,7 @@ function BallPlacement(_draw) : MaterialPlacement(_draw) constructor {
     
     c = new Vec2()
     o = new Vec2()
-    r = 32
+    r = BALL_BASE_RADIUS
     
     s = new State(PlaceInner)
     

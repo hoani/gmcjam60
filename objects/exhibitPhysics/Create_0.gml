@@ -4,42 +4,17 @@ name = "Physics"
 
 world = new PhysicsWorld()
 
-assembly = new PhyAssembly(world)
-
-active = 0
-materials = [
-    new MaterialEgg(),
-    new MaterialWheel(),
-    new MaterialBeam(),
-    new MaterialBall(),
-    new MaterialBlock(),
-    new MaterialBox(),
-]
-
-
-pStart = new Vec2()
-
-
-mBlock = new MaterialBlock()
+builder = new PhyBuilder(world)
 
 ScoreBoat().Login()
 
 
-placement = noone
-
-grid = 16
-gridOffset = 8
-
-function clipToGrid(in) {
-    return Clip(in, grid, gridOffset)
-}
-
-
+var mBlock = new MaterialBlock()
 var p = mBlock.Placement() 
     
-p.Confirm(clipToGrid(64), clipToGrid(480)) 
-p.Confirm(clipToGrid(920), clipToGrid(512))
-p.Confirm(clipToGrid(920), clipToGrid(512))
-p.Confirm(clipToGrid(920), clipToGrid(512))
+p.Confirm(builder.ClipToGrid(64),  builder.ClipToGrid(480)) 
+p.Confirm(builder.ClipToGrid(920), builder.ClipToGrid(512))
+p.Confirm(builder.ClipToGrid(920), builder.ClipToGrid(512))
+p.Confirm(builder.ClipToGrid(920), builder.ClipToGrid(512))
 
-assembly.base = [p.Encode()]
+builder.assembly.base = [p.Encode()]

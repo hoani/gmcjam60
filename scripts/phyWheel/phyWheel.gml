@@ -1,3 +1,6 @@
+#macro WHEEL_BASE_RADIUS 32
+
+
 function WheelBody(_c, _radius = 32, _draw) : MaterialBodyDynamic(_draw) constructor {
     circle = new Circle(_c, _radius)
     joinDelegate = new WheelJoiner(circle)
@@ -22,10 +25,17 @@ function WheelJoiner(_circle) : Joinable() constructor {
 }
 
 
-function MaterialWheel() constructor {
+function MaterialWheel() : Material() constructor {
     draw = new WheelDraw()
     static Placement = function() {
         return new WheelPlacement(draw)
+    }
+    
+    static _DrawContext = function(_x, _y) {
+        return {
+            c: new Vec2(_x, _y),
+            r: WHEEL_BASE_RADIUS,
+        }
     }
 }
 
@@ -33,10 +43,9 @@ function MaterialWheel() constructor {
 function WheelDraw() : MaterialDraw() constructor {
     static Placement = function(ctx) {
         with (ctx) {
-            draw_line(c.x, c.y-8, c.x, c.y+8)
-            draw_line(c.x-8, c.y, c.x+8, c.y)
-            draw_circle(c.x, c.y, r, true)
-            draw_circle(c.x, c.y, r/2, true)
+            DrawPlus(c, 8)
+            DrawCircleOutline(c, r)
+            DrawCircleOutline(c, r/2)
         }
     }
     
@@ -56,7 +65,7 @@ function WheelPlacement(_draw) : MaterialPlacement(_draw) constructor {
     
     c = new Vec2()
     o = new Vec2()
-    r = 32
+    r = WHEEL_BASE_RADIUS
     
     s = new State(PlaceInner)
     

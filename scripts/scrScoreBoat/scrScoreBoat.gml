@@ -13,8 +13,8 @@ function _ScoreBoatHandler() constructor {
     static isReady = false
     
     static Login = function(_success = FuncNone, _fail = FuncNone) {
-        if sb_ready() {
-            return;
+        if isReady {
+            return sb_refresh().success(_success).fail(_fail); // Just give a request so that success etc still work
         }
         return sb_init("8xvgXd2", "uejwbGmvN2VX8IhG", "NKkGVKBpyc38c83HMhqxs_FaEZ5QwtVU8BdmhNb7rUI")
             .success(function(_info) {
