@@ -1,9 +1,9 @@
 function EggBody(_c, _r, _draw) : MaterialBodyDynamic(_draw) constructor {
-    circle = new Circle(_c, _r)
+    shape = new Circle(_c, _r)
     
-    static Update = function(ctx) {
-        circle.center.x = ctx.x
-        circle.center.y = ctx.y
+    static _Update = function(ctx) {
+        shape.center.x = ctx.x
+        shape.center.y = ctx.y
     }
 }
 
@@ -74,7 +74,7 @@ function EggPlacement(_draw) : MaterialPlacement(_draw) constructor {
             Friction(1).
             LinearDamping(0.125).
             Bullet().
-            Breakable().
+            Object(objPhyEgg).
             Apply(c.x, c.y, new EggBody(c, r, draw))
         
         var p = new Polygon([[-24, 8], [24, 8], [8, -24], [-8, -24]])

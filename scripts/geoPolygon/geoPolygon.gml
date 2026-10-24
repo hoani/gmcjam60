@@ -44,21 +44,41 @@ function Polygon(_points) constructor {
         return (intersects % 2) != 0 // Odd intersects = point inside
     }
     
+    static OutsideOf = function(b) {
+        for (var i = 0; i< array_length(points); i++) {
+            if b.PointInside(points[i]) {
+                return false
+            }
+        }
+        
+        for (var i = 0; i < array_length(b.lines); i++) {
+            if _LineIntersect(b.lines[i]) {
+                return false
+            }
+        }
+        return true
+    }
+    
+    
+    static _LineIntersect = function(o) {
+        for (var i = 0; i < array_length(lines); i++) {
+            if (o.Intersect(lines[i])) {
+                return true
+            }
+        }
+        return Contains(o.p0) || Contains(o.p1)
+    }
+    
     static Intersect = function(o) {
         if !is_struct(o) || is_undefined(o.Shape) {
             return false;
         }
         if o.Shape == "Line" {
-            for (var i = 0; i < array_length(lines); i++) {
-                if (o.Intersect(lines[i])) {
-                    return true
-                }
-            }
-            return Contains(o.p0) || Contains(o.p1)
+            return _LineIntersect(o)
         }
         if o.Shape == "Polygon" {
             for (var i = 0; i < array_length(lines); i++) {
-                if (o.Intersect(lines[i])) {
+                if (o._LineIntersect(lines[i])) {
                     return true
                 }
             }

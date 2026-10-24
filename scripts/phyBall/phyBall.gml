@@ -2,12 +2,12 @@
 
 
 function BallBody(_c, _radius = BALL_BASE_RADIUS, _draw) : MaterialBodyDynamic(_draw) constructor {
-    circle = new Circle(_c, _radius)
-    joinDelegate = new BallJoiner(circle)
+    shape = new Circle(_c, _radius)
+    joinDelegate = new BallJoiner(shape)
     
-    static Update = function(ctx) {
-        circle.center.x = ctx.x
-        circle.center.y = ctx.y
+    static _Update = function(ctx) {
+        shape.center.x = ctx.x
+        shape.center.y = ctx.y
     }
 }
 
@@ -39,7 +39,7 @@ function BallDraw() : MaterialDraw() constructor {
     
     static Build = function(ctx) {
         var _c = c_white;
-        draw_circle_color(ctx.x, ctx.y, ctx.body.circle.radius, _c, _c, true)
+        DrawCircleOutline(ctx.body.shape.center, ctx.body.shape.radius, 2, _c)
     }
 }
 

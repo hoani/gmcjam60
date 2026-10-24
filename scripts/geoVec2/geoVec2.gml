@@ -143,6 +143,11 @@ function DirectionToVec2(dir) {
 }
 
 
+function Vec2Spr(spr) {
+    return new Vec2(sprite_get_width(spr), sprite_get_height(spr))
+}
+
+
 function Vec2Tests(_run, _method) : VerrificMethodTest(_run, _method) constructor {
     
     static test_subject="Vec2 Tests"

@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"scrPlay",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"scrPlay",
+  "parent":{
+    "name":"control",
+    "path":"folders/Engines/physics/control.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

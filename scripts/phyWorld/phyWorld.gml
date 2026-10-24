@@ -1,4 +1,6 @@
 
+
+
 function PhysicsWorld() {
     if !variable_global_exists("physicsWorld") {
         global.physicsWorld = new _PhysicsWorld();
@@ -9,7 +11,7 @@ function PhysicsWorld() {
 function _PhysicsWorld(_gravity = 9.8, _maxYSpd = 8, _pixelsPerMeter = 128) constructor {
     gravity = _gravity
     pixelsPerMeter = _pixelsPerMeter;
-    physicsRoom = room
+    bounds = new Bounds(0, 0, room_width, room_height)
     
     static _init_ = function() {
         NewWorld()
@@ -25,6 +27,7 @@ function _PhysicsWorld(_gravity = 9.8, _maxYSpd = 8, _pixelsPerMeter = 128) cons
         
         started = false
         physics_pause_enable(!started)
+        bounds = new Bounds(0, 0, room_width, room_height)
     }
     
     

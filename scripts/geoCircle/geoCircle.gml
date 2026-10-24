@@ -30,6 +30,15 @@ function Circle(_center, _radius) constructor {
         }
     }
     
+    static OutsideOf = function(b) {
+        // Find closest point to center
+        var _v = new Vec2(
+            clamp(center.x, b.p0.x, b.p1.x),
+            clamp(center.y, b.p0.y, b.p1.y)
+        )
+        var _dp = _v.Subtract(center)
+        return _dp.Distance2() > (radius * radius);
+    }
     
     static ClosestPointLine = function(o) {
         var p = o.ClosestPointCircle(self)

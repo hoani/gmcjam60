@@ -102,6 +102,16 @@ function PhyAssembly(_world) constructor {
         return history.CanRedo()
     }
     
+    
+    static Rebuild = function() {
+        var encoded = history.current
+        Reset()
+        if encoded == "" {
+            return;
+        }
+        parts = Load(encoded)
+    }
+    
     static Undo = function() {
         var encoded = history.Undo()
         Reset()

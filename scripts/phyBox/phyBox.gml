@@ -1,7 +1,5 @@
-function BoxBody(_c, _p, draw) : MaterialBodyDynamic(draw) constructor {
-    c = _c
-    p = _p
-    joinDelegate = new BoxJoiner(p)
+function BoxBody(_c, _p, _draw) : PolygonBodyDynamic(_c, _p, _draw) constructor {
+    joinDelegate = new BoxJoiner(_p)
 }
 
 function BoxJoiner(_polygon) : EdgeWeldJoiner(_polygon) constructor { }

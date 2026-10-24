@@ -1,22 +1,26 @@
-//state.Update()
-//
-//switch state.Get() {
-    //case StateTitle:
-        //
-        //break;
-    //case StateBuild:
-        //
-        //break;
-    //case StatePlay:
-        //
-        //break;
-    //case StateWin:
-        //
-        //break;
-    //case StateLose:
-        //
-        //break;
-//}
+state.Update()
+
+switch state.Get() {
+    case StateTitle:
+        if !IsActiveControl(c.title.uid) {
+            state.Set(StateBuild)
+        }
+        break;
+    case StateBuild:
+        if world.Started() {
+            state.Set(StatePlay)
+        }
+        break;
+    case StatePlay:
+        
+        break;
+    case StateWin:
+        
+        break;
+    case StateLose:
+        
+        break;
+}
 
 
 struct_foreach(c, function(_, v) {

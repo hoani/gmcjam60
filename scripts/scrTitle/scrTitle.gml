@@ -1,14 +1,16 @@
-function Title() : ActiveController() constructor {
+function Title(_onTrigger) : ActiveController() constructor {
     surface = surface_create(room_width, room_height)
     pending = true
     cooldown = new Cooldown(60)
+    callback = new Callback()
+    callback.Set(_onTrigger)
 
     
     static _Update = function() {
         if cooldown.Active() {
             cooldown.Update()
             if !cooldown.Active() {
-                PopControlStack()
+                callback.Call()
             }
             return
         }

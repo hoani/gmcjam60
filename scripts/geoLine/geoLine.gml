@@ -32,12 +32,29 @@ function Line(_x0, _y0, _x1, _y1) constructor {
         return delta.Distance()
     } 
     
+    
+    static OutsideOf = function(b) {
+        if b.PointInside(p0) || b.PointInside(p1) {
+            return false
+        }
+        for (var i = 0; i < array_length(b.lines); i++) {
+            if _LineIntersect(b.lines[i]) {
+                return false
+            }
+        }
+        return true
+    }
+    
+    static _LineIntersect = function(o) {
+        return Clockwise(p0, p1, o.p0) != Clockwise(p0, p1, o.p1) && Clockwise(o.p0, o.p1, p0) != Clockwise(o.p0, o.p1, p1)
+    }
+    
     static Intersect = function(o) {
         if !is_struct(o) || is_undefined(o.Shape) {
             return false;
         }
         if o.Shape == "Line" {
-            return Clockwise(p0, p1, o.p0) != Clockwise(p0, p1, o.p1) && Clockwise(o.p0, o.p1, p0) != Clockwise(o.p0, o.p1, p1)
+            return _LineIntersect(o)
         }
         if o.Shape == "Polygon" {
             return o.Intersect(self)

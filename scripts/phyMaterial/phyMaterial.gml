@@ -1,8 +1,71 @@
+
+
+function LineBodyDynamic(_l, _draw) : MaterialBodyDynamic(_draw) constructor {
+    center = _l.p0.Add(_l.p1).Multiply(0.5)
+    original = _l
+    shape = PointsLine(_l.p0, _l.p1)
+    
+    static _Update = function(ctx) {
+        var local = [original.p0, original.p1]
+        var _out = _RepositionLocalPoints(ctx, center, local)
+        shape = PointsLine(_out[0], _out[1])
+    }
+}
+
+function PolygonBodyDynamic(_c, _p, _draw) : MaterialBodyDynamic(_draw) constructor {
+    center = _c
+    original = _p
+    shape = new Polygon(_p.points)
+    
+    static _Update = function(ctx) {
+        //var _c = dcos(ctx.phy_rotation)
+        //var _s = dsin(ctx.phy_rotation)
+        //var local = original.points
+        //var _out = array_create(array_length(local))
+        //for (var i = 0; i < array_length(local); i++) {
+            //var _d = local[i].Subtract(center)
+            //_out[i] = new Vec2(
+                //ctx.phy_position_x + _d.x * _c - _d.y *_s, 
+                //ctx.phy_position_y + _d.x * _s + _d.y *_c
+            //)
+        //}
+        shape = new Polygon(_RepositionLocalPoints(ctx, center, original.points))
+    }
+}
+
 function MaterialBodyDynamic(_draw) : MaterialBody(_draw) constructor {
     dynamic = new BodyDynamic()
+    static bounds = PhysicsWorld().bounds
+    shape = noone
     
     static PreUpdate = function(ctx) {
         dynamic.PreUpdate(ctx)
+    }
+    
+    
+    static Update = function(ctx) {
+        _Update(ctx)
+        
+        if bounds.Outside(shape) {
+            ctx.OnOutOfBounds()
+        }
+    }
+    
+    static _Update = function(ctx) {
+    }
+    
+    static _RepositionLocalPoints = function(ctx, _center, local) {
+        var _out = array_create(array_length(local))
+        var _c = dcos(ctx.phy_rotation)
+        var _s = dsin(ctx.phy_rotation)
+        for (var i = 0; i < array_length(local); i++) {
+            var _d = local[i].Subtract(_center)
+            _out[i] = new Vec2(
+                ctx.phy_position_x + _d.x * _c - _d.y *_s, 
+                ctx.phy_position_y + _d.x * _s + _d.y *_c
+            )
+        }
+        return _out
     }
 }
 
@@ -23,11 +86,9 @@ function MaterialBody(_draw) : Joinable() constructor {
     }
     
     static Cleanup = function() {
-        static _JoinableCleanup = function() {
-            for (var _i = 0; _i < array_length(joins); _i++) {
-            	if instance_exists(joins[_i]) {
-            		instance_destroy(joins[_i])
-            	}
+        for (var _i = 0; _i < array_length(joins); _i++) {
+            if instance_exists(joins[_i]) {
+                instance_destroy(joins[_i])
             }
         }
     }

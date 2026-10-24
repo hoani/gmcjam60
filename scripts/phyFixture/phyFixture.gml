@@ -55,9 +55,13 @@ function PhyFixture() constructor {
         return inst
     }
     
-    static Breakable = function() {
-        object = objPhyBreakable
+    static Object = function(obj) {
+        object = obj
         return self
+    }
+    
+    static Breakable = function() {
+        return Object(objPhyBreakable)
     }
     
     static Circle = function(radius) {

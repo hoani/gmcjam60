@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"geoBounds",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"geoBounds",
+  "parent":{
+    "name":"geometry",
+    "path":"folders/Engines/geometry.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

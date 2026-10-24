@@ -1,7 +1,6 @@
 #macro BEAM_BASE_XOFFSET 32
 
-function BeamBody(_line, draw) : MaterialBodyDynamic(draw) constructor {
-    line = _line
+function BeamBody(_line, draw) : LineBodyDynamic(_line, draw) constructor {
     joinDelegate = new BeamJoiner(_line)
 }
 

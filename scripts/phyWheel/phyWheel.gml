@@ -2,12 +2,12 @@
 
 
 function WheelBody(_c, _radius = 32, _draw) : MaterialBodyDynamic(_draw) constructor {
-    circle = new Circle(_c, _radius)
-    joinDelegate = new WheelJoiner(circle)
+    shape = new Circle(_c, _radius)
+    joinDelegate = new WheelJoiner(shape)
     
     static Update = function(ctx) {
-        circle.center.x = ctx.x
-        circle.center.y = ctx.y
+        shape.center.x = ctx.x
+        shape.center.y = ctx.y
     }
 }
 
@@ -50,9 +50,10 @@ function WheelDraw() : MaterialDraw() constructor {
     }
     
     static Build = function(ctx) {
-        var _c = c_white;
-        draw_circle_color(ctx.x, ctx.y, ctx.body.circle.radius, _c, _c, true)
-        draw_circle_color(ctx.x, ctx.y, ctx.body.circle.radius/2, _c, _c, true)
+        var c = ctx.body.shape.center
+        var r = ctx.body.shape.radius
+        DrawCircleOutline(c, r)
+        DrawCircleOutline(c, r/2)
     }
 }
 

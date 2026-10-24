@@ -24,6 +24,7 @@ function PhyBuilder(world) : ActiveController() constructor {
     
     static SelectPrevious = function() {
         active = (active + array_length(materials) - 1) % array_length(materials) 
+        DebugMessage($"Set active to {active}")
     }
     
     static SelectNext = function() {
@@ -36,7 +37,9 @@ function PhyBuilder(world) : ActiveController() constructor {
         
         if placement == noone {
             if mouse_check_button_pressed(mb_left) { 
+                DebugMessage($"Placing {active}")
                 placement = materials[active].Placement()
+                PushControlStack(uid)
             }
             
             if mouse_wheel_up() {
@@ -46,17 +49,20 @@ function PhyBuilder(world) : ActiveController() constructor {
             if mouse_wheel_down() {
                 SelectNext()
             }
+            
+            return
         }
         
-        if placement != noone {
-            placement.Drag(mx, my)
-        }
+
+        placement.Drag(mx, my)
+        
         
         if mouse_check_button_released(mb_left) {
             placed = placement.Confirm(mx, my)
             if placed != noone {
                 assembly.Add(placement)
                 placement = noone
+                PopControlStack()
             }
         }
     }
@@ -71,6 +77,10 @@ function PhyBuilder(world) : ActiveController() constructor {
         if placement == noone {
             assembly.Redo()
         }
+    }
+    
+    static Reset = function() {
+        assembly.Rebuild()
     }
     
     

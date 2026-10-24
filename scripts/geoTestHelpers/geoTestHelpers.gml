@@ -7,5 +7,6 @@ function GeometryEngineTestCases() {
         PolygonTests,        
         CircleTests,
         RectangleTests,
+        BoundsTests,
     ]
 }

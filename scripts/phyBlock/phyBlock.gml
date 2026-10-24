@@ -1,10 +1,8 @@
 #macro BLOCK_BASE_WIDTH 32
 #macro BLOCK_BASE_HEIGHT 16
 
-function BlockBody(_c, _p, _draw) : MaterialBody(_draw) constructor {
-    c = _c
-    p = _p
-    joinDelegate = new BlockJoiner(p)
+function BlockBody(_c, _p, _draw) : PolygonBodyDynamic(_c, _p, _draw) constructor {
+    joinDelegate = new BlockJoiner(_p)
 }
 
 function BlockJoiner(_polygon) : EdgeWeldJoiner(_polygon) constructor { }
@@ -36,8 +34,9 @@ function BlockDraw() : MaterialDraw() constructor {
     static Placement = function(ctx) {
         with (ctx) {
             ctx.DrawPoints()
-                
-            var p = Rectangle(c, width, height,  dir);
+            var p = Rectangle(c, width-5, height-5,  dir);
+            DrawPolygonOutline(c, p.points, 2, c_white)
+            p = Rectangle(c, width, height,  dir);
             DrawPolygonOutline(c, p.points, 2, c_white)
         }
     }

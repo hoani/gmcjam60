@@ -5,8 +5,8 @@
   "isDnD":false,
   "name":"scrBuilder",
   "parent":{
-    "name":"build",
-    "path":"folders/Engines/physics/build.yy",
+    "name":"control",
+    "path":"folders/Engines/physics/control.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",
