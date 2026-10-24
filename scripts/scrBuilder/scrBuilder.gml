@@ -7,6 +7,9 @@ function PhyBuilder(world) : ActiveController() constructor {
     
     draftSurface = surface_create(room_width, room_height)
     assemblySurface = surface_create(room_width, room_height)
+    
+    
+    
 
     active = 0
     materials = [

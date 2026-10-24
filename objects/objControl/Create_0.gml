@@ -4,6 +4,7 @@ world = PhysicsWorld()
 world.Reset()
 
 
+var help = Help(new Vec2(16, 8), sprHelpHover, sprHelp)
 
 var start = Button(new Vec2(room_width-16, room_height-8), sprStart, function() {
     PopControlStack()
@@ -14,12 +15,12 @@ var start = Button(new Vec2(room_width-16, room_height-8), sprStart, function() 
 builder = new PhyBuilder(world)
 play = new PhyPlay(world, function() {
     builder.Reset()
-    PushControlStack([c.builder.uid, c.start.uid])
+    PushControlStack([c.builder.uid, c.start.uid, c.help.uid])
 })
 
 title = new Title(function() {
     PopControlStack()
-    PushControlStack([c.builder.uid, c.start.uid])
+    PushControlStack([c.builder.uid, c.start.uid, c.help.uid])
 })
     
 
@@ -28,6 +29,7 @@ c = {
     builder: builder,
     title: title,
     start: start,
+    help: help,
 }
 
 StateTitle = 0

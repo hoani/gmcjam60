@@ -20,7 +20,7 @@ function PhyPlay(_world, _onRestart) : ActiveController() constructor {
     
     onRestart = _onRestart
     
-    restart = Button(new Vec2(room_width/2, room_height/2), sprStart, function() {
+    retry = Button(new Vec2(room_width/2, room_height/2), sprRetry, function() {
         PopControlStack()
         Reset()
         onRestart()
@@ -31,7 +31,7 @@ function PhyPlay(_world, _onRestart) : ActiveController() constructor {
         OnOutOfBounds()
     }).HRight().VBottom()
     
-    buttons = [restart, cancel]
+    buttons = [retry, cancel]
     
     
     static Reset = function() {
@@ -57,7 +57,7 @@ function PhyPlay(_world, _onRestart) : ActiveController() constructor {
         if remaining <= 0 {
             DebugMessage("You win")
             state.Set(StateWin)
-            EnableButtons(restart)
+            EnableButtons(retry)
         }
     }
     
@@ -66,7 +66,7 @@ function PhyPlay(_world, _onRestart) : ActiveController() constructor {
             return
         }
         DebugMessage("You lose")
-        EnableButtons(restart)
+        EnableButtons(retry)
         state.Set(StateLose)
     }
     
