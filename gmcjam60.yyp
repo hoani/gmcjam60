@@ -315,6 +315,7 @@
     {"id":{"name":"sprStart","path":"sprites/sprStart/sprStart.yy",},},
     {"id":{"name":"sprSymbol24","path":"sprites/sprSymbol24/sprSymbol24.yy",},},
     {"id":{"name":"sprTitle","path":"sprites/sprTitle/sprTitle.yy",},},
+    {"id":{"name":"sprTransform","path":"sprites/sprTransform/sprTransform.yy",},},
   ],
   "resourceType":"GMProject",
   "resourceVersion":"2.0",

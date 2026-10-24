@@ -17,6 +17,13 @@ function BoxDraw() : MaterialDraw() constructor {
         ctx.DrawPoints()
         var p = Rectangle(ctx.c, ctx.width, ctx.height,  ctx.dir);
         DrawPolygonOutline(ctx.c, p.points, 2, color)
+        
+        if struct_exists(ctx, "s") && ctx.s.Get() == ctx.PlaceRotate {
+            draw_sprite(sprTransform, 0, MouseX, MouseY)
+        }
+        if struct_exists(ctx, "s") && ctx.s.Get() == ctx.PlaceDrag {
+            draw_sprite(sprTransform, 1, MouseX, MouseY)
+        }
     }
 }
 

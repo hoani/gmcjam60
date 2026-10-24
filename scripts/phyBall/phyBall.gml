@@ -33,6 +33,10 @@ function BallDraw() : MaterialDraw() constructor {
     static Placement = function(ctx, color=c_white) {
         DrawPlus(ctx.c, 8, 2, color)
         DrawCircleOutline(ctx.c, ctx.r, 2, color)
+        
+        if struct_exists(ctx, "s") && ctx.s.Get() == ctx.PlaceDrag {
+            draw_sprite(sprTransform, 1, MouseX, MouseY)
+        }
     }
 }
 
@@ -44,6 +48,7 @@ function BallPlacement(_draw) : MaterialPlacement(_draw) constructor {
     PlaceInner = 0
     PlaceOuter = 1
     PlaceDrag = 2
+    PlaceDone = 3
     
     c = new Vec2()
     o = new Vec2()
@@ -80,6 +85,7 @@ function BallPlacement(_draw) : MaterialPlacement(_draw) constructor {
                 s.Set(PlaceDrag)
                 return noone
             case PlaceDrag:
+                s.Set(PlaceDone)
                 return Place()
         }
     }

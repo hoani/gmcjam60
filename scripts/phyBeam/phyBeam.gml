@@ -26,6 +26,10 @@ function BeamDraw() : MaterialDraw() constructor {
         DrawCircleOutline(ctx.a, 3, 2, color)
         DrawCircleOutline(ctx.b, 3, 2, color)
         DrawLine(ctx.a, ctx.b, 2, color)
+        
+        if struct_exists(ctx, "s") && ctx.s.Get() == ctx.PlaceDrag {
+            draw_sprite(sprTransform, 1, MouseX, MouseY)
+        }
     }
 }
 
@@ -46,6 +50,7 @@ function BeamPlacement(_draw) : MaterialPlacement(_draw) constructor {
     PlaceA = 0
     PlaceB = 1
     PlaceDrag = 2
+    PlaceDone = 3
     
     a = new Vec2()
     b = new Vec2()
@@ -89,6 +94,7 @@ function BeamPlacement(_draw) : MaterialPlacement(_draw) constructor {
                 s.Set(PlaceDrag)
                 return noone
             case PlaceDrag:
+                s.Set(PlaceDone)
                 return Place()
         }
     }

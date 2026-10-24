@@ -75,6 +75,7 @@ function PhyBuilder(world) : ActiveController() constructor {
                     refreshAssembly = true
                     assembly.Add(placement)
                     placement = noone
+                    PopControlStack()
                     
                 }
             }

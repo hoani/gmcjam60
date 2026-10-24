@@ -30,13 +30,23 @@ function BlockPlacement(draw) : RectanglePlacement(draw) constructor {
 }
 
 
+
+
 function BlockDraw() : MaterialDraw() constructor {
     static Placement = function(ctx, color=c_white) {
         ctx.DrawPoints()
+        
         var p = Rectangle(ctx.c, ctx.width-5, ctx.height-5, ctx.dir);
         DrawPolygonOutline(ctx.c, p.points, 2, color)
         p = Rectangle(ctx.c, ctx.width, ctx.height,  ctx.dir);
         DrawPolygonOutline(ctx.c, p.points, 2, color)
+        
+        if struct_exists(ctx, "s") && ctx.s.Get() == ctx.PlaceRotate {
+            draw_sprite(sprTransform, 0, MouseX, MouseY)
+        }
+        if struct_exists(ctx, "s") && ctx.s.Get() == ctx.PlaceDrag {
+            draw_sprite(sprTransform, 1, MouseX, MouseY)
+        }
     }
 }
 
@@ -59,6 +69,7 @@ function RectanglePlacement(_draw = new MaterialDraw()) : MaterialPlacement(_dra
     static PlaceB = 1
     static PlaceRotate = 2
     static PlaceDrag = 3
+    static PlaceDone = 4
     
     
     a = new Vec2()
@@ -120,6 +131,7 @@ function RectanglePlacement(_draw = new MaterialDraw()) : MaterialPlacement(_dra
                 s.Set(PlaceDrag)
                 return noone
             case PlaceDrag:
+                s.Set(PlaceDone)
                 return Place()
         }
     }
