@@ -13,7 +13,7 @@ function BallBody(_c, _radius = BALL_BASE_RADIUS, _draw) : MaterialBodyDynamic(_
 
 function BallJoiner(_circle) : EdgeWeldJoiner(_circle) constructor { }
 
-function MaterialBall() : Material() constructor {
+function MaterialBall() : Material("Ball") constructor {
     draw = new BallDraw()
     static Placement = function() {
         return new BallPlacement(draw)

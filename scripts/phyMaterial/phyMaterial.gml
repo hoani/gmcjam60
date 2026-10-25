@@ -107,7 +107,8 @@ function CommonOutOfBounds() {
 
 
 
-function Material() constructor {
+function Material(_name) constructor {
+    name = _name
     draw = MaterialDraw()
     static Placement = function() {
         DebugError("material has no placement property")

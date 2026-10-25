@@ -21,6 +21,10 @@ function ButtonClass(_pos, _sprite, _onPressed) : ActiveController() constructor
     state = new State(StateIdle)
     appear = new Cooldown(16)
     
+    enableCondition = function() {
+        return true
+    }
+    
     
     static HLeft = function() {
         b = new PositionedBox(c.x, b.y, w, h)
@@ -52,6 +56,11 @@ function ButtonClass(_pos, _sprite, _onPressed) : ActiveController() constructor
         return self
     }
     
+    static WithEnableCondition = function(check) {
+        enableCondition = check
+        return self
+    }
+    
     static Appear = function() {
         hovered = false
         state.Set(StateActive)
@@ -64,18 +73,22 @@ function ButtonClass(_pos, _sprite, _onPressed) : ActiveController() constructor
         appear.Trigger()
     }
     
+    static _CheckEnableCondition = function() {
+        return enableCondition()
+    }
+    
     
     static Update = function() {
         if !appear.Active() {
             switch state.Get() {
                 case StateIdle:
-                    if InControlStack(uid) {
+                    if InControlStack(uid) && _CheckEnableCondition() {
                         Appear()
                     }
                     
                     break;
                 case StateActive:
-                    if !InControlStack(uid) {
+                    if !InControlStack(uid) || !_CheckEnableCondition() {
                         Disappear()
                     }
                     break;

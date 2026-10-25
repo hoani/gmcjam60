@@ -20,7 +20,6 @@ function PhyAssembly(_world) constructor {
     static Add = function(spec) {
         array_push(parts, spec.Encode())
         history.Add(Encode())
-        DebugMessage($"Stored {string_length(history.current)} bytes {array_length(parts)} into history")
     }
     
     static Delete = function(spec) {
@@ -32,7 +31,6 @@ function PhyAssembly(_world) constructor {
       		}
       	}
         history.Add(Encode())
-        DebugMessage($"Stored {string_length(history.current)} bytes {array_length(parts)} into history")
     }
     
     
@@ -108,7 +106,7 @@ function PhyAssembly(_world) constructor {
         if encoded == "" {
             return;
         }
-        base = Load(encoded)
+        base = Load(encoded, false)
     }
     
     static CanUndo = function() {
@@ -129,8 +127,10 @@ function PhyAssembly(_world) constructor {
     }
     
     
-    static Rebuild = function() {
-        var encoded = GetCurrent()
+    static Rebuild = function(encoded="") {
+        if encoded == "" {
+            encoded = GetCurrent()
+        }
         Reset()
         if encoded == "" {
             return;

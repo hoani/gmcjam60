@@ -115,6 +115,35 @@ function OnlineHandler() constructor {
         )
     }
     
+    static LevelIncrPlays = function(uuid) {
+        online.LevelIncrField(
+            uuid, "plays",
+            function(spec){ DebugMessage("Incremented plays") },
+            function(error){ DebugMessage($"Error incrementing plays {error}") }
+        )
+        online.LevelIncrField(
+            uuid, "uplays",
+            function(spec){ DebugMessage("Incremented plays") },
+            function(error){ DebugMessage($"Error incrementing plays {error}") }
+        )
+    }
+    
+    static LevelIncrWins = function(uuid) {
+        online.LevelIncrField(
+            uuid, "wins",
+            function(spec){ DebugMessage("Incremented wins") },
+            function(error){ DebugMessage($"Error incrementing wins {error}") }
+        )
+    }
+    
+    static LevelIncrLikes = function(uuid) {
+        online.LevelIncrField(
+            uuid, "likes",
+            function(spec){ DebugMessage("Incremented likes") },
+            function(error){ DebugMessage($"Error incrementing likes {error}") }
+        )
+    }
+    
     static UpdatePending = function() {
         var uuid = array_last(pending)
         

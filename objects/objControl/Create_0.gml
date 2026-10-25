@@ -29,6 +29,9 @@ assembly= {
     build: new PhyAssembly(world),
 }
 
+assembly.play.LoadBase(EggInTheMiddle())
+
+
 function GoToOnline() {
     PopControlStack()
     PushControlStack(onlineStack)
@@ -39,8 +42,8 @@ function GoToOnline() {
 
 function GoToSandbox() {
     PopControlStack()
-    assembly.play.SetBase([])
-    builder.SetBlueprint(0)
+    assembly.play.LoadBase(EggInTheMiddle())
+    builder.SetMode(BuildModePlay)
     builder.Reset(assembly.play)
     canPublish = false
     PushControlStack(sandboxStack)
@@ -48,8 +51,14 @@ function GoToSandbox() {
 
 function GoToBuild() {
     PopControlStack()
-    builder.Reset(assembly.build)
-    builder.SetBlueprint(1)
+    
+    // Put an egg in the middle if the assembly is empty
+    var _enc = assembly.build.GetCurrent()
+    if _enc == "" {
+        _enc = EggInTheMiddle()
+    }
+    builder.Reset(assembly.build, _enc)
+    builder.SetMode(BuildModeCreate)
     canPublish = true
     if online.HasUserLevelSpec() {
         publish.name = online.GetUserLevelSpec().name
@@ -117,11 +126,7 @@ buttons = {
     
     back: {
         sandbox: Button(new Vec2(room_width-16, 8), sprNavigateBack, function() {
-            PopControlStack()
-            assembly.play.SetBase([])
-            builder.SetBlueprint(0)
-            builder.Reset(assembly.play)
-            PushControlStack(sandboxStack)
+            GoToSandbox() 
         }).HRight().VTop(),
         online: Button(new Vec2(room_width-16, 8), sprNavigateOnline, function() {
             GoToOnline()
@@ -143,13 +148,19 @@ buttons = {
         GoToBuild()
     }).HRight().VBottom(),
     
-    test: Button(new Vec2(room_width-16, room_height-8), sprTest, function() {
-        PopControlStack()
-        assembly.play.SetBase(assembly.build.ConcatAssembly())
-        builder.SetBlueprint(0)
-        builder.Reset(assembly.play)
-        PushControlStack(testStack)
-    }).HRight().VBottom(),
+    test: Button(new Vec2(room_width-16, room_height-8), sprTest, 
+        function() {
+            PopControlStack()
+            assembly.play.SetBase(assembly.build.ConcatAssembly())
+            builder.SetMode(BuildModePlay)
+            builder.Reset(assembly.play)
+            PushControlStack(testStack)
+        })
+        .HRight().VBottom()
+        .WithEnableCondition(function() {
+            return instance_number(objPhyEgg) > 0
+        }
+    ),
 }
 
 
@@ -160,13 +171,13 @@ browser = new Browser()
 
 play.WithOnWin(function(){
     if onlineLevel != noone {
-        DebugMessage($"TODO: Publish Win for {onlineLevel.uuid}")
+        online.LevelIncrWins(onlineLevel.uuid)
     }
 })
 
 play.WithOnPlay(function(){
     if onlineLevel != noone {
-        DebugMessage($"TODO: Publish Play for {onlineLevel.uuid}")
+        online.LevelIncrPlays(onlineLevel.uuid)
     }
 })
 
@@ -183,7 +194,7 @@ browser.Refresh(
         assembly.play.SetBase([])
         assembly.play.LoadBase(onlineLevel.level)
         assembly.play.Reset()
-        builder.SetBlueprint(0)
+        builder.SetMode(BuildModePlay)
         builder.Reset(assembly.play)
         
         PushControlStack(levelStack)
@@ -193,7 +204,8 @@ browser.Refresh(
 
 title = new Title(function() {
     PopControlStack()
-    PushControlStack(builderStack)
+    PopControlStack() // Builder was in the stack just to show graphics
+    PushControlStack(sandboxStack)
 })
 
 c = {
@@ -238,9 +250,11 @@ surface_resize(application_surface, room_width, room_height);
 
 
 if Debug() {
-    //PushControlStack(titleStack)
-    PushControlStack(onlineStack)
+    PushControlStack(builder.uid)
+    PushControlStack(titleStack)
+    //PushControlStack(onlineStack)
 } else {
+    PushControlStack(builder.uid)
     PushControlStack(titleStack)
 }
 

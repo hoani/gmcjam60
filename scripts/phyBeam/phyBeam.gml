@@ -6,8 +6,9 @@ function BeamBody(_line, draw) : LineBodyDynamic(_line, draw) constructor {
 
 
 
-function MaterialBeam() : Material() constructor {
+function MaterialBeam() : Material("Beam") constructor {
     draw = new BeamDraw()
+    
     static Placement = function() {
         return new BeamPlacement(draw)
     }
@@ -92,6 +93,10 @@ function BeamPlacement(_draw) : MaterialPlacement(_draw) constructor {
                 return noone
             case PlaceB:
                 s.Set(PlaceDrag)
+                if array_length(joinCandidates) != 0 {
+                    s.Set(PlaceDone)
+                    return Place()
+                }
                 return noone
             case PlaceDrag:
                 s.Set(PlaceDone)

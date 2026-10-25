@@ -7,7 +7,7 @@ function EggBody(_c, _r, _draw) : MaterialBodyDynamic(_draw) constructor {
     }
 }
 
-function MaterialEgg() : Material() constructor {
+function MaterialEgg() : Material("Egg") constructor {
     draw = new EggDraw()
     static Placement = function() {
         return new EggPlacement(draw)

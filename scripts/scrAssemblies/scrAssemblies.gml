@@ -1,0 +1,3 @@
+function EggInTheMiddle(){
+    return "eyJoYXNoIjoiZDE5ZTEzZjg5NTE2NTM5Yjk4ZWEwMWQzZTVhMjUzZjIiLCJwYXJ0cyI6Ilt7XCJwb2ludHNcIjpbNjQ4LjAsMzYwLjBdLFwiaW5kZXhcIjo1LjB9XSJ9"
+}

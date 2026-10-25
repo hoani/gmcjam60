@@ -1,3 +1,6 @@
+#macro BuildModePlay 0
+#macro BuildModeCreate 1
+
 function PhyBuilder(_assembly) : ActiveController() constructor {
     
     static Grid = 16
@@ -8,15 +11,22 @@ function PhyBuilder(_assembly) : ActiveController() constructor {
     draftSurface = surface_create(room_width, room_height)
     assemblySurface = surface_create(room_width, room_height)
     
+    
+    
     active = 0
-    materials = [
-        new MaterialEgg(),
+    
+    playMaterials = [
         new MaterialWheel(),
         new MaterialBeam(),
         new MaterialBall(),
         new MaterialBlock(),
         new MaterialBox(),
     ]
+    createMaterials = [
+        new MaterialEgg(),
+    ]
+    
+    materials = array_concat(playMaterials, [])
     
     placement = noone
     placed = noone
@@ -24,10 +34,23 @@ function PhyBuilder(_assembly) : ActiveController() constructor {
     deleteCircle = new Circle(new Vec2(0, 0), 8)
     refreshAssembly = true
     cancelling = false
-    blueprintIndex = 0
+    blueprintIndex = BuildModePlay
     
-    static SetBlueprint = function(index=0) {
+    static SetMode = function(index=BuildModePlay) {
+        if index != blueprintIndex {
+            active = 0
+        }
         blueprintIndex = index
+        switch (blueprintIndex) {
+            case BuildModePlay: {
+                materials = array_concat(playMaterials, [])
+                break;
+            }
+            case BuildModeCreate: {
+                materials = array_concat(createMaterials, playMaterials)
+                break;
+            }
+        }
     }
     
     static SelectPrevious = function() {
@@ -62,6 +85,11 @@ function PhyBuilder(_assembly) : ActiveController() constructor {
             if mouse_check_button_pressed(mb_right) {
                 PushControlStack(uid)
                 deleting = true
+            }
+            
+            if Debug() && keyboard_check_pressed(vk_space) {
+                DebugMessage($"Spec: {assembly.GetCurrent()}")
+                DebugMessage($"{string_length(assembly.GetCurrent())} bytes")
             }
             
             return
@@ -130,13 +158,13 @@ function PhyBuilder(_assembly) : ActiveController() constructor {
         }
     }
     
-    static Reset = function(_assembly=noone) {
+    static Reset = function(_assembly=noone, _encoded="") {
         if _assembly != noone {
             assembly = _assembly
             refreshAssembly = true
         }
         
-        assembly.Rebuild()
+        assembly.Rebuild(_encoded)
     }
     
     

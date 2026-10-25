@@ -25,8 +25,9 @@ function WheelJoiner(_circle) : Joinable() constructor {
 }
 
 
-function MaterialWheel() : Material() constructor {
+function MaterialWheel() : Material("Wheel") constructor {
     draw = new WheelDraw()
+    
     static Placement = function() {
         return new WheelPlacement(draw)
     }

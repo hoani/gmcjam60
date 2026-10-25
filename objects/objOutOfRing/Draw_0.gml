@@ -4,8 +4,6 @@ var f = flare.Fraction() * magnitude
 var mc = merge_colour(c_aqua, c_white, main.Fraction())
 var fc = merge_colour(c_lime, c_white, flare.Fraction())
 
-DrawPlus(new Vec2(room_width/2, room_height/2), 20)
-
 draw_primitive_begin(pr_trianglelist);
 
 

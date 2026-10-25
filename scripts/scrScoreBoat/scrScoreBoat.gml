@@ -69,6 +69,10 @@ function _ScoreBoatHandler() constructor {
         return sb_leaderboard_scores(cred.LevelBoard(), {offset: offset, limit: limit, order: order}, _success, _fail)
     }
     
+    static LevelIncrField = function(uuid, field, _success = FuncNone, _fail = FuncNone) {
+        sb_datastore_incr(cred.LevelData(), uuid, field, 1, _success, _fail)
+    }
+    
     static UploadLevel = function(_levelSpec, _success = FuncNone, _fail = FuncNone) {
         levelSpec = _levelSpec
         cb.upload.success.Push(_success)

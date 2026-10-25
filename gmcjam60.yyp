@@ -218,6 +218,7 @@
     {"id":{"name":"scr_sb_request","path":"scripts/scr_sb_request/scr_sb_request.yy",},},
     {"id":{"name":"scr_sb_session","path":"scripts/scr_sb_session/scr_sb_session.yy",},},
     {"id":{"name":"scrAnimate","path":"scripts/scrAnimate/scrAnimate.yy",},},
+    {"id":{"name":"scrAssemblies","path":"scripts/scrAssemblies/scrAssemblies.yy",},},
     {"id":{"name":"scrBrowser","path":"scripts/scrBrowser/scrBrowser.yy",},},
     {"id":{"name":"scrBuilder","path":"scripts/scrBuilder/scrBuilder.yy",},},
     {"id":{"name":"scrButton","path":"scripts/scrButton/scrButton.yy",},},

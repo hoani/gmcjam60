@@ -7,7 +7,7 @@ function BlockBody(_c, _p, _draw) : PolygonBodyDynamic(_c, _p, _draw) constructo
 
 function BlockJoiner(_polygon) : EdgeWeldJoiner(_polygon) constructor { }
 
-function MaterialBlock() : MaterialRectangle() constructor {
+function MaterialBlock() : MaterialRectangle("Block") constructor {
     draw = new BlockDraw()
     
     static Placement = function() {
@@ -18,6 +18,7 @@ function MaterialBlock() : MaterialRectangle() constructor {
 
 function BlockPlacement(draw) : RectanglePlacement(draw) constructor {
     index = MATERIAL_BLOCK
+    
     
     static _Place = function() {
         var p = Rectangle(c, width, height, dir);
@@ -51,7 +52,7 @@ function BlockDraw() : MaterialDraw() constructor {
 }
 
 
-function MaterialRectangle() : Material() constructor {
+function MaterialRectangle(_name) : Material(_name) constructor {
     static _DrawContext = function(_x, _y) {
         return {
             c: new Vec2(_x+BLOCK_BASE_WIDTH/2, _y+BLOCK_BASE_HEIGHT/2),
