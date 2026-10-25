@@ -18,7 +18,10 @@ function PhyPlay(_world) : ActiveController() constructor {
     remaining = 0
     world = _world
     
-    onRestart = FuncNone()
+    onRestart = FuncNone
+    onPublish = FuncNone
+    
+    canPublish = false
     
     retry = Button(new Vec2(room_width/2, room_height/2), sprRetry, function() {
         PopControlStack()
@@ -32,10 +35,24 @@ function PhyPlay(_world) : ActiveController() constructor {
         onRestart()
     }).HRight().VTop()
     
-    buttons = [retry, cancel]
+    publish = Button(new Vec2(room_width/2, room_height/2 + 96), sprPublish, function() {
+        PopControlStack()
+        Reset()
+        onPublish()
+    }).HCenter().VTop()
+    
+    buttons = [retry, cancel, publish]
     
     static WithOnRestart = function(_onRestart) {
         onRestart = _onRestart
+        return self
+    }
+    
+    static WithOnPublish = function(_onPublish=noone) {
+        canPublish = (_onPublish != noone)
+        if canPublish {
+            onPublish = _onPublish
+        }
         return self
     }
     
@@ -61,9 +78,13 @@ function PhyPlay(_world) : ActiveController() constructor {
     static OnBreak = function() {
         remaining--;
         if remaining <= 0 {
-            DebugMessage("You win")
+            DebugMessage($"You win, pub: {canPublish}")
             state.Set(StateWin)
-            EnableButtons(retry)
+            if canPublish {
+                EnableButtons([retry, publish])
+            } else {
+                EnableButtons(retry)
+            }
         }
     }
     
@@ -84,6 +105,10 @@ function PhyPlay(_world) : ActiveController() constructor {
     }
     
     static Update = function() {
+        array_foreach(buttons, function(b) {
+            b.Update()
+        })
+        
         if !InControlStack(uid) || !world.Started() {
             return
         }
@@ -106,12 +131,14 @@ function PhyPlay(_world) : ActiveController() constructor {
                 break
         }
         
-        array_foreach(buttons, function(b) {
-            b.Update()
-        })
+        
     }
     
     static Draw = function() {
+        array_foreach(buttons, function(b) {
+            b.Draw()
+        })
+        
         if !InControlStack(uid) {
             return
         }
@@ -123,9 +150,7 @@ function PhyPlay(_world) : ActiveController() constructor {
                 draw_sprite(sprResult, 1, room_width/2, room_height/2)
                 break
         }
-        array_foreach(buttons, function(b) {
-            b.Draw()
-        })
+        
     }
 
 }

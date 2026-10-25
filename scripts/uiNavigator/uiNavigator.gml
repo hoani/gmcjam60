@@ -12,7 +12,7 @@ function UiNavigator(width=512, _ypos=room_height/2, _xpos = room_width/2) const
     onSelected = undefined;
     
     pos = new Vec2(_xpos, _ypos)
-    font = fScrawlingPad
+    font = fScrawlingPadSm
     
     page = 0
     optionsPerPage = 8

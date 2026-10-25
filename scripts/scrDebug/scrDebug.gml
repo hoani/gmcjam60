@@ -2,7 +2,7 @@
 
 #macro FPS_FILTER 64
 
-#macro DEBUG_KEY_RESET vk_backspace
+#macro DEBUG_KEY_RESET vk_end
 #macro DEBUG_KEY_FPS_UP ord("P")
 #macro DEBUG_KEY_FPS_DOWN ord("O")
 #macro DEBUG_KEY_GOTO_ZOO ord("T")
@@ -16,6 +16,9 @@ function DebugClass(_enabled=false, _promo=false) constructor {
     
     static Update = function() {
         fps_avg = (fps_avg * (FPS_FILTER - 1)/FPS_FILTER) + fps_real/FPS_FILTER
+        if string_starts_with(room_get_name(room), "zoo") {
+            return
+        }
         _HandleControls();
     }
     

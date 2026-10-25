@@ -53,29 +53,33 @@ function ButtonClass(_pos, _sprite, _onPressed) : ActiveController() constructor
     }
     
     static Appear = function() {
+        hovered = false
         state.Set(StateActive)
         appear.Trigger()
     }
     
     static Disappear = function() {
+        hovered = false
         state.Set(StateIdle)
         appear.Trigger()
     }
     
     
     static Update = function() {
-        switch state.Get() {
-            case StateIdle:
-                if InControlStack(uid) {
-                    Appear()
-                }
-                
-                break;
-            case StateActive:
-                if !InControlStack(uid) {
-                    Disappear()
-                }
-                break;
+        if !appear.Active() {
+            switch state.Get() {
+                case StateIdle:
+                    if InControlStack(uid) {
+                        Appear()
+                    }
+                    
+                    break;
+                case StateActive:
+                    if !InControlStack(uid) {
+                        Disappear()
+                    }
+                    break;
+            }
         }
         if !InControlStack(uid) || appear.Active() {
             appear.Update()
@@ -121,6 +125,10 @@ function ButtonClass(_pos, _sprite, _onPressed) : ActiveController() constructor
             return
         }
         
+        if state.Get() == StateIdle && !appear.Active() {
+            return
+        }
+        
         _Draw()
     }
     
@@ -146,7 +154,7 @@ function ButtonClass(_pos, _sprite, _onPressed) : ActiveController() constructor
             var s = 1 + (1 - cooldown.Fraction())*amt
             var xoff = b.x0 + (1-s)*w/2
             var yoff = b.y0 + (1-s)*h/2
-            draw_sprite_ext(sprite, 0, xoff, yoff, s, s, 0, c_white, cooldown.Fraction())
+            draw_sprite_ext(sprite, 0, xoff, yoff, s, s, 0, c_white, cooldown.Fraction()*alpha)
         }
         draw_sprite_ext(sprite, 0, b.x0, b.y0, 1, 1, 0, c_white, alpha)
         
