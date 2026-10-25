@@ -70,6 +70,7 @@ publish = new Publish(
                 DebugMessage("Publishing succeeded")
                 publish.Done("Publish Succeeded")
                 canPublish = false
+                online.RequestPopulateRegistry()
             },
             function(_error){
                 DebugMessage($"Publishing failed {_error}")
@@ -78,8 +79,7 @@ publish = new Publish(
         )
     },
     function() {
-        PopControlStack()
-        PushControlStack(prevStack)
+        GoToBuild()
     }
 )
 
@@ -92,6 +92,12 @@ buttons = {
         })
         
         if canPublish && online.IsOnline() {
+            // Setup publish names if available
+            if online.HasUserLevelSpec() {
+                publish.name = online.GetUserLevelSpec().name
+                publish.username = online.GetUserLevelSpec().username
+            }
+            
             c.play.WithOnPublish(function(){
                 builder.Reset()
                 PushControlStack(publishStack)
@@ -124,6 +130,10 @@ buttons = {
             GoToBuild()
         }).HRight().VTop(),
         test: Button(new Vec2(room_width-16, 8), sprNavigateBack, function() {
+            if publish.state.Get() == publish.StateDone {
+                GoToBuild()
+                return
+            }
             PopControlStack()
             PushControlStack(prevStack)
         }).HRight().VTop(),

@@ -106,7 +106,7 @@ function Publish(_doPublish, _onPublish) : ActiveController() constructor {
             case StatePublish:
                 break
             case StateDone:
-                if keyboard_check_pressed(vk_enter) && state.Mono() > 20 {
+                if (keyboard_check_pressed(vk_enter) && state.Mono() > 20) || state.Mono() > 300 {
                     Reset()
                     onPublish(name, username)
                 }
@@ -122,9 +122,11 @@ function Publish(_doPublish, _onPublish) : ActiveController() constructor {
         }
         
         instructionText.Draw(0, room_height/4)
-        formText.Draw(0, room_height/2)
-        errorText.Draw(0, room_height*3/4, C_YELLOW)
         
+        if state.Get() == StateUser || state.Get() == StateName {
+            formText.Draw(0, room_height/2)
+            errorText.Draw(0, room_height*3/4, C_YELLOW)
+        }
     }
 
 }

@@ -82,6 +82,8 @@ function LevelEntryClass(_uuid, _name, _username) constructor {
         if struct_exists(s, "wins") { wins = _SafeReal(s.wins, wins) }
         if struct_exists(s, "uplays") { uplays = _SafeReal(s.uplays, uplays) }
         if struct_exists(s, "level") && !is_undefined(s.level) { level = s.level }
+        if struct_exists(s, "username") && !is_undefined(s.username) { username = s.username }
+        if struct_exists(s, "name") && !is_undefined(s.name) { name = s.name }
         
         return self
     }

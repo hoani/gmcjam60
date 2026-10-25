@@ -66,7 +66,16 @@ function OnlineHandler() constructor {
             return true
         }
         
+        // Every 5 minutes, repopulate the registry
+        if s.Mono() > 60*60*5 {
+            PopulateRegistry()
+        }
+        
         return false
+    }
+    
+    static RequestPopulateRegistry = function() {
+        PopulateRegistry()
     }
     
     static Login = function() {

@@ -36,6 +36,7 @@ function PhyAssembly(_world) constructor {
     }
     
     
+    
     static EncodeFull = function() {
         var full = array_concat(base, parts)
         var partsEnc = json_stringify(full);
