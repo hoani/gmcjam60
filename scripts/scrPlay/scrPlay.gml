@@ -20,6 +20,8 @@ function PhyPlay(_world) : ActiveController() constructor {
     
     onRestart = FuncNone
     onPublish = FuncNone
+    onWin = FuncNone
+    onPlay = FuncNone
     
     canPublish = false
     
@@ -56,6 +58,16 @@ function PhyPlay(_world) : ActiveController() constructor {
         return self
     }
     
+    static WithOnWin = function(_onWin) {
+        onWin = _onWin
+        return self
+    }
+    
+    static WithOnPlay = function(_onPlay) {
+        onPlay = _onPlay
+        return self
+    }
+    
     
     static Reset = function() {
         state = new State(StateIdle)
@@ -78,7 +90,8 @@ function PhyPlay(_world) : ActiveController() constructor {
     static OnBreak = function() {
         remaining--;
         if remaining <= 0 {
-            DebugMessage($"You win, pub: {canPublish}")
+            DebugMessage($"You win")
+            onWin()
             state.Set(StateWin)
             if canPublish {
                 EnableButtons([retry, publish])
@@ -122,6 +135,7 @@ function PhyPlay(_world) : ActiveController() constructor {
                     OnOutOfBounds()
                 } else {
                     DoRegistration()
+                    onPlay()
                 }
                 break;
             case StatePlay:

@@ -14,13 +14,11 @@ assembly= {
     build: new PhyAssembly(world),
 }
 
-
-
-
 function GoToOnline() {
     PopControlStack()
     PushControlStack(onlineStack)
     canPublish = false
+    onlineLevel = noone
     world.Destroy()
 }
 
@@ -45,7 +43,8 @@ canPublish = false
 
 publish = new Publish(
     function(){
-        DebugMessage("Publish Done")
+        var enc = assembly.build.EncodeFull()
+        DebugMessage($"Publishing: {enc}")
         publish.Done("Publish Succeeded")
         canPublish = false
     },
@@ -120,6 +119,49 @@ play = new PhyPlay(world)
 builder = new PhyBuilder(assembly.play)
 browser = new Browser()
 
+play.WithOnWin(function(){
+    if onlineLevel != noone {
+        DebugMessage($"TODO: Publish Win for {onlineLevel.uuid}")
+    }
+})
+
+play.WithOnPlay(function(){
+    if onlineLevel != noone {
+        DebugMessage($"TODO: Publish Play for {onlineLevel.uuid}")
+    }
+})
+
+var levelStr = "eyJoYXNoIjoiYzliOWU1NzNkYWQyOWY0ZWI0NmNkYjdiYThkYWE5M2MiLCJwYXJ0cyI6Ilt7XCJwb2ludHNcIjpbNTg0LjAsMjk2LjBdLFwiaW5kZXhcIjo1LjB9LHtcInBvaW50c1wiOlsyOTYuMCw2MDAuMCw5NTIuMCw2MDAuMCw5NTIuMCw2MDAuMCw5MDQuMCw2NDguMF0sXCJpbmRleFwiOjEuMH0se1wicG9pbnRzXCI6WzU4NC4wLDcyLjAsNjAwLjAsMTM2LjAsNjAwLjAsMTg0LjBdLFwiaW5kZXhcIjozLjB9XSJ9"
+
+
+levelRegistry = new LevelRegistry()
+levelRegistry.OnLevel(LevelEntry("abcdd", "Test 0", "Steve1").Populate({likes: 0, plays: 0, wins: 0, uplays: 0, level: levelStr}))
+levelRegistry.OnLevel(LevelEntry("abcde", "Test 1", "Steve2").Populate({likes: 0, plays: 0, wins: 0, uplays: 0, level: levelStr}))
+levelRegistry.OnLevel(LevelEntry("abcdf", "Test 2", "Steve3").Populate({likes: 0, plays: 0, wins: 0, uplays: 0, level: levelStr}))
+levelRegistry.OnLevel(LevelEntry("abcdg", "Test 3", "Steve4").Populate({likes: 0, plays: 0, wins: 0, uplays: 0, level: levelStr}))
+levelRegistry.OnLevel(LevelEntry("abcdh", "Test 4", "Steve5").Populate({likes: 0, plays: 0, wins: 0, uplays: 0, level: levelStr}))
+levelRegistry.OnLevel(LevelEntry("abcdi", "Test 5", "Steve6").Populate({likes: 0, plays: 0, wins: 0, uplays: 0, level: levelStr}))
+
+
+onlineLevel = noone
+
+browser.Refresh(
+    levelRegistry.GetDisplay(), 
+    function(which) {
+        PopControlStack()
+        DebugMessage($"Selected {which}")
+        onlineLevel = levelRegistry.GetActive(which)
+        
+        assembly.play.SetBase([])
+        assembly.play.LoadBase(onlineLevel.level)
+        assembly.play.Reset()
+        builder.SetBlueprint(0)
+        builder.Reset(assembly.play)
+        
+        PushControlStack(levelStack)
+    }
+)
+
 
 title = new Title(function() {
     PopControlStack()
@@ -151,6 +193,7 @@ testStack = [builder.uid, buttons.start.uid, buttons.back.build.uid]
 onlineStack = [browser.uid, buttons.build.uid, buttons.back.sandbox.uid]
 titleStack = [c.title.uid, buttons.online.uid]
 publishStack = [c.publish.uid, buttons.back.test.uid]
+levelStack = [builder.uid, buttons.back.online.uid, buttons.start.uid]
 
 StateTitle = 0
 StateBuild = 1
@@ -167,7 +210,7 @@ surface_resize(application_surface, room_width, room_height);
 
 if Debug() {
     //PushControlStack(titleStack)
-    PushControlStack(sandboxStack)
+    PushControlStack(onlineStack)
 } else {
     PushControlStack(titleStack)
 }

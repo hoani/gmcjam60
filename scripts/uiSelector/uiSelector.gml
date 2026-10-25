@@ -180,6 +180,7 @@ function Selector(width=512, _ypos=room_height/2, _xpos = room_width/2) construc
             } else {
                 onSelected(returns[hovered])
             }
+            state.Set(state_active)
         }
     }
     

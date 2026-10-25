@@ -32,7 +32,7 @@ void main() {
         noise(px * 0.05 + u_frame * 3.1),
         noise(px * 0.05 + u_frame * 7.7 + 50.0)
     ) - 0.5;
-    vec2 uv = v_vTexcoord + offset * 0.003*u_amount;  // wobble in UV units
+    vec2 uv = v_vTexcoord + offset * 0.001*u_amount;  // wobble in UV units
 
     vec4 col = v_vColour * texture2D(gm_BaseTexture, uv);
     col.a *= mix(1.0 - 0.4*u_amount, 1.0, noise(px * 0.8 + u_frame));
