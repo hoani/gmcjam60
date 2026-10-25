@@ -56,7 +56,7 @@ function OnlineHandler() constructor {
             return true
         }
         
-        if array_length(registry.GetActiveList()) == 0 {
+        if array_length(registry.GetActiveList()) == 0 && array_length(pending) == 0 {
             PopulateRegistry()
             return true
         }
@@ -171,7 +171,7 @@ function OnlineHandler() constructor {
         online.BrowseLevels(0, 200, "newest", 
             function(spec){
                 var len = array_length(spec.scores)
-                DebugMessage($"Got {len}")
+                DebugMessage($"Got {len} entries")
                 if len == 0 {
                     s.Set(StateCooldown)
                     return
@@ -184,11 +184,14 @@ function OnlineHandler() constructor {
                     var username = struct_get(levelSpec, "player_name") ?? "Guest"
                     var player = struct_get(levelSpec, "player") ?? ""
                     if player == "" {
+                        
                         continue
                     }
                     levelSpec = new LevelEntryClass(player, levelName, username)
                     registry.OnLevel(levelSpec)
-                    array_push(pending, player)
+                    if !array_contains(pending, player) {
+                        array_push(pending, player)
+                    }
                 }
                 onLevelRegistry()
                 s.Set(StateIdle)

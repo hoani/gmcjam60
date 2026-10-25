@@ -3,12 +3,12 @@ online = new OnlineHandler()
 online.OnLevelRegistry(function(){
     var levelStr = "eyJoYXNoIjoiYzliOWU1NzNkYWQyOWY0ZWI0NmNkYjdiYThkYWE5M2MiLCJwYXJ0cyI6Ilt7XCJwb2ludHNcIjpbNTg0LjAsMjk2LjBdLFwiaW5kZXhcIjo1LjB9LHtcInBvaW50c1wiOlsyOTYuMCw2MDAuMCw5NTIuMCw2MDAuMCw5NTIuMCw2MDAuMCw5MDQuMCw2NDguMF0sXCJpbmRleFwiOjEuMH0se1wicG9pbnRzXCI6WzU4NC4wLDcyLjAsNjAwLjAsMTM2LjAsNjAwLjAsMTg0LjBdLFwiaW5kZXhcIjozLjB9XSJ9"
 
-    levelRegistry.OnLevel(LevelEntry("abcdd", "Test 0", "Steve1").Populate({likes: 0, plays: 0, wins: 0, uplays: 0, level: levelStr}))
-    levelRegistry.OnLevel(LevelEntry("abcde", "Test 1", "Steve2").Populate({likes: 0, plays: 0, wins: 0, uplays: 0, level: levelStr}))
-    levelRegistry.OnLevel(LevelEntry("abcdf", "Test 2", "Steve3").Populate({likes: 0, plays: 0, wins: 0, uplays: 0, level: levelStr}))
-    levelRegistry.OnLevel(LevelEntry("abcdg", "Test 3", "Steve4").Populate({likes: 0, plays: 0, wins: 0, uplays: 0, level: levelStr}))
-    levelRegistry.OnLevel(LevelEntry("abcdh", "Test 4", "Steve5").Populate({likes: 0, plays: 0, wins: 0, uplays: 0, level: levelStr}))
-    levelRegistry.OnLevel(LevelEntry("abcdi", "Test 5", "Steve6").Populate({likes: 0, plays: 0, wins: 0, uplays: 0, level: levelStr}))
+    //levelRegistry.OnLevel(LevelEntry("abcdd", "Test 0", "Steve1").Populate({likes: 0, plays: 0, wins: 0, uplays: 0, level: levelStr}))
+    //levelRegistry.OnLevel(LevelEntry("abcde", "Test 1", "Steve2").Populate({likes: 0, plays: 0, wins: 0, uplays: 0, level: levelStr}))
+    //levelRegistry.OnLevel(LevelEntry("abcdf", "Test 2", "Steve3").Populate({likes: 0, plays: 0, wins: 0, uplays: 0, level: levelStr}))
+    //levelRegistry.OnLevel(LevelEntry("abcdg", "Test 3", "Steve4").Populate({likes: 0, plays: 0, wins: 0, uplays: 0, level: levelStr}))
+    //levelRegistry.OnLevel(LevelEntry("abcdh", "Test 4", "Steve5").Populate({likes: 0, plays: 0, wins: 0, uplays: 0, level: levelStr}))
+    //levelRegistry.OnLevel(LevelEntry("abcdi", "Test 5", "Steve6").Populate({likes: 0, plays: 0, wins: 0, uplays: 0, level: levelStr}))
     
     browser.Refresh(levelRegistry.GetDisplay())
 })
@@ -33,7 +33,7 @@ assembly.play.LoadBase(EggInTheMiddle())
 
 
 function GoToOnline() {
-    PopControlStack()
+    ClearControlStack()
     PushControlStack(onlineStack)
     canPublish = false
     onlineLevel = noone

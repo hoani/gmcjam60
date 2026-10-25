@@ -3,15 +3,15 @@
 #macro FPS_FILTER 64
 
 #macro DEBUG_KEY_RESET vk_end
-#macro DEBUG_KEY_FPS_UP ord("P")
-#macro DEBUG_KEY_FPS_DOWN ord("O")
-#macro DEBUG_KEY_GOTO_ZOO ord("T")
+#macro DEBUG_KEY_FPS_UP vk_add
+#macro DEBUG_KEY_FPS_DOWN vk_subtract
 #macro DEBUG_KEY_SFX_TOGGLE ord("N")
 #macro DEBUG_KEY_MUSIC_TOGGLE ord("M")
 
 function DebugClass(_enabled=false, _promo=false) constructor {
     enabled = _enabled
     promo = _promo
+    enableControls=false
     fps_avg = 0;
     
     static Update = function() {
@@ -40,7 +40,7 @@ function DebugClass(_enabled=false, _promo=false) constructor {
     }
     
     static _HandleControls = function() {
-    	if !enabled {
+    	if !enabled || !enableControls {
     		return
     	}
     	
@@ -56,9 +56,6 @@ function DebugClass(_enabled=false, _promo=false) constructor {
     		game_set_speed(game_get_speed(gamespeed_fps)*0.5, gamespeed_fps)
         }
         
-        if keyboard_check_pressed(DEBUG_KEY_GOTO_ZOO) {
-    		room_goto(rmZoo)
-        }
         
         if keyboard_check_pressed(DEBUG_KEY_SFX_TOGGLE) {
     		SfxToggle()

@@ -45,6 +45,11 @@ function MaterialFactory() constructor {
     }
 }
 
+
+function EncodedPlacementEqual(a, b) {
+    return array_equals(a.points, b.points) && a.index == b.index
+}
+
 function EncodePlacement(index, points){
     var _points = []
     for (var i = 0; i<array_length(points); i++) {

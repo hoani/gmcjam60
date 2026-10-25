@@ -25,7 +25,7 @@ function PhyAssembly(_world) constructor {
     static Delete = function(spec) {
         var enc = spec.Encode()
         for (var i = 0; i < array_length(parts); i++) {
-            if json_stringify(parts[i]) == json_stringify(enc) {
+            if EncodedPlacementEqual(enc, parts[i]) {
       			array_delete(parts, i, 1);
       			break
       		}

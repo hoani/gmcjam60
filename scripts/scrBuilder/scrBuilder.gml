@@ -56,20 +56,35 @@ function PhyBuilder(_assembly) : ActiveController() constructor {
                 break;
             }
         }
+        SelectIndex(active)
+    }
+    
+    static SelectIndex = function(index) {
+        if array_length(materials) == 0 {
+            return
+        }
+        while index < 0 {
+            index += array_length(materials)
+        }
+        active = index % array_length(materials)
+        materialName.Set(materials[active].name)
+        placeableChecker = materials[active].Placement()
     }
     
     static SelectPrevious = function() {
+        SelectIndex(active - 1)
         active = (active + array_length(materials) - 1) % array_length(materials) 
         materialName.Set(materials[active].name)
         placeableChecker = materials[active].Placement()
     }
     
     static SelectNext = function() {
-        active = (active + 1) % array_length(materials)
-        materialName.Set(materials[active].name)
-        placeableChecker = materials[active].Placement()
+        SelectIndex(active + 1)
     }
     
+    static _CanPlace = function() {
+        return (blueprintIndex != BuildModeCreate) || string_length(assembly.GetCurrent()) < LevelSizeUpper
+    }
     
     static _Update = function() {
         mouse.x = clamp(ClipToGrid(MouseX), 40, room_width - 40)
@@ -77,9 +92,8 @@ function PhyBuilder(_assembly) : ActiveController() constructor {
         placeableChecker.Drag(mouse.x, mouse.y) // Always update so when we place it is in the correct location
         
 
-        
         if placement == noone && deleting == false {
-            canPlace = placeableChecker.CanPlace()
+            canPlace = placeableChecker.CanPlace() && _CanPlace()
             
             
             if mouse_check_button_pressed(mb_left) && canPlace{ 
@@ -116,7 +130,7 @@ function PhyBuilder(_assembly) : ActiveController() constructor {
 
         if placement != noone {
             placement.Drag(mouse.x, mouse.y)
-            canPlace = placement.CanPlace()
+            canPlace = placement.CanPlace() && _CanPlace()
             
             if mouse_check_button_released(mb_left) && !cancelling && canPlace {
                 placed = placement.Confirm(mouse.x, mouse.y)
