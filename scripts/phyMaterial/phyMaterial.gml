@@ -1,5 +1,5 @@
 #macro C_DELETE C_RED 
-#macro C_JOIN c_lime
+#macro C_JOIN c_orange
 #macro C_PLACING C_YELLOW
 #macro C_PLACABLE C_GREEN
 
@@ -233,7 +233,7 @@ function MaterialPlacement(_draw)  constructor {
     static DrawJoins = function() {
         for (var i = 0; i< array_length(joinCandidates); i++) {
             var j = joinCandidates[i]
-            DrawCircleOutline(j.pos, 5, 2, c_lime)
+            DrawCircleOutline(j.pos, 5, 2, C_JOIN)
         }
     }
     

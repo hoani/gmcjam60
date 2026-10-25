@@ -74,11 +74,11 @@ function PhyBuilder(_assembly) : ActiveController() constructor {
     static _Update = function() {
         mouse.x = clamp(ClipToGrid(MouseX), 40, room_width - 40)
         mouse.y = clamp(ClipToGrid(MouseY), 40, room_height - 40)
+        placeableChecker.Drag(mouse.x, mouse.y) // Always update so when we place it is in the correct location
         
 
         
         if placement == noone && deleting == false {
-            placeableChecker.Drag(mouse.x, mouse.y)
             canPlace = placeableChecker.CanPlace()
             
             

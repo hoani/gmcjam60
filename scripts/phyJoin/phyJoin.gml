@@ -32,6 +32,9 @@ function PhyJoin(_pos) constructor {
         inst.x = inst.xstart + physics_joint_get_value(join, phy_joint_anchor_1_x) -anchor.x
         inst.y = inst.ystart + physics_joint_get_value(join, phy_joint_anchor_1_y) -anchor.y
         
+        pos.x = inst.x
+        pos.y = inst.y
+        
         inst.image_angle = physics_joint_get_value(join, phy_joint_angle)
         
         strain = CalculateStrain();
@@ -44,6 +47,7 @@ function PhyJoin(_pos) constructor {
        	}
     }
     
+
     static GetJoinLine = function() {
         var _x1 = physics_joint_get_value(join, phy_joint_anchor_1_x)
        	var _y1 = physics_joint_get_value(join, phy_joint_anchor_1_y)
@@ -65,6 +69,6 @@ function PhyJoin(_pos) constructor {
     }
     
     static Draw = function() {
-        DrawCircleOutline(pos, 8, 2, c_lime)
+        DrawCircleOutline(pos, 8, 2, C_JOIN)
     }
 }
