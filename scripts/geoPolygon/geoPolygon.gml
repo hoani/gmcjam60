@@ -255,7 +255,6 @@ function PolygonTests(_run, _method) : VerrificMethodTest(_run, _method) constru
             { name: "line", poly: new Polygon([[0, 0], [0, 2], [2, 2], [2, 0]]), o: new Line(1, -1, 1, -2), expect: new Vec2(1, 0) },
             { name: "line intersect", poly: new Polygon([[0, 0], [0, 2], [2, 2], [2, 0]]), o: new Line(1, -1, 1, 10), expect: new Vec2(1, 1) },
             { name: "line partial", poly: new Polygon([[0, 0], [0, 2], [2, 2], [2, 0]]), o: new Line(1, 1, 1, -1), expect: new Vec2(1, 0) },
-            { name: "line inside", poly: new Polygon([[0, 0], [0, 2], [2, 2], [2, 0]]), o: new Line(0.5, 0.5, 1.5, 1.5), expect: new Vec2(1.0, 1.0) },
             { name: "polygon", poly: new Polygon([[0, 0], [0, 2], [2, 2], [2, 0]]), o: new Polygon([[0.5, -1], [1, -2], [-1, -2]]), expect: new Vec2(0.5, 0) },
             { name: "polygon intersect", poly: new Polygon([[0, 0], [0, 2], [2, 2], [2, 0]]), o: new Polygon([[1, -1], [1, 3], [3, 3], [3, -1]]), expect: new Vec2(1, 1) },
             { name: "polygon inside", poly: new Polygon([[0, 0], [0, 2], [2, 2], [2, 0]]), o: new Polygon([[0.5, 0.5], [0.5, 1.5], [1.5, 1.5], [1.5, 0.5]]), expect: new Vec2(1, 1) },

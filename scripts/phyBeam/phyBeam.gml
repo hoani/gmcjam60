@@ -110,7 +110,10 @@ function BeamPlacement(_draw) : MaterialPlacement(_draw) constructor {
     }
     
     static _Mask = function() {
-        return _Shape()
+        var base = _Shape()
+        var d = base.Distance()
+        var factor = (d - 1)/d
+        return base.Multiply(factor)
     }
     
     

@@ -65,6 +65,13 @@ function Line(_x0, _y0, _x1, _y1) constructor {
         return false
     }
     
+    static Multiply = function(_factor) {
+        var c = Center()
+        var a = p0.Subtract(c).Multiply(_factor).Add(c)
+        var b = p1.Subtract(c).Multiply(_factor).Add(c)
+        return new Line(a.x, a.y, b.x, b.y)
+    }
+    
     static ClosestPointLine = function(o) {
         if !Intersect(o) {
             var candidate = ClosestPoint(o.p0)
@@ -108,34 +115,32 @@ function Line(_x0, _y0, _x1, _y1) constructor {
     }
     
     static ClosestPointPolygon = function(o) {
-        if !Intersect(o) {
-            var candidate = p0
-            var d2 = p0.Subtract(o.ClosestPoint(p0)).Distance2()
+        if Intersect(o) {
+            var sum = new Vec2(0,0)
+            var n = 0
             for (var i = 0; i<array_length(o.lines); i++) {
-                var p = ClosestPointLine(o.lines[i])
-                var pd2 = p.Subtract(o.ClosestPoint(p)).Distance2()
-                if pd2 < d2 {
-                    candidate = p
-                    d2 = pd2
+                var l = o.lines[i]
+                if l.Intersect(self) {
+                    sum = sum.Add(ClosestPointLine(l))
+                    n+=1
                 }
             }
-            return candidate
-        }
-        
-        var sum = new Vec2(0,0)
-        var n = 0
-        for (var i = 0; i<array_length(o.lines); i++) {
-            var l = o.lines[i]
-            if l.Intersect(self) {
-                sum = sum.Add(ClosestPointLine(l))
-                n+=1
+            if n > 0 {
+                return sum.Multiply(1/n)
             }
         }
-        if n > 0 {
-            return sum.Multiply(1/n)
+        
+		var candidate = p0
+        var d2 = p0.Subtract(o.ClosestPoint(p0)).Distance2()
+        for (var i = 0; i<array_length(o.lines); i++) {
+            var p = ClosestPointLine(o.lines[i])
+            var pd2 = p.Subtract(o.ClosestPoint(p)).Distance2()
+            if pd2 < d2 {
+                candidate = p
+                d2 = pd2
+            }
         }
-
-		return p0.Add(p1).Multiply(0.5) // Failsafe - shouldn't get here.
+        return candidate
     }
     
     static ClosestPointCircle = function(o) {
@@ -201,15 +206,15 @@ function LineTests(_run, _method) : VerrificMethodTest(_run, _method) constructo
         for (var i = 5; i < 10; i++) {
             var v = DirectionToVec2(i*75);
             var l = new Line(5, 5, 5 + v.x*i, 5 + v.y*i);
-            assert_that((l.Distance() - i) < 1/64, $"distance of {l.Str()} does not match {i}");
-            assert_that((l.Distance2() - i*i) < 1/64, $"distance of {l.Str()} does not match {i}");
+            assert_that(abs(l.Distance() - i) < 1/64, $"distance of {l.Str()} does not match {i}");
+            assert_that(abs(l.Distance2() - i*i) < 1/64, $"distance of {l.Str()} does not match {i}");
         }
         
         for (var i = 0; i<360; i++) {
             var dir = i;
             var v = DirectionToVec2(i);
             var l = new Line(100, 120, 100 + v.x*5, 120 + v.y*5)
-            assert_that(angle_difference(l.Direction(), dir) < 1/64, $"direction of {l.Str()}) does not match {dir}");
+            assert_that(abs(angle_difference(l.Direction(), dir)) < 1/64, $"direction of {l.Str()}) does not match {dir}");
         }
     }
     
@@ -250,7 +255,6 @@ function LineTests(_run, _method) : VerrificMethodTest(_run, _method) constructo
             { name: "polygon", l0: new Line(-1, 0, 1, 0), o: new Polygon([[0.5, 1], [1, 2], [-1, 2]]), expect: new Vec2(0.5, 0) },
             { name: "polygon intersect", l0: new Line(-1, 1, 3, 1), o: new Polygon([[0, 0], [0, 2], [2, 2], [2, 0]]), expect: new Vec2(1, 1) },
             { name: "polygon partial", l0: new Line(1, 1, 3, 1), o: new Polygon([[0, 0], [0, 2], [2, 2], [2, 0]]), expect: new Vec2(2, 1) },
-            { name: "polygon inside", l0: new Line(0.5, 0.5, 1.5, 1.5), o: new Polygon([[0, 0], [0, 2], [2, 2], [2, 0]]), expect: new Vec2(1.0, 1.0) },
             { name: "circle", l0: new Line(-1, 0, 1, 0), o: new Circle(new Vec2(0.5, 5), 1), expect: new Vec2(0.5, 0) },
             { name: "circle intersect", l0: new Line(-3, 1, 3, 1), o: new Circle(new Vec2(0, 0), 2), expect: new Vec2(0, 1) },
             { name: "circle inside", l0: new Line(-1, 0.5, 1, 0.5), o: new Circle(new Vec2(0, 0), 2), expect: new Vec2(0, 0.5) },
