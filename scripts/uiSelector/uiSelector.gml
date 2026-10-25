@@ -174,7 +174,7 @@ function Selector(width=512, _ypos=room_height/2, _xpos = room_width/2) construc
     }
     
     static _UpdateSelected = function() {
-        if state.mono > 60 {
+        if state.mono > 30 {
             if is_undefined(returns) {
                 onSelected(hovered)    
             } else {
@@ -226,11 +226,8 @@ function Selector(width=512, _ypos=room_height/2, _xpos = room_width/2) construc
             var opt = options[i]
             
             if i == hovered {
-                if floor(state.mono/12) % 2 == 1 {
-                    _DrawOptHovered(opt)
-                } else {
-                    _DrawOptSelected(opt)
-                }
+                _DrawOptHovered(opt)
+                _DrawOptSelected(opt)
             } else {
                 _DrawOptIdle(opt)
             }
@@ -273,14 +270,18 @@ function Selector(width=512, _ypos=room_height/2, _xpos = room_width/2) construc
     static _DrawOptSelected = function(opt) {
         var frame = MonoSlowed(4);
         var amount = 0.5;
-        var alpha = 1
+        
+        
+        
+        var fract = state.mono/30
+        var alpha = 1 - fract
         
         shader_set(shWobble);
         shader_set_uniform_f(shader_get_uniform(shWobble, "u_frame"), frame);
         shader_set_uniform_f(shader_get_uniform(shWobble, "u_amount"), amount);
         
         var b = opt.b;
-        var m = margin/4;
+        var m = (fract*2 + 1/4)*margin;
         opt.s.Draw(b.x0 + hpad, b.y0 + vpad, C_WHITE);
         prim.RectangleBorder(b.x0-m, b.y0-m, b.x1+m, b.y1+m, 4, prim.border.light, alpha);
         m = m+1;

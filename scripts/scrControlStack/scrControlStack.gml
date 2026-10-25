@@ -61,6 +61,10 @@ function ControlStackClass() constructor {
         pending = []
     }
     
+    static Peek = function() {
+        return array_last(stack)
+    }
+    
     /// Pop the active items off the stack.
     static Pop = function() {
         array_pop(stack);
@@ -103,6 +107,11 @@ function ControlStackClass() constructor {
 function PushControlStack(_ids=[], pushOnLock=true) {
     ControlStack().Push(_ids, pushOnLock);
 }
+
+function PeekControlStack() {
+    return ControlStack().Peek();
+}
+
 
 function PopControlStack() {
     ControlStack().Pop();

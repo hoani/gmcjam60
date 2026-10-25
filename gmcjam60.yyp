@@ -214,6 +214,7 @@
     {"id":{"name":"scr_sb_request","path":"scripts/scr_sb_request/scr_sb_request.yy",},},
     {"id":{"name":"scr_sb_session","path":"scripts/scr_sb_session/scr_sb_session.yy",},},
     {"id":{"name":"scrAnimate","path":"scripts/scrAnimate/scrAnimate.yy",},},
+    {"id":{"name":"scrBrowser","path":"scripts/scrBrowser/scrBrowser.yy",},},
     {"id":{"name":"scrBuilder","path":"scripts/scrBuilder/scrBuilder.yy",},},
     {"id":{"name":"scrButton","path":"scripts/scrButton/scrButton.yy",},},
     {"id":{"name":"scrCallback","path":"scripts/scrCallback/scrCallback.yy",},},
@@ -306,6 +307,7 @@
     {"id":{"name":"sprHelp","path":"sprites/sprHelp/sprHelp.yy",},},
     {"id":{"name":"sprHelpHover","path":"sprites/sprHelpHover/sprHelpHover.yy",},},
     {"id":{"name":"sprNavigateBack","path":"sprites/sprNavigateBack/sprNavigateBack.yy",},},
+    {"id":{"name":"sprNavigateBuild","path":"sprites/sprNavigateBuild/sprNavigateBuild.yy",},},
     {"id":{"name":"sprNavigateOnline","path":"sprites/sprNavigateOnline/sprNavigateOnline.yy",},},
     {"id":{"name":"sprNext","path":"sprites/sprNext/sprNext.yy",},},
     {"id":{"name":"sprPhyBase","path":"sprites/sprPhyBase/sprPhyBase.yy",},},
@@ -332,6 +334,7 @@
   "resourceVersion":"2.0",
   "RoomOrderNodes":[
     {"roomId":{"name":"rm_entry","path":"rooms/rm_entry/rm_entry.yy",},},
+    {"roomId":{"name":"rmGame","path":"rooms/rmGame/rmGame.yy",},},
     {"children":[
         {"children":[
             {"roomId":{"name":"zooUi","path":"rooms/zooUi/zooUi.yy",},},
@@ -352,7 +355,6 @@
             {"roomId":{"name":"zooText","path":"rooms/zooText/zooText.yy",},},
           ],"groupName":"text",},
       ],"groupName":"zoo",},
-    {"roomId":{"name":"rmGame","path":"rooms/rmGame/rmGame.yy",},},
     {"roomId":{"name":"rmZoo","path":"rooms/rmZoo/rmZoo.yy",},},
   ],
   "templateType":"game",

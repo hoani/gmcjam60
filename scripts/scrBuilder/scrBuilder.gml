@@ -1,9 +1,9 @@
-function PhyBuilder(world) : ActiveController() constructor {
+function PhyBuilder(_assembly) : ActiveController() constructor {
     
     static Grid = 16
     static GridOffset = 8
     
-    assembly = new PhyAssembly(world)
+    assembly = _assembly
     
     draftSurface = surface_create(room_width, room_height)
     assemblySurface = surface_create(room_width, room_height)
@@ -24,7 +24,11 @@ function PhyBuilder(world) : ActiveController() constructor {
     deleteCircle = new Circle(new Vec2(0, 0), 8)
     refreshAssembly = true
     cancelling = false
+    blueprintIndex = 0
     
+    static SetBlueprint = function(index=0) {
+        blueprintIndex = index
+    }
     
     static SelectPrevious = function() {
         active = (active + array_length(materials) - 1) % array_length(materials) 
@@ -126,15 +130,23 @@ function PhyBuilder(world) : ActiveController() constructor {
         }
     }
     
-    static Reset = function() {
+    static Reset = function(_assembly=noone) {
+        if _assembly != noone {
+            assembly = _assembly
+            refreshAssembly = true
+        }
+        
         assembly.Rebuild()
     }
     
     
     static Draw = function() {
-        if PhysicsWorld().Started() {
-            return 
+        if !InControlStack(uid) || PhysicsWorld().Started() {
+            refreshAssembly = true
+            return
         }
+        
+        draw_sprite_stretched(sprBlueprint, blueprintIndex, 0, 0, room_width, room_height)
         _DrawAssembly()
         _DrawPlacement()
     }

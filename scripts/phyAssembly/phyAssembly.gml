@@ -6,6 +6,17 @@ function PhyAssembly(_world) constructor {
     base = []
     parts = []
     
+    
+    static ConcatAssembly = function() {
+        return array_concat(base, parts)
+    }
+    
+    static SetBase = function(_base=[]) {
+        base = _base
+        parts = []
+        history = new History()
+    }
+    
     static Add = function(spec) {
         array_push(parts, spec.Encode())
         history.Add(Encode())
@@ -108,8 +119,17 @@ function PhyAssembly(_world) constructor {
     }
     
     
-    static Rebuild = function() {
+    static GetCurrent = function() {
         var encoded = history.current
+        if encoded == -1 {
+            return ""
+        }
+        return encoded
+    }
+    
+    
+    static Rebuild = function() {
+        var encoded = GetCurrent()
         Reset()
         if encoded == "" {
             return;
@@ -118,7 +138,7 @@ function PhyAssembly(_world) constructor {
     }
     
     static Undo = function() {
-        var encoded = history.Undo()
+        var encoded = GetCurrent()
         Reset()
         if encoded == "" {
             return;
@@ -127,7 +147,7 @@ function PhyAssembly(_world) constructor {
     }
     
     static Redo = function() {
-        var encoded = history.Redo()
+        var encoded = GetCurrent()
         Reset()
         if encoded == "" {
             return;

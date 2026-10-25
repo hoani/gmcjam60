@@ -1,4 +1,4 @@
-
+ 
 function DummyBreakNotifier() constructor {
     static OnBreak = function() {
     }
@@ -8,7 +8,7 @@ function DummyBreakNotifier() constructor {
 }
 
 
-function PhyPlay(_world, _onRestart) : ActiveController() constructor {
+function PhyPlay(_world) : ActiveController() constructor {
     static StateIdle = 0
     static StatePlay = 1
     static StateWin = 2
@@ -18,7 +18,7 @@ function PhyPlay(_world, _onRestart) : ActiveController() constructor {
     remaining = 0
     world = _world
     
-    onRestart = _onRestart
+    onRestart = FuncNone()
     
     retry = Button(new Vec2(room_width/2, room_height/2), sprRetry, function() {
         PopControlStack()
@@ -33,6 +33,11 @@ function PhyPlay(_world, _onRestart) : ActiveController() constructor {
     }).HRight().VTop()
     
     buttons = [retry, cancel]
+    
+    static WithOnRestart = function(_onRestart) {
+        onRestart = _onRestart
+        return self
+    }
     
     
     static Reset = function() {

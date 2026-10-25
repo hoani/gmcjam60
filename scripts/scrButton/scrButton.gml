@@ -12,8 +12,14 @@ function ButtonClass(_pos, _sprite, _onPressed) : ActiveController() constructor
     h = sprite_get_height(_sprite)
     c = new Vec2(_pos.x + w/2, _pos.y + h/2)
     b = new PositionedBox(c.x, c.y, w, h)
-    cooldown = new Cooldown(30)
+    cooldown = new Cooldown(15)
     hovered = false
+    
+    static StateIdle = 0
+    static StateActive = 1
+    
+    state = new State(StateIdle)
+    appear = new Cooldown(16)
     
     
     static HLeft = function() {
@@ -45,9 +51,42 @@ function ButtonClass(_pos, _sprite, _onPressed) : ActiveController() constructor
         b = new PositionedBox(b.x, c.y - h/2, w, h)
         return self
     }
+    
+    static Appear = function() {
+        state.Set(StateActive)
+        appear.Trigger()
+    }
+    
+    static Disappear = function() {
+        state.Set(StateIdle)
+        appear.Trigger()
+    }
+    
+    
+    static Update = function() {
+        switch state.Get() {
+            case StateIdle:
+                if InControlStack(uid) {
+                    Appear()
+                }
+                
+                break;
+            case StateActive:
+                if !InControlStack(uid) {
+                    Disappear()
+                }
+                break;
+        }
+        if !InControlStack(uid) || appear.Active() {
+            appear.Update()
+            return
+        }
+        method(self, static_get(ActiveController).Update)();
+    }
 
     
     static _Update = function() {
+        
         if cooldown.Active() {
             cooldown.Update()
             if !cooldown.Active() {
@@ -78,7 +117,7 @@ function ButtonClass(_pos, _sprite, _onPressed) : ActiveController() constructor
     
     
     static Draw = function() {
-        if !InControlStack(uid) {
+        if !InControlStack(uid) && !appear.Active(){
             return
         }
         
@@ -90,13 +129,21 @@ function ButtonClass(_pos, _sprite, _onPressed) : ActiveController() constructor
         var frame = MonoSlowed(hovered ? 4 : 8);
         var amount = hovered ? 0.5 : 1.25;
         var alpha = hovered ? 1 : 0.75;
+        if appear.Active() {
+            if state.Get() == StateActive {
+                alpha = alpha*(1-appear.Fraction())
+            } else {
+                alpha = alpha*(appear.Fraction())
+            }
+        }
         
         shader_set(shWobble);
         shader_set_uniform_f(shader_get_uniform(shWobble, "u_frame"), frame);
         shader_set_uniform_f(shader_get_uniform(shWobble, "u_amount"), amount);
         
         if cooldown.Active() {
-            var s = 2 - cooldown.Fraction()
+            var amt = 1 - clamp(w*h/(256*128), 0.0, 0.75)
+            var s = 1 + (1 - cooldown.Fraction())*amt
             var xoff = b.x0 + (1-s)*w/2
             var yoff = b.y0 + (1-s)*h/2
             draw_sprite_ext(sprite, 0, xoff, yoff, s, s, 0, c_white, cooldown.Fraction())
