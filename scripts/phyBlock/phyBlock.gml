@@ -84,7 +84,7 @@ function RectanglePlacement(_draw = new MaterialDraw()) : MaterialPlacement(_dra
     
     s = new State(PlaceA)
     
-    static Drag = function(x, y) {
+    static _Drag = function(x, y) {
         UpdateJoins()
         switch s.Get() {
             case PlaceA:
@@ -143,6 +143,10 @@ function RectanglePlacement(_draw = new MaterialDraw()) : MaterialPlacement(_dra
     
     static _Shape = function() {
         return Rectangle(c, width, height,  dir)
+    }
+    
+    static _Mask = function() {
+        return Rectangle(c, width-1, height-1,  dir)
     }
     
     static DrawPoints = function() {

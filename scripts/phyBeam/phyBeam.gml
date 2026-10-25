@@ -2,6 +2,14 @@
 
 function BeamBody(_line, draw) : LineBodyDynamic(_line, draw) constructor {
     joinDelegate = new BeamJoiner(_line)
+    
+    
+    static _CanPlace = function(o) {
+        if o.IsJoinCandidate(self) {
+            return true
+        }
+        return method(self, static_get(MaterialBody)._CanPlace)(o)
+    }
 }
 
 
@@ -59,7 +67,7 @@ function BeamPlacement(_draw) : MaterialPlacement(_draw) constructor {
     
     s = new State(PlaceA)
     
-    static Drag = function(x, y) {
+    static _Drag = function(x, y) {
         UpdateJoins()
         var o;
         switch s.Get() {
@@ -92,13 +100,6 @@ function BeamPlacement(_draw) : MaterialPlacement(_draw) constructor {
                 s.Set(PlaceB)
                 return noone
             case PlaceB:
-                s.Set(PlaceDrag)
-                if array_length(joinCandidates) != 0 {
-                    s.Set(PlaceDone)
-                    return Place()
-                }
-                return noone
-            case PlaceDrag:
                 s.Set(PlaceDone)
                 return Place()
         }
@@ -106,6 +107,19 @@ function BeamPlacement(_draw) : MaterialPlacement(_draw) constructor {
     
     static _Shape = function() {
         return PointsLine(a, b)
+    }
+    
+    static _Mask = function() {
+        return _Shape()
+    }
+    
+    
+    static _CheckCanPlace = function() {
+        canPlace = true
+        with(objPhyMaterial) {
+            var placeable = body.CanPlace(other) || other.IsJoinCandidate(body)
+            other.canPlace &= placeable
+        }
     }
     
     static _Place = function() {

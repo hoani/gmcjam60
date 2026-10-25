@@ -65,7 +65,7 @@ function PhyAssembly(_world) constructor {
         var _parts = json_parse(data.parts)
         for (var i = 0; i < array_length(_parts); i++) {
             var inst = factory.PlaceEncoded(_parts[i])
-            if deletable {
+            if deletable && inst != noone {
                 inst.body.SetDeletable()
             }
         }

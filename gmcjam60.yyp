@@ -179,7 +179,6 @@
     {"id":{"name":"phyBeam","path":"scripts/phyBeam/phyBeam.yy",},},
     {"id":{"name":"phyBlock","path":"scripts/phyBlock/phyBlock.yy",},},
     {"id":{"name":"phyBox","path":"scripts/phyBox/phyBox.yy",},},
-    {"id":{"name":"phyCodec","path":"scripts/phyCodec/phyCodec.yy",},},
     {"id":{"name":"phyDynamic","path":"scripts/phyDynamic/phyDynamic.yy",},},
     {"id":{"name":"phyEgg","path":"scripts/phyEgg/phyEgg.yy",},},
     {"id":{"name":"phyFixture","path":"scripts/phyFixture/phyFixture.yy",},},

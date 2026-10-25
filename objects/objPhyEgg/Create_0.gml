@@ -2,6 +2,7 @@
 event_inherited();
 
 // Note hp = 2 by default
+maxhp = hp
 
 notifier = new DummyBreakNotifier()
 
@@ -14,9 +15,7 @@ OnImpulse = function(impulse) {
         return
     }
     DebugMessage($"Impule hit {impulse}")
-    if impulse > 1 {
-        hp -= impulse
-    }
+    hp -= impulse
     
     if hp < 0 {
         notifier.OnBreak()

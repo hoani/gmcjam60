@@ -9,6 +9,13 @@ function WheelBody(_c, _radius = 32, _draw) : MaterialBodyDynamic(_draw) constru
         shape.center.x = ctx.x
         shape.center.y = ctx.y
     }
+    
+    static _CanPlace = function(o) {
+        if o.IsJoinCandidate(self, JOIN_TYPE_REV) {
+            return true
+        }
+        return method(self, static_get(MaterialBody)._CanPlace)(o)
+    }
 }
 
 function WheelJoiner(_circle) : Joinable() constructor {
@@ -67,7 +74,7 @@ function WheelPlacement(_draw) : MaterialPlacement(_draw) constructor {
     
     s = new State(PlaceInner)
     
-    static Drag = function(x, y) {
+    static _Drag = function(x, y) {
         UpdateJoins()
         switch s.Get() {
             case PlaceInner:
@@ -101,8 +108,21 @@ function WheelPlacement(_draw) : MaterialPlacement(_draw) constructor {
         return new Circle(c, 1)
     }
     
+    static _Mask = function() {
+        return new Circle(c, r-1)
+    }
+    
     static _Type = function() {
         return JOIN_TYPE_REV
+    }
+    
+    
+    static _CheckCanPlace = function() {
+        canPlace = true
+        with(objPhyMaterial) {
+            var placeable = body.CanPlace(other) || other.IsJoinCandidate(body, JOIN_TYPE_REV)
+            other.canPlace &= placeable
+        }
     }
     
     

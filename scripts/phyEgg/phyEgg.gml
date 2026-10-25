@@ -29,7 +29,8 @@ function EggDraw() : MaterialDraw() constructor {
     
     static Play = function(ctx) {
         with(ctx) {
-            draw_sprite_ext(sprPhyEgg, 0, x, y, 1, 1, image_angle, c_white, 1)
+            var img = clamp(floor((1-ctx.hp/ctx.maxhp)*8), 0, 7)
+            draw_sprite_ext(sprPhyEgg, img, x, y, 1, 1, image_angle, c_white, 1)
         }
     }
 }
@@ -42,11 +43,11 @@ function EggPlacement(_draw) : MaterialPlacement(_draw) constructor {
     PlaceDrag = 0
     
     c = new Vec2()
-    r = 64
+    r = 32
     
     s = new State(PlaceDrag)
     
-    static Drag = function(x, y) {
+    static _Drag = function(x, y) {
         switch s.Get() {
             case PlaceDrag:
                c = new Vec2(x, y)
@@ -63,6 +64,10 @@ function EggPlacement(_draw) : MaterialPlacement(_draw) constructor {
     
     static _Shape = function() {
         return new Circle(c, r)
+    }
+    
+    static _Mask = function() {
+        return new Circle(c, r-1)
     }
     
     static _Place = function() {

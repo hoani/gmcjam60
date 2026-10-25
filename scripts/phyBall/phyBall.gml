@@ -56,7 +56,7 @@ function BallPlacement(_draw) : MaterialPlacement(_draw) constructor {
     
     s = new State(PlaceInner)
     
-    static Drag = function(x, y) {
+    static _Drag = function(x, y) {
         UpdateJoins()
         switch s.Get() {
             case PlaceInner:
@@ -92,6 +92,10 @@ function BallPlacement(_draw) : MaterialPlacement(_draw) constructor {
     
     static _Shape = function() {
         return new Circle(c, r)
+    }
+    
+    static _Mask = function() {
+        return new Circle(c, r-1)
     }
     
     static _Place = function() {

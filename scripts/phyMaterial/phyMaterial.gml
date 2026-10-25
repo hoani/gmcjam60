@@ -98,6 +98,22 @@ function MaterialBody(_draw) : Joinable() constructor {
             }
         }
     }
+    
+    // Whether a candidate shape can place here
+    static CanPlace = function(o) {
+        return _CanPlace(o)
+    }
+    
+    static _CanPlace = function(o) {
+        return Overlaps(o._Mask()) == false
+    }
+    
+    static Overlaps = function(o) {
+        if shape == noone {
+            return true
+        }
+        return shape.Intersect(o)
+    }
 }
 
 function CommonOutOfBounds() {
@@ -130,6 +146,7 @@ function MaterialPlacement(_draw)  constructor {
     points = []
     joinCandidates = []
     index = MATERIAL_UNKNOWN
+    canPlace = false
     
     static Valid = function() {
         return false;
@@ -146,6 +163,12 @@ function MaterialPlacement(_draw)  constructor {
     
     
     static Drag = function(x, y) {
+        _Drag(x, y)
+        
+        _CheckCanPlace()
+    }
+    
+    static _Drag = function(x, y) {
     }
     
     static Confirm = function(x, y) {
@@ -167,8 +190,20 @@ function MaterialPlacement(_draw)  constructor {
         return noone
     }
     
+    static _Mask = function() {
+        return _Shape()
+    }
+    
     static _Type = function() {
         return JOIN_TYPE_WELD
+    }
+    
+    // This is the default, some shapes have other requirements
+    static _CheckCanPlace = function() {
+        canPlace = true
+        with(objPhyMaterial) {
+            other.canPlace &= body.CanPlace(other)
+        }
     }
     
     static UpdateJoins = function() {
@@ -185,6 +220,16 @@ function MaterialPlacement(_draw)  constructor {
         }
     }
     
+    static IsJoinCandidate = function(body, _which=JOIN_TYPE_WELD) {
+        for (var i = 0; i<array_length(joinCandidates); i++) {
+            var c = joinCandidates[i]
+            if c.who.body == body && c.which == _which {
+                return true
+            }
+        }
+        return false
+    }
+    
     static DrawJoins = function() {
         for (var i = 0; i< array_length(joinCandidates); i++) {
             var j = joinCandidates[i]
@@ -196,7 +241,14 @@ function MaterialPlacement(_draw)  constructor {
         return EncodePlacement(index, points)
     }
     
+    static CanPlace = function() {
+        return canPlace
+    }
+    
     static Place = function() {
+        if !canPlace {
+            return noone
+        }
         var inst = _Place() 
         inst.placement = self // Registers self so we can delete it from assembly if needed
         return inst

@@ -11,8 +11,6 @@ function PhyBuilder(_assembly) : ActiveController() constructor {
     draftSurface = surface_create(room_width, room_height)
     assemblySurface = surface_create(room_width, room_height)
     
-    
-    
     active = 0
     
     playMaterials = [
@@ -28,13 +26,20 @@ function PhyBuilder(_assembly) : ActiveController() constructor {
     
     materials = array_concat(playMaterials, [])
     
+    
+    materialName = NewText(materials[active].name, fScrawlingPadSm).WithAlign(fa_center)
+    
+    canPlace = true
     placement = noone
+    placeableChecker = materials[active].Placement()
     placed = noone
     deleting = false
     deleteCircle = new Circle(new Vec2(0, 0), 8)
     refreshAssembly = true
     cancelling = false
     blueprintIndex = BuildModePlay
+    
+    mouse = new Vec2()
     
     static SetMode = function(index=BuildModePlay) {
         if index != blueprintIndex {
@@ -55,21 +60,32 @@ function PhyBuilder(_assembly) : ActiveController() constructor {
     
     static SelectPrevious = function() {
         active = (active + array_length(materials) - 1) % array_length(materials) 
-        DebugMessage($"Set active to {active}")
+        materialName.Set(materials[active].name)
+        placeableChecker = materials[active].Placement()
     }
     
     static SelectNext = function() {
-        active = (active + 1) % array_length(materials) 
+        active = (active + 1) % array_length(materials)
+        materialName.Set(materials[active].name)
+        placeableChecker = materials[active].Placement()
     }
     
+    
     static _Update = function() {
-        var mx = ClipToGrid(MouseX)
-        var my = ClipToGrid(MouseY)
+        mouse.x = clamp(ClipToGrid(MouseX), 40, room_width - 40)
+        mouse.y = clamp(ClipToGrid(MouseY), 40, room_height - 40)
+        
+
         
         if placement == noone && deleting == false {
-            if mouse_check_button_pressed(mb_left) { 
+            placeableChecker.Drag(mouse.x, mouse.y)
+            canPlace = placeableChecker.CanPlace()
+            
+            
+            if mouse_check_button_pressed(mb_left) && canPlace{ 
                 DebugMessage($"Placing {active}")
                 placement = materials[active].Placement()
+                placement.Drag(mouse.x, mouse.y)
                 PushControlStack(uid)
                 return
             }
@@ -92,15 +108,18 @@ function PhyBuilder(_assembly) : ActiveController() constructor {
                 DebugMessage($"{string_length(assembly.GetCurrent())} bytes")
             }
             
+            
+            
             return
         }
         
 
         if placement != noone {
-            placement.Drag(mx, my)
+            placement.Drag(mouse.x, mouse.y)
+            canPlace = placement.CanPlace()
             
-            if mouse_check_button_released(mb_left) && !cancelling {
-                placed = placement.Confirm(mx, my)
+            if mouse_check_button_released(mb_left) && !cancelling && canPlace {
+                placed = placement.Confirm(mouse.x, mouse.y)
                 if placed != noone {
                     placed.body.SetDeletable()
                     placed = noone
@@ -211,11 +230,14 @@ function PhyBuilder(_assembly) : ActiveController() constructor {
         if !IsActiveControl(uid) {
             return
         }
+        
+        materialName.Draw(0, 0)
+        
         draftSurface = RefreshSurface(draftSurface, room_width, room_height)
         
         if placement != noone {
             
-            var c = cancelling ? C_DELETE : C_PLACABLE;
+            var c = cancelling || !canPlace ? C_DELETE : C_PLACABLE;
             surface_set_target(draftSurface)
             draw_clear_alpha(c_white, 0)
             placement.Draw(c)
@@ -253,8 +275,8 @@ function PhyBuilder(_assembly) : ActiveController() constructor {
         
         surface_set_target(draftSurface)
         draw_clear_alpha(c_white, 0)
-        active = (active) % array_length(materials) 
-        materials[active].Draw(MouseX, MouseY)
+        var c = canPlace ? c_white : C_DELETE
+        placeableChecker.Draw(c)
         surface_reset_target()
         
         shader_set(shSketch);

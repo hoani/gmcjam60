@@ -41,7 +41,7 @@ void main() {
     vec2 uv = v_vTexcoord + offset * 0.003;  // wobble in UV units
 
     vec4 col = v_vColour * texture2D(gm_BaseTexture, uv);
-    col.a *= mix(0.0, 0.8, alphaHash(px * 0.8 + u_frame));
+    col.a *= mix(0.4, 0.8, alphaHash(px * 0.8 + u_frame));
 
     gl_FragColor = col;
 }
