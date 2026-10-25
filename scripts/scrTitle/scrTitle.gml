@@ -7,16 +7,20 @@ function Title(_onTrigger) : ActiveController() constructor {
 
     
     static _Update = function() {
+        
         if cooldown.Active() {
             cooldown.Update()
             if !cooldown.Active() {
+                PopControlStack()
                 callback.Call()
             }
             return
         }
         
+        
         if !cooldown.Active() && mouse_check_button_released(mb_left) && Mono() > 10 {
             cooldown.Trigger()
+            PushControlStack(uid)
         }
     }
     

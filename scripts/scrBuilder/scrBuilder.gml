@@ -26,6 +26,16 @@ function PhyBuilder(_assembly) : ActiveController() constructor {
     
     materials = array_concat(playMaterials, [])
     
+    left = Button(new Vec2(room_width/2-160, 8), sprToolLeft, function() {
+        SelectPrevious()
+    }).HRight().VTop()
+    
+    right = Button(new Vec2(room_width/2+160, 8), sprToolRight, function() {
+        SelectNext()
+    }).HLeft().VTop()
+    
+    buttons = [left, right]
+    
     
     materialName = NewText(materials[active].name, fScrawlingPadSm).WithAlign(fa_center)
     
@@ -86,6 +96,17 @@ function PhyBuilder(_assembly) : ActiveController() constructor {
         return (blueprintIndex != BuildModeCreate) || string_length(assembly.GetCurrent()) < LevelSizeUpper
     }
     
+    
+    static Update = function() {
+        if !InControlStack(uid) {
+            return
+        }
+        
+        _UpdateToolbelt()
+        
+        method(self, static_get(ActiveController).Update)()
+    }
+    
     static _Update = function() {
         mouse.x = clamp(ClipToGrid(MouseX), 40, room_width - 40)
         mouse.y = clamp(ClipToGrid(MouseY), 40, room_height - 40)
@@ -121,7 +142,6 @@ function PhyBuilder(_assembly) : ActiveController() constructor {
                 DebugMessage($"Spec: {assembly.GetCurrent()}")
                 DebugMessage($"{string_length(assembly.GetCurrent())} bytes")
             }
-            
             
             
             return
@@ -177,6 +197,8 @@ function PhyBuilder(_assembly) : ActiveController() constructor {
                 PopControlStack()
             }
         }
+        
+        
     }
     
     static Undo = function() {
@@ -208,7 +230,11 @@ function PhyBuilder(_assembly) : ActiveController() constructor {
         }
         
         draw_sprite_stretched(sprBlueprint, blueprintIndex, 0, 0, room_width, room_height)
+        
+        
+        
         _DrawAssembly()
+        _DrawToolbelt()
         _DrawPlacement()
     }
     
@@ -240,12 +266,33 @@ function PhyBuilder(_assembly) : ActiveController() constructor {
         
     }
     
+    static _UpdateToolbelt = function() {
+        if !IsActiveControl(uid) && !IsActiveControl(left.uid) && !IsActiveControl(right.uid) {
+            return
+        }
+        array_foreach(buttons, function(b){
+            b._Update()
+        })
+        
+        materialName.Step()
+    }
+    
+    
+    static _DrawToolbelt = function() {
+        if !IsActiveControl(uid) && !IsActiveControl(left.uid) && !IsActiveControl(right.uid) {
+            return
+        }
+        array_foreach(buttons, function(b){
+            b._Draw()
+        })
+        
+        materialName.Draw(0, 8)
+    }
+    
     static _DrawPlacement = function() {
         if !IsActiveControl(uid) {
             return
         }
-        
-        materialName.Draw(0, 0)
         
         draftSurface = RefreshSurface(draftSurface, room_width, room_height)
         

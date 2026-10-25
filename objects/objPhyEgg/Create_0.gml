@@ -11,14 +11,15 @@ Register = function(n) {
 }
 
 OnImpulse = function(impulse) {
-    if impulse < 0.5 {
+    if impulse.Distance() < 0.5 {
         return
     }
     DebugMessage($"Impule hit {impulse}")
-    hp -= impulse
+    hp -= impulse.Distance()
     
     if hp < 0 {
         notifier.OnBreak()
+        InstanceCreate(x, y, objEggSplat, {impulse: impulse})
         instance_destroy()
     }
 } 

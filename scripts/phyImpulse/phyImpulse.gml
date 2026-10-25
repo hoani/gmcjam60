@@ -13,14 +13,16 @@ function PhyImpulse(_inst) constructor {
     }
     
     static Impulse = function() {
+        var impulse = new Vec2()
         var impulse = _BodyImpulse(instance)
+        
         
         for (var i = 0; i<array_length(others); i++) {
             if !_AngleCheck(others[i]) {
                 continue
             }
             var candidate = _BodyImpulse(others[i]);
-            if candidate > impulse {
+            if candidate.Distance2() > impulse.Distance2() {
                 impulse = candidate
             }
         }
@@ -49,7 +51,7 @@ function PhyImpulse(_inst) constructor {
         var prev = b.body.dynamic.prev;
         var dvx = b.phy_speed_x - prev.spd.x;
         var dvy = b.phy_speed_y - prev.spd.y;
-        return b.phy_mass * (new Vec2(dvx, dvy)).Distance();
+        return (new Vec2(dvx, dvy)).Multiply(b.phy_mass);
     }
 
 }
