@@ -108,7 +108,7 @@ function Publish(_doPublish, _onPublish) : ActiveController() constructor {
             case StateDone:
                 if keyboard_check_pressed(vk_enter) && state.Mono() > 20 {
                     Reset()
-                    onPublish()
+                    onPublish(name, username)
                 }
                 break
         }

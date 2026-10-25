@@ -244,6 +244,8 @@
     {"id":{"name":"scrLayers","path":"scripts/scrLayers/scrLayers.yy",},},
     {"id":{"name":"scrLevelRegistry","path":"scripts/scrLevelRegistry/scrLevelRegistry.yy",},},
     {"id":{"name":"scrMouse","path":"scripts/scrMouse/scrMouse.yy",},},
+    {"id":{"name":"scrOnlineCredentials","path":"scripts/scrOnlineCredentials/scrOnlineCredentials.yy",},},
+    {"id":{"name":"scrOnlineHandler","path":"scripts/scrOnlineHandler/scrOnlineHandler.yy",},},
     {"id":{"name":"scrParticleUtils","path":"scripts/scrParticleUtils/scrParticleUtils.yy",},},
     {"id":{"name":"scrPlay","path":"scripts/scrPlay/scrPlay.yy",},},
     {"id":{"name":"scrPolygon","path":"scripts/scrPolygon/scrPolygon.yy",},},
@@ -344,6 +346,9 @@
     {"roomId":{"name":"rmGame","path":"rooms/rmGame/rmGame.yy",},},
     {"children":[
         {"children":[
+            {"roomId":{"name":"zooScoreboat","path":"rooms/zooScoreboat/zooScoreboat.yy",},},
+          ],"groupName":"scoreboat",},
+        {"children":[
             {"roomId":{"name":"zooUi","path":"rooms/zooUi/zooUi.yy",},},
           ],"groupName":"ui",},
         {"children":[
@@ -352,9 +357,6 @@
         {"children":[
             {"roomId":{"name":"zooShader","path":"rooms/zooShader/zooShader.yy",},},
           ],"groupName":"shader",},
-        {"children":[
-            {"roomId":{"name":"zooScoreboat","path":"rooms/zooScoreboat/zooScoreboat.yy",},},
-          ],"groupName":"scoreboat",},
         {"children":[
             {"roomId":{"name":"zooPlatform","path":"rooms/zooPlatform/zooPlatform.yy",},},
           ],"groupName":"platform",},

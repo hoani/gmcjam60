@@ -50,9 +50,12 @@ function UiNavigator(width=512, _ypos=room_height/2, _xpos = room_width/2) const
         return page*optionsPerPage
     }
     
-    static Refresh = function(_options, _onSelected) {
+    static Refresh = function(_options, _onSelected=noone) {
         options = _options
-        onSelected = _onSelected
+        if _onSelected != noone {
+            onSelected = _onSelected
+        }
+        
         active = []
         
         array_copy(active, 0, options, _Offset(), optionsPerPage)

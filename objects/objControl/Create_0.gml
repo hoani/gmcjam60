@@ -1,4 +1,19 @@
 
+online = new OnlineHandler()
+online.OnLevelRegistry(function(){
+    var levelStr = "eyJoYXNoIjoiYzliOWU1NzNkYWQyOWY0ZWI0NmNkYjdiYThkYWE5M2MiLCJwYXJ0cyI6Ilt7XCJwb2ludHNcIjpbNTg0LjAsMjk2LjBdLFwiaW5kZXhcIjo1LjB9LHtcInBvaW50c1wiOlsyOTYuMCw2MDAuMCw5NTIuMCw2MDAuMCw5NTIuMCw2MDAuMCw5MDQuMCw2NDguMF0sXCJpbmRleFwiOjEuMH0se1wicG9pbnRzXCI6WzU4NC4wLDcyLjAsNjAwLjAsMTM2LjAsNjAwLjAsMTg0LjBdLFwiaW5kZXhcIjozLjB9XSJ9"
+
+    levelRegistry.OnLevel(LevelEntry("abcdd", "Test 0", "Steve1").Populate({likes: 0, plays: 0, wins: 0, uplays: 0, level: levelStr}))
+    levelRegistry.OnLevel(LevelEntry("abcde", "Test 1", "Steve2").Populate({likes: 0, plays: 0, wins: 0, uplays: 0, level: levelStr}))
+    levelRegistry.OnLevel(LevelEntry("abcdf", "Test 2", "Steve3").Populate({likes: 0, plays: 0, wins: 0, uplays: 0, level: levelStr}))
+    levelRegistry.OnLevel(LevelEntry("abcdg", "Test 3", "Steve4").Populate({likes: 0, plays: 0, wins: 0, uplays: 0, level: levelStr}))
+    levelRegistry.OnLevel(LevelEntry("abcdh", "Test 4", "Steve5").Populate({likes: 0, plays: 0, wins: 0, uplays: 0, level: levelStr}))
+    levelRegistry.OnLevel(LevelEntry("abcdi", "Test 5", "Steve6").Populate({likes: 0, plays: 0, wins: 0, uplays: 0, level: levelStr}))
+    
+    browser.Refresh(levelRegistry.GetDisplay())
+})
+levelRegistry = online.GetLeaderboard()
+onlineLevel = noone
 
 world = PhysicsWorld()
 world.Reset()
@@ -36,17 +51,31 @@ function GoToBuild() {
     builder.Reset(assembly.build)
     builder.SetBlueprint(1)
     canPublish = true
+    if online.HasUserLevelSpec() {
+        publish.name = online.GetUserLevelSpec().name
+        publish.username = online.GetUserLevelSpec().username
+    }
     PushControlStack(buildStack)
 }
 
 canPublish = false
 
 publish = new Publish(
-    function(){
+    function(name, username){
         var enc = assembly.build.EncodeFull()
         DebugMessage($"Publishing: {enc}")
-        publish.Done("Publish Succeeded")
-        canPublish = false
+        
+        online.PublishLevel(name, username, enc, 
+            function(){
+                DebugMessage("Publishing succeeded")
+                publish.Done("Publish Succeeded")
+                canPublish = false
+            },
+            function(_error){
+                DebugMessage($"Publishing failed {_error}")
+                publish.Done("Publish Failed... Please Try Again")
+            }
+        )
     },
     function() {
         PopControlStack()
@@ -62,7 +91,7 @@ buttons = {
             PushControlStack(prevStack)
         })
         
-        if canPublish {
+        if canPublish && online.IsOnline() {
             c.play.WithOnPublish(function(){
                 builder.Reset()
                 PushControlStack(publishStack)
@@ -131,19 +160,8 @@ play.WithOnPlay(function(){
     }
 })
 
-var levelStr = "eyJoYXNoIjoiYzliOWU1NzNkYWQyOWY0ZWI0NmNkYjdiYThkYWE5M2MiLCJwYXJ0cyI6Ilt7XCJwb2ludHNcIjpbNTg0LjAsMjk2LjBdLFwiaW5kZXhcIjo1LjB9LHtcInBvaW50c1wiOlsyOTYuMCw2MDAuMCw5NTIuMCw2MDAuMCw5NTIuMCw2MDAuMCw5MDQuMCw2NDguMF0sXCJpbmRleFwiOjEuMH0se1wicG9pbnRzXCI6WzU4NC4wLDcyLjAsNjAwLjAsMTM2LjAsNjAwLjAsMTg0LjBdLFwiaW5kZXhcIjozLjB9XSJ9"
 
 
-levelRegistry = new LevelRegistry()
-levelRegistry.OnLevel(LevelEntry("abcdd", "Test 0", "Steve1").Populate({likes: 0, plays: 0, wins: 0, uplays: 0, level: levelStr}))
-levelRegistry.OnLevel(LevelEntry("abcde", "Test 1", "Steve2").Populate({likes: 0, plays: 0, wins: 0, uplays: 0, level: levelStr}))
-levelRegistry.OnLevel(LevelEntry("abcdf", "Test 2", "Steve3").Populate({likes: 0, plays: 0, wins: 0, uplays: 0, level: levelStr}))
-levelRegistry.OnLevel(LevelEntry("abcdg", "Test 3", "Steve4").Populate({likes: 0, plays: 0, wins: 0, uplays: 0, level: levelStr}))
-levelRegistry.OnLevel(LevelEntry("abcdh", "Test 4", "Steve5").Populate({likes: 0, plays: 0, wins: 0, uplays: 0, level: levelStr}))
-levelRegistry.OnLevel(LevelEntry("abcdi", "Test 5", "Steve6").Populate({likes: 0, plays: 0, wins: 0, uplays: 0, level: levelStr}))
-
-
-onlineLevel = noone
 
 browser.Refresh(
     levelRegistry.GetDisplay(), 
@@ -175,6 +193,7 @@ c = {
     builder: builder,
     browser: browser,
     publish: publish,
+    online: online,
     
     // Buttons
     bStart: buttons.start,

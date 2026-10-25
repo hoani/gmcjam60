@@ -38,16 +38,34 @@ function Callback() constructor{
 }
 
 // Allows us to set up a callback where we can arrange the calling, and follow a typical spawn/callback sequence.
-function CompoundCallback(ctx, callback) {
-    return {
-        ctx: ctx,
-        onDone: callback,
-        callbacks: [],
-        Push: function(_callback) {
-            array_push(callbacks, _callback)
-        },
-        Call: function(_index) {
-            callbacks[_index](ctx, onDone);
+function CompoundCallback() constructor {
+    callbacks = []
+    
+    /// Set the next callback.
+    /// @arg _callback
+    static Push = function(_callback) {
+        array_push(callbacks, _callback)
+    }
+    
+    static Clear = function() {
+        callbacks = []
+    }
+    
+    static HasPending = function() {
+        return array_length(callbacks) != 0
+    }
+    
+    /// Call and consume the callback. Does nothing if empty
+    static Call = function() {
+        var _list = callbacks
+        callbacks = []
+        
+        var args = array_create(argument_count);
+        for (var i = 0; i < argument_count; i++) {
+            args[i] = argument[i];
+        }
+        for (var i = 0; i<array_length(_list); i++) {
+            method_call(_list[i], args);
         }
     }
 }

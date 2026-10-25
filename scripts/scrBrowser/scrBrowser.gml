@@ -5,7 +5,7 @@ function Browser() constructor {
     uid = navigator.uid // This is just a passthrough
     
     
-    static Refresh = function(_items = [], _onSelection) {
+    static Refresh = function(_items, _onSelection=noone) {
         navigator.Refresh(_items, _onSelection)
     }
     
