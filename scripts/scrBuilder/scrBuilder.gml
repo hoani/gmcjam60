@@ -34,11 +34,14 @@ function PhyBuilder(_assembly) : ActiveController() constructor {
         new MaterialYoga(), 
         new MaterialBar(),
         new MaterialWheel(),
+        
         new MaterialPeg(),
+        
         //new MaterialBall(),
         
         //new MaterialBox(),
         new MaterialBlackHole(), 
+        new MaterialBumper(),
     ]
     createMaterials = [
         new MaterialEgg(),

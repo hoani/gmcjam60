@@ -7,7 +7,10 @@ function PhyImpulse(_inst) constructor {
         if _inst.body.dynamic == noone {
             return
         }
-        if other.placement.index == MATERIAL_BLACKHOLE {
+        if _inst.placement.index == MATERIAL_BLACKHOLE {
+            return
+        }
+        if _inst.placement.index == MATERIAL_BUMPER {
             return
         }
         if !array_contains(others, _inst) {

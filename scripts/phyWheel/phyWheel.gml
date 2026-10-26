@@ -49,14 +49,22 @@ function MaterialWheel() : Material("Wheel") constructor {
 
 
 function WheelDraw() : MaterialDraw() constructor {
+    
     static Placement = function(ctx, color=c_white) {
         DrawPlus(ctx.c, 8, 2, color)
-        DrawCircleOutline(ctx.c, ctx.r, 2, color)
-        DrawCircleOutline(ctx.c, ctx.r/2, 2, color)
+        var c = ctx.c
+        var img = ctx.r <= 32 ? 0 : (ctx.r <= 48 ? 1 : 2)
+        draw_sprite_ext(sprWheel, img, c.x, c.y, 1, 1, 0, color, 1)
         
         if struct_exists(ctx, "s") && ctx.s.Get() == ctx.PlaceDrag {
             draw_sprite(sprTransform, 1, MouseX, MouseY)
         }
+    }
+    
+    static Play = function(ctx) {
+        var r = ctx.body.shape.radius
+        var img = r <= 32 ? 0 : (r <= 48 ? 1 : 2)
+        draw_sprite_ext(sprWheel, img, ctx.x, ctx.y, 1, 1, ctx.image_angle, c_white, 1)
     }
 }
 
