@@ -1,6 +1,7 @@
 #macro CH_SYMBOL (0x80)
 #macro CH_SYMBOL_HEART ("\u8000")
 #macro CH_SYMBOL_BOLT ("\u8001")
+#macro CH_SYMBOL_PLAY ("\u8002")
 
 function ChRepeats(symbol, repeats=1) {
     if repeats > 3 {

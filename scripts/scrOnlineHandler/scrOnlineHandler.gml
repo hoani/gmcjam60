@@ -145,6 +145,10 @@ function OnlineHandler() constructor {
         )
     }
     
+    static FetchLevelSpecByUuid = function(uuid) {
+        array_push(pending, uuid)
+    }
+    
     static UpdatePending = function() {
         var uuid = array_last(pending)
         

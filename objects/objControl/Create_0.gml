@@ -177,12 +177,14 @@ browser = new Browser()
 play.WithOnWin(function(){
     if onlineLevel != noone {
         online.LevelIncrWins(onlineLevel.uuid)
+        online.FetchLevelSpecByUuid(onlineLevel.uuid)
     }
 })
 
 play.WithOnPlay(function(){
     if onlineLevel != noone {
         online.LevelIncrPlays(onlineLevel.uuid)
+        online.FetchLevelSpecByUuid(onlineLevel.uuid)
     }
 })
 

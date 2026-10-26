@@ -22,6 +22,8 @@ Controls
 Credits
     All resources I have licenses for.
 
+    Design/Graphics - Hoani
+
     Sound Effects - Levi Bilas Boas
     Fonts - Chequered Ink
 

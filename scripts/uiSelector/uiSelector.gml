@@ -1,38 +1,25 @@
-function Selectable(_texts, _index) constructor {
-    if !is_array(_texts) {
-        _texts = [_texts]
-    } 
-    contents = [];
-    for (var i = 0; i < array_length(_texts); i++) {
-        array_push(contents, _texts[i].original)
-    }
-    texts = _texts;
+function Selectable(_text, _index) constructor {
+    content = _text.original;
+    text = _text;
     index = _index;
     
     static GrowText = function() {
-        for (var i = 0; i < array_length(texts); i++) {
-            texts[i].Set($"{ChScale(1.1)}{contents[i]}");
-        }
+        text.Set($"{ChScale(1.1)}{content}");
     }
     
     static ResetText = function() {
-        for (var i = 0; i < array_length(texts); i++) {
-            texts[i].Set(contents[i]);
-        }
+        text.Set(content);
     }
     
     static Step = function() {
-        for (var i = 0; i < array_length(texts); i++) {
-            texts[i].Step();
-        }
+        text.Step();
     }
     
     static Draw = function(x, y, c=c_white) {
-        for (var i = 0; i < array_length(texts); i++) {
-            texts[i].Draw(x, y, c);
-        }
+        text.Draw(x, y, c);
     }
 }
+
 
 
 

@@ -71,6 +71,12 @@ function LevelEntryClass(_uuid, _name, _username) constructor {
     uplays = 0
     level = ""
     
+    static winPercent = function() {
+        if uplays = 0 {
+            return 0
+        }
+        return floor(100*wins/uplays)
+    }
     
     static IsPopulated = function() {
         return level != ""
@@ -89,10 +95,7 @@ function LevelEntryClass(_uuid, _name, _username) constructor {
     }
     
     static Display = function() {
-        return [
-            $"{name} by {username}"
-            //NewText($"{name} by {username}", fScrawlingPad).WithAlign(fa_left), 
-        ]   
+        return $"{name} by {username}\n{plays} {CH_SYMBOL_PLAY}   Win {winPercent()}%"
     }
     
     static _SafeReal = function(val, def) {
