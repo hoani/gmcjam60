@@ -6,6 +6,8 @@ const int MAX_HOLES = 8;
 // Per hole: xy = centre (window pixels), z = shadow radius (pixels). z <= 0 means unused.
 uniform vec3 u_holes[MAX_HOLES];
 
+uniform int u_count;
+
 // Size in pixels of the surface being drawn (set from GML).
 uniform vec2 u_resolution;
 
@@ -19,6 +21,9 @@ void main()
     float edge   = 1.5 / u_resolution.y;  // ~1.5 px soft shadow edge
 
     for (int i = 0; i < MAX_HOLES; i++) {
+        if (u_count <= i) {
+            break;
+        }
         float rCap = u_holes[i].z / u_resolution.y;
         if (rCap > 0.0) {
             vec2  d  = pos - u_holes[i].xy / u_resolution.y;   // from this hole to the pixel

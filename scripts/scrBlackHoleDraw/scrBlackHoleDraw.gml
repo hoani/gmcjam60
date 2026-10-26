@@ -3,6 +3,7 @@ function BlackHoleShader() constructor {
 
     u_holes   = shader_get_uniform(shLensing, "u_holes");
     u_resolution = shader_get_uniform(shLensing, "u_resolution");
+    u_count = shader_get_uniform(shLensing, "u_count");
     count = 0
     
     static Update = function() {
@@ -31,6 +32,7 @@ function BlackHoleShader() constructor {
         shader_set(shLensing);
         gpu_set_texrepeat(true);
         shader_set_uniform_f_array(u_holes, data);
+        shader_set_uniform_i(u_count, count);
         shader_set_uniform_f(u_resolution, surface_get_width(application_surface), surface_get_height(application_surface));
         
         draw_surface(application_surface, 0, 0)
