@@ -19,8 +19,8 @@ function UiNavigator(width=512, _ypos=room_height/2, _xpos = room_width/2) const
     
     
     
-    var pPos = pos.Add(new Vec2(-(width/2 + 16),0))
-    var nPos = pos.Add(new Vec2((width/2 + 16), 0))
+    var pPos = pos.Add(new Vec2(-(width/2 + 16),-48))
+    var nPos = pos.Add(new Vec2((width/2 + 16), -48))
     
     
     PrevPage = function() {

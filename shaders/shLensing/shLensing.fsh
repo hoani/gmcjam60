@@ -1,3 +1,4 @@
+varying vec2 v_vTexcoord;
 varying vec4 v_vColour;
 
 const int MAX_HOLES = 8;
@@ -11,7 +12,8 @@ uniform vec2 u_resolution;
 void main()
 {
     // Everything in screen heights (geometrized units, c = G = 1), origin at the corner.
-    vec2  pos    = gl_FragCoord.xy / u_resolution.y;
+    vec2 pos = v_vTexcoord * u_resolution / u_resolution.y;
+    //vec2  pos    = gl_FragCoord.xy / u_resolution.y;
     vec2  source = pos;          // where this pixel's ray came from; starts unbent
     float lit    = 1.0;          // 0 inside any shadow
     float edge   = 1.5 / u_resolution.y;  // ~1.5 px soft shadow edge

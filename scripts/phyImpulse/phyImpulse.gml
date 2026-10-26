@@ -26,6 +26,10 @@ function PhyImpulse(_inst) constructor {
     }
     
     static Impulse = function() {
+        if array_length(others) == 0 {
+            // no collision, so no impact
+            return new Vec2()
+        }
         var impulse = _BodyImpulse(instance)
         
         

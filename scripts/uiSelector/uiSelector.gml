@@ -26,11 +26,12 @@ function Selectable(_text, _index) constructor {
 
 function Selector(width=512, _ypos=room_height/2, _xpos = room_width/2) constructor {
     options = []
+    selected = 0
     hovered = -1;
     box = new Box(width, room_height)
     margin = 16
     hpad = 32
-    vpad = 8
+    vpad = 4
     onSelected = undefined;
     returns = undefined;
     hasCancel = false;
@@ -44,7 +45,7 @@ function Selector(width=512, _ypos=room_height/2, _xpos = room_width/2) construc
     ypos = _ypos
     xpos = _xpos
     cmds = Cmds()
-    font = fScrawlingPadSm
+    font = fSunshiny
     
     hoverSfx = sndHover
     pressSfx = sndButton
@@ -159,20 +160,16 @@ function Selector(width=512, _ypos=room_height/2, _xpos = room_width/2) construc
         if CommandsContinueCheck() && hovered >= 0 {
             state.Set(state_selected)
             CreateSfx(pressSfx)
-            //var s = sndSelectorSelect;
-            //if hasCancel && (hovered == (array_length(options) - 1)) {
-                //s = sndSelectorCancel
-            //}
-            //sfx.play(s);
+            selected = hovered
         }
     }
     
     static _UpdateSelected = function() {
         if state.mono > 30 {
             if is_undefined(returns) {
-                onSelected(hovered)    
+                onSelected(selected)    
             } else {
-                onSelected(returns[hovered])
+                onSelected(returns[selected])
             }
             state.Set(state_active)
         }

@@ -1,5 +1,5 @@
 function Browser() constructor {
-    navigator = Navigator(640, room_height/2, room_width/2 - 128);
+    navigator = Navigator(600, room_height/2+48, room_width/2 - 128);
     navigator.Activate([], FuncNone)
     
     uid = navigator.uid // This is just a passthrough
