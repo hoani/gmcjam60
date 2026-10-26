@@ -71,6 +71,15 @@ function HelpClass(_pos, _sprite, _helpSprite) : ActiveController() constructor 
             return
         }
         
+        if cooldown.Active() || hovered {
+            var alpha = hovered ? 1 - cooldown.Fraction() : cooldown.Fraction()
+            draw_set_alpha(alpha*0.25)
+            draw_set_color(c_black)
+            draw_rectangle(0, 0, room_width, room_height, false)
+            draw_set_alpha(1)
+            draw_set_colour(c_white)
+        }
+        
         var frame = MonoSlowed(hovered ? 4 : 8);
         var amount = hovered ? 0.5 : 1.25;
         var alpha = hovered ? 1 : 0.75;
@@ -82,8 +91,10 @@ function HelpClass(_pos, _sprite, _helpSprite) : ActiveController() constructor 
         draw_sprite_ext(sprite, 0, b.x0, b.y0, 1, 1, 0, c_white, alpha)
         
         if cooldown.Active() || hovered {
+            
             alpha = hovered ? 1 - cooldown.Fraction() : cooldown.Fraction()
             draw_sprite_ext(helpSprite, 0, room_width/2, room_height/2, 1, 1, 0, c_white, alpha)
+            
         }
         
         shader_reset()

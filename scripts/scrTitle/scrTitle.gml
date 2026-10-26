@@ -4,6 +4,11 @@ function Title(_onTrigger) : ActiveController() constructor {
     cooldown = new Cooldown(60)
     callback = new Callback()
     callback.Set(_onTrigger)
+    
+    
+    
+    
+    credits = new Credits()
 
     
     static _Update = function() {
@@ -22,6 +27,9 @@ function Title(_onTrigger) : ActiveController() constructor {
             cooldown.Trigger()
             PushControlStack(uid)
         }
+        
+        credits.Update()
+        pending = true
     }
     
     
@@ -37,7 +45,9 @@ function Title(_onTrigger) : ActiveController() constructor {
         if pending {
             pending = false
             surface_set_target(surface)
+            draw_clear_alpha(c_white, 0)
             draw_sprite(sprTitle, 0, 0, 0)
+            credits.Draw()
             surface_reset_target()
         }
         
@@ -56,6 +66,7 @@ function Title(_onTrigger) : ActiveController() constructor {
         
         
         shader_reset()
+        
     }
 
 }

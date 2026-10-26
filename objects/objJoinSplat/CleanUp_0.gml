@@ -1,0 +1,5 @@
+part_type_destroy(pblood)
+part_type_destroy(pspray)
+part_type_destroy(plines)
+part_emitter_destroy(ps, pe)
+part_system_destroy(ps)

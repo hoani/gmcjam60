@@ -28,8 +28,14 @@ struct_foreach(c, function(_, v) {
 })
 
 
+struct_foreach(help, function(_, v) {
+    v.Update()
+})
+
+
 if Debug() {
     if keyboard_check_pressed(vk_space) {
-        InstanceCreate(room_width/2, room_height/2, objEggSplat, {impulse: new Vec2(0, 2)})
+        //InstanceCreate(room_width/2, room_height/2, objEggSplat, {impulse: new Vec2(0, 2)})
+        InstanceCreate(room_width/2, room_height/2, objJoinSplat)
     }
 }

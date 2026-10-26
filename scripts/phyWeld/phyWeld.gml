@@ -26,8 +26,8 @@ function PhyWeld(obj0, obj1, pos) : PhyJoin(pos) constructor {
     }
     
     static OnBreak = function() {
-        //var _line = GetJoinLine()
-    	//joint_break_emit_line(global.p.weld, _line)
+        var pos = GetJoinLine().Center()
+        InstanceCreate(pos.x, pos.y, objJoinSplat)
     }
 }
 

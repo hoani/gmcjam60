@@ -19,7 +19,12 @@ world = PhysicsWorld()
 world.Reset()
 
 
-help = Help(new Vec2(16, 8), sprHelpHover, sprHelp)
+help = {
+    sandbox: Help(new Vec2(16, 8), sprHelpHover, sprHelpSandbox),
+    lobby: Help(new Vec2(16, 8), sprHelpHover, sprHelpLobby),
+    build: Help(new Vec2(16, 8), sprHelpHover, sprHelpBuild),
+    play: Help(new Vec2(16, 8), sprHelpHover, sprHelpPlay),
+}
 
 prevStack = []
 
@@ -210,12 +215,13 @@ title = new Title(function() {
 
 c = {
     title: title,
-    help: help,
+    
     play: play,
     builder: builder,
     browser: browser,
     publish: publish,
     online: online,
+    
     
     // Buttons
     bStart: buttons.start,
@@ -228,13 +234,13 @@ c = {
     bTest: buttons.test,
 }
 
-sandboxStack = [builder.uid, buttons.start.uid, help.uid, buttons.online.uid]
-buildStack = [builder.uid, buttons.test.uid, buttons.back.online.uid]
-testStack = [builder.uid, buttons.start.uid, buttons.back.build.uid]
-onlineStack = [browser.uid, buttons.build.uid, buttons.back.sandbox.uid]
+sandboxStack = [builder.uid, buttons.start.uid, help.sandbox.uid, buttons.online.uid]
+buildStack = [builder.uid, buttons.test.uid, buttons.back.online.uid, help.build.uid]
+testStack = [builder.uid, buttons.start.uid, buttons.back.build.uid, help.build.uid]
+onlineStack = [browser.uid, buttons.build.uid, buttons.back.sandbox.uid, help.lobby.uid]
 titleStack = [c.title.uid, buttons.online.uid]
 publishStack = [c.publish.uid, buttons.back.test.uid]
-levelStack = [builder.uid, buttons.back.online.uid, buttons.start.uid]
+levelStack = [builder.uid, buttons.back.online.uid, buttons.start.uid, help.play.uid]
 
 StateTitle = 0
 StateBuild = 1

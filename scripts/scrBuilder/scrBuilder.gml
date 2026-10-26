@@ -13,6 +13,8 @@ function PhyBuilder(_assembly) : ActiveController() constructor {
     
     active = 0
     
+    toolbeltReady = false
+    
     playMaterials = [
         new MaterialWheel(),
         new MaterialBeam(),
@@ -270,6 +272,13 @@ function PhyBuilder(_assembly) : ActiveController() constructor {
         if !IsActiveControl(uid) && !IsActiveControl(left.uid) && !IsActiveControl(right.uid) {
             return
         }
+        
+        if placement != noone {
+            return
+        }
+        
+        toolbeltReady = true // Bad solution but allows us to not show toolbelt in title
+        
         array_foreach(buttons, function(b){
             b._Update()
         })
@@ -279,7 +288,7 @@ function PhyBuilder(_assembly) : ActiveController() constructor {
     
     
     static _DrawToolbelt = function() {
-        if !IsActiveControl(uid) && !IsActiveControl(left.uid) && !IsActiveControl(right.uid) {
+        if !InControlStack(uid) || !toolbeltReady {
             return
         }
         array_foreach(buttons, function(b){
