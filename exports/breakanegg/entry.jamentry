@@ -1,0 +1,38 @@
+{
+  "version": "V2",
+  "writtenBy": "EntryPackager",
+  "title": "Break an Egg",
+  "alignment": "Yellow",
+  "team": {
+    "authors": [
+      {
+        "name": "Hoani",
+        "communityId": "hoani"
+      }
+    ]
+  },
+  "attribution": {
+    "code": "MostlyCustom",
+    "visuals": "Custom",
+    "music": "None",
+    "sounds": "Premade"
+  },
+  "files": {
+    "launchers": [
+      {
+        "name": "Windows Executable",
+        "type": 1,
+        "location": "breakanegg.exe"
+      }
+    ],
+    "readme": {
+      "location": "README.txt",
+      "isRequired": false
+    },
+    "thumbnails": {
+      "thumbnailLocation": "thumbnail.png",
+      "thumbnailSmallLocation": "thumbnail-small.png"
+    }
+  },
+  "pageUrl": "https://gx.games/games/2ofnl6/break-an-egg/tracks/c306cee3-e075-4180-9f43-4120254169a6/"
+}

@@ -66,7 +66,7 @@ function GameClass() constructor {
     
     controlStack = new ControlStackClass()
     
-    debug = new DebugClass(true, false);
+    debug = new DebugClass(false, false);
     cmds = InitCommands();
     
 	mono = 0
