@@ -44,7 +44,7 @@ function Selector(width=512, _ypos=room_height/2, _xpos = room_width/2) construc
     ypos = _ypos
     xpos = _xpos
     cmds = Cmds()
-    font = f_test
+    font = fScrawlingPadSm
     
     hoverSfx = sndHover
     pressSfx = sndButton

@@ -1,7 +1,20 @@
 
 #macro BOWLING_BALL_RADIUS 32
 #macro SHOTPUT_RADIUS 16
+#macro YOGA_RADIUS 64
+#macro PEG_RADIUS 16
 
+function MaterialPeg() : MaterialSimpleBall("Peg", sprPeg) constructor {
+    static Placement = function() {
+        return new PegPlacement(draw)
+    }
+}
+
+function MaterialYoga() : MaterialSimpleBall("Yoga Ball", sprYoga) constructor {
+    static Placement = function() {
+        return new YogaPlacement(draw)
+    }
+}
 
 function MaterialShotput() : MaterialSimpleBall("Shotput", sprShotput) constructor {
     static Placement = function() {
@@ -13,6 +26,34 @@ function MaterialBowlingBall() : MaterialSimpleBall("Bowling Ball", sprBowlingBa
     static Placement = function() {
         return new BowlingBallPlacement(draw)
     }
+}
+
+function PegPlacement(_draw) : BallSimplePlacement(_draw, PEG_RADIUS) constructor {
+    index = MATERIAL_PEG
+    
+    static _Place = function() {
+       	return CircleFixture(r).
+            Static().
+            JoinCandidates(joinCandidates).
+            Apply(c.x, c.y, new BallBody(c, r, draw))
+    }
+    
+}
+
+function YogaPlacement(_draw) : BallSimplePlacement(_draw, YOGA_RADIUS) constructor {
+    index = MATERIAL_YOGA
+    
+    static _Place = function() {
+       	return CircleFixture(r).
+            Density(1/64).
+            Restitution(0.95).
+            Friction(1).
+            LinearDamping(0.5).
+            Bullet().
+            JoinCandidates(joinCandidates).
+            Apply(c.x, c.y, new BallBody(c, r, draw))
+    }
+    
 }
 
 function ShotputPlacement(_draw) : BallSimplePlacement(_draw, SHOTPUT_RADIUS) constructor {

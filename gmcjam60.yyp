@@ -125,6 +125,7 @@
     {"id":{"name":"objOutOfRing","path":"objects/objOutOfRing/objOutOfRing.yy",},},
     {"id":{"name":"objParticles","path":"objects/objParticles/objParticles.yy",},},
     {"id":{"name":"objParticleTester","path":"objects/objParticleTester/objParticleTester.yy",},},
+    {"id":{"name":"objPhyBlackHole","path":"objects/objPhyBlackHole/objPhyBlackHole.yy",},},
     {"id":{"name":"objPhyBreakable","path":"objects/objPhyBreakable/objPhyBreakable.yy",},},
     {"id":{"name":"objPhyEgg","path":"objects/objPhyEgg/objPhyEgg.yy",},},
     {"id":{"name":"objPhyJoin","path":"objects/objPhyJoin/objPhyJoin.yy",},},
@@ -183,6 +184,7 @@
     {"id":{"name":"phyBall","path":"scripts/phyBall/phyBall.yy",},},
     {"id":{"name":"phyBallSimple","path":"scripts/phyBallSimple/phyBallSimple.yy",},},
     {"id":{"name":"phyBeam","path":"scripts/phyBeam/phyBeam.yy",},},
+    {"id":{"name":"phyBlackHole","path":"scripts/phyBlackHole/phyBlackHole.yy",},},
     {"id":{"name":"phyBlock","path":"scripts/phyBlock/phyBlock.yy",},},
     {"id":{"name":"phyBox","path":"scripts/phyBox/phyBox.yy",},},
     {"id":{"name":"phyCrate","path":"scripts/phyCrate/phyCrate.yy",},},
@@ -226,6 +228,7 @@
     {"id":{"name":"scr_sb_session","path":"scripts/scr_sb_session/scr_sb_session.yy",},},
     {"id":{"name":"scrAnimate","path":"scripts/scrAnimate/scrAnimate.yy",},},
     {"id":{"name":"scrAssemblies","path":"scripts/scrAssemblies/scrAssemblies.yy",},},
+    {"id":{"name":"scrBlackHoleDraw","path":"scripts/scrBlackHoleDraw/scrBlackHoleDraw.yy",},},
     {"id":{"name":"scrBrowser","path":"scripts/scrBrowser/scrBrowser.yy",},},
     {"id":{"name":"scrBuilder","path":"scripts/scrBuilder/scrBuilder.yy",},},
     {"id":{"name":"scrButton","path":"scripts/scrButton/scrButton.yy",},},
@@ -334,6 +337,7 @@
     {"id":{"name":"spr_dust_ground","path":"sprites/spr_dust_ground/spr_dust_ground.yy",},},
     {"id":{"name":"spr_spark","path":"sprites/spr_spark/spr_spark.yy",},},
     {"id":{"name":"sprBar","path":"sprites/sprBar/sprBar.yy",},},
+    {"id":{"name":"sprBlackHole","path":"sprites/sprBlackHole/sprBlackHole.yy",},},
     {"id":{"name":"sprBlock","path":"sprites/sprBlock/sprBlock.yy",},},
     {"id":{"name":"sprBlueprint","path":"sprites/sprBlueprint/sprBlueprint.yy",},},
     {"id":{"name":"sprBowlingBall","path":"sprites/sprBowlingBall/sprBowlingBall.yy",},},
@@ -349,6 +353,7 @@
     {"id":{"name":"sprNavigateOnline","path":"sprites/sprNavigateOnline/sprNavigateOnline.yy",},},
     {"id":{"name":"sprNext","path":"sprites/sprNext/sprNext.yy",},},
     {"id":{"name":"sprPartSplatter","path":"sprites/sprPartSplatter/sprPartSplatter.yy",},},
+    {"id":{"name":"sprPeg","path":"sprites/sprPeg/sprPeg.yy",},},
     {"id":{"name":"sprPhyBase","path":"sprites/sprPhyBase/sprPhyBase.yy",},},
     {"id":{"name":"sprPhyCollisionless","path":"sprites/sprPhyCollisionless/sprPhyCollisionless.yy",},},
     {"id":{"name":"sprPhyEgg","path":"sprites/sprPhyEgg/sprPhyEgg.yy",},},
@@ -372,6 +377,7 @@
     {"id":{"name":"sprToolLeft","path":"sprites/sprToolLeft/sprToolLeft.yy",},},
     {"id":{"name":"sprToolRight","path":"sprites/sprToolRight/sprToolRight.yy",},},
     {"id":{"name":"sprTransform","path":"sprites/sprTransform/sprTransform.yy",},},
+    {"id":{"name":"sprYoga","path":"sprites/sprYoga/sprYoga.yy",},},
   ],
   "resourceType":"GMProject",
   "resourceVersion":"2.0",
@@ -379,6 +385,9 @@
     {"roomId":{"name":"rm_entry","path":"rooms/rm_entry/rm_entry.yy",},},
     {"roomId":{"name":"rmGame","path":"rooms/rmGame/rmGame.yy",},},
     {"children":[
+        {"children":[
+            {"roomId":{"name":"zooShader","path":"rooms/zooShader/zooShader.yy",},},
+          ],"groupName":"shader",},
         {"children":[
             {"roomId":{"name":"zooScoreboat","path":"rooms/zooScoreboat/zooScoreboat.yy",},},
           ],"groupName":"scoreboat",},
@@ -388,9 +397,6 @@
         {"children":[
             {"roomId":{"name":"zooPhysics","path":"rooms/zooPhysics/zooPhysics.yy",},},
           ],"groupName":"physics",},
-        {"children":[
-            {"roomId":{"name":"zooShader","path":"rooms/zooShader/zooShader.yy",},},
-          ],"groupName":"shader",},
         {"children":[
             {"roomId":{"name":"zooPlatform","path":"rooms/zooPlatform/zooPlatform.yy",},},
           ],"groupName":"platform",},

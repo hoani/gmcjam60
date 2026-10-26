@@ -21,6 +21,7 @@ function PhyFixture() constructor {
     joinCandidates = []
     offset = new Vec2()
     object = objPhyMaterial
+    restitution = 0.5
     
     // Call this if the instance already exists and has a fixture
     static AppendTo = function(inst) {
@@ -30,8 +31,10 @@ function PhyFixture() constructor {
     
     
     static Apply = function(_x, _y, body) {
-        var inst = InstanceCreate(_x, _y, object, {body: body})
+        var inst = InstanceCreate(_x, _y, object, {body: body, restitution: restitution})
         AppendTo(inst)
+        
+        
 
         inst.phy_bullet = bullet
         inst.phy_fixed_rotation = isStatic
@@ -100,6 +103,7 @@ function PhyFixture() constructor {
     }
     
     static Restitution = function(val) {
+        restitution = val
         physics_fixture_set_restitution(f, val);
         return self
     }

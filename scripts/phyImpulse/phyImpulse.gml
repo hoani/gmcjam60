@@ -7,13 +7,22 @@ function PhyImpulse(_inst) constructor {
         if _inst.body.dynamic == noone {
             return
         }
+        if other.placement.index == MATERIAL_BLACKHOLE {
+            return
+        }
         if !array_contains(others, _inst) {
             array_push(others, _inst)
         }
     }
     
+    
+    static GetOthers = function() {
+        var who = others
+        others = []
+        return who
+    }
+    
     static Impulse = function() {
-        var impulse = new Vec2()
         var impulse = _BodyImpulse(instance)
         
         
@@ -46,12 +55,14 @@ function PhyImpulse(_inst) constructor {
     
     static _BodyImpulse = function(b) {
         if !instance_exists(b) || b.body.dynamic == noone {
-            return 0
+            return new Vec2()
         }
         var prev = b.body.dynamic.prev;
         var dvx = b.phy_speed_x - prev.spd.x;
         var dvy = b.phy_speed_y - prev.spd.y;
-        return (new Vec2(dvx, dvy)).Multiply(b.phy_mass);
+        return (new Vec2(dvx, dvy))
+            .Multiply(b.phy_mass)
+            .Multiply(1-0.75*b.restitution); // Assume bouncier objects spread impact
     }
 
 }

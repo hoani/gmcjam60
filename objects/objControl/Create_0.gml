@@ -268,5 +268,5 @@ if Debug() {
 
 
 
-
+blackHoleShader = new BlackHoleShader()
 

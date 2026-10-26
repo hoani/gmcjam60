@@ -10,7 +10,10 @@
 #macro MATERIAL_BAR (MATERIAL_CRATE + 1)
 #macro MATERIAL_BOWLING (MATERIAL_BAR + 1)
 #macro MATERIAL_SHOTPUT (MATERIAL_BOWLING + 1)
-#macro MATERIAL_TOTAL (MATERIAL_SHOTPUT + 1)
+#macro MATERIAL_YOGA (MATERIAL_SHOTPUT + 1)
+#macro MATERIAL_BLACKHOLE (MATERIAL_YOGA + 1)
+#macro MATERIAL_PEG (MATERIAL_BLACKHOLE + 1)
+#macro MATERIAL_TOTAL (MATERIAL_PEG + 1)
 
 
 function MaterialFactory() constructor {
@@ -26,6 +29,9 @@ function MaterialFactory() constructor {
         new MaterialBar(),
         new MaterialBowlingBall(),
         new MaterialShotput(),
+        new MaterialYoga(),
+        new MaterialBlackHole(),
+        new MaterialPeg(),
     ]
     
     static PlaceEncoded = function(b64enc) {

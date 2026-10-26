@@ -1,6 +1,9 @@
 #macro BuildModePlay 0
 #macro BuildModeCreate 1
 
+
+#macro MaxBlackHoles 8
+
 function PhyBuilder(_assembly) : ActiveController() constructor {
     
     static Grid = 16
@@ -23,15 +26,19 @@ function PhyBuilder(_assembly) : ActiveController() constructor {
     toolbeltReady = false
     
     playMaterials = [
-        new MaterialShotput(), 
-        new MaterialBar(), 
-        new MaterialCrate(), 
-        new MaterialBowlingBall(),               
-        new MaterialWheel(),
-        new MaterialBeam(),
-        new MaterialBall(),
         new MaterialBlock(),
-        new MaterialBox(),
+        new MaterialBeam(),
+        new MaterialBowlingBall(),
+        new MaterialCrate(),
+        new MaterialShotput(),
+        new MaterialYoga(), 
+        new MaterialBar(),
+        new MaterialWheel(),
+        new MaterialPeg(),
+        //new MaterialBall(),
+        
+        //new MaterialBox(),
+        new MaterialBlackHole(), 
     ]
     createMaterials = [
         new MaterialEgg(),
@@ -104,6 +111,12 @@ function PhyBuilder(_assembly) : ActiveController() constructor {
     }
     
     static _CanPlace = function() {
+        if placeableChecker.index == MATERIAL_BLACKHOLE {
+            if instance_number(objPhyBlackHole) >= MaxBlackHoles {
+                return false
+            }
+        }
+        
         return (blueprintIndex != BuildModeCreate) || string_length(assembly.GetCurrent()) < LevelSizeUpper
     }
     
