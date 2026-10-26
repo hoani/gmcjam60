@@ -1,5 +1,51 @@
 #macro BEAM_BASE_XOFFSET 32
 
+
+function MaterialBar() : MaterialBeam("Bar") constructor {
+    draw = new BarDraw()
+    
+    static Placement = function() {
+        return new BarPlacement(draw)
+    }
+}
+
+
+function BarDraw() : BeamDraw(sprBar) constructor {
+
+    static Placement = function(ctx, color=c_white) {
+        DrawCircleOutline(ctx.a, 3, 2, color)
+        DrawCircleOutline(ctx.b, 3, 2, color)
+        
+        var u = ctx.a.Subtract(ctx.b).Unit().Rotate(90).Multiply(3)
+        DrawLine(ctx.a.Add(u), ctx.b.Add(u), 2, color)
+        DrawLine(ctx.a.Subtract(u), ctx.b.Subtract(u), 2, color)
+
+        
+        if struct_exists(ctx, "s") && ctx.s.Get() == ctx.PlaceDrag {
+            draw_sprite(sprTransform, 1, MouseX, MouseY)
+        }
+    }
+}
+
+function BarPlacement(_draw) : BeamPlacement(_draw, MATERIAL_BAR) constructor {
+    
+    static _Place = function() {
+        var line = PointsLine(a, b)
+        
+        var c = line.Center()
+        dir = line.Direction()
+
+       	var p = Rectangle(c, d, 4, dir);
+        return PolygonFixture(c, p).
+            Density(0.5).
+            Friction(0.2).
+            Restitution(0.5).
+            Bullet().
+            JoinCandidates(joinCandidates).
+            Apply(c.x, c.y, new BeamBody(line, draw))
+    }
+}
+
 function BeamBody(_line, draw) : LineBodyDynamic(_line, draw) constructor {
     joinDelegate = new BeamJoiner(_line)
     
@@ -14,12 +60,14 @@ function BeamBody(_line, draw) : LineBodyDynamic(_line, draw) constructor {
 
 
 
-function MaterialBeam() : Material("Beam") constructor {
+function MaterialBeam(_name="Plank") : Material(_name) constructor {
     draw = new BeamDraw()
     
     static Placement = function() {
         return new BeamPlacement(draw)
     }
+    
+    
     
     static _DrawContext = function(_x, _y) {
         return {
@@ -30,15 +78,22 @@ function MaterialBeam() : Material("Beam") constructor {
 }
 
 
-function BeamDraw() : MaterialDraw() constructor {
+function BeamDraw(_spr=sprPlank) : MaterialDraw() constructor {
+    spr = _spr
     static Placement = function(ctx, color=c_white) {
         DrawCircleOutline(ctx.a, 3, 2, color)
         DrawCircleOutline(ctx.b, 3, 2, color)
-        DrawLine(ctx.a, ctx.b, 2, color)
+        DrawLine(ctx.a, ctx.b, 3, color)
         
         if struct_exists(ctx, "s") && ctx.s.Get() == ctx.PlaceDrag {
             draw_sprite(sprTransform, 1, MouseX, MouseY)
         }
+    }
+    
+    
+    static Play = function(ctx) {
+        var xscale = ctx.placement.d/sprite_get_width(spr)
+        draw_sprite_ext(spr, 0, ctx.x, ctx.y, xscale, 1, ctx.image_angle + ctx.placement.dir, c_white, 1)
     }
 }
 
@@ -54,8 +109,8 @@ function BeamJoiner(_line) : Joinable() constructor {
 
 
 
-function BeamPlacement(_draw) : MaterialPlacement(_draw) constructor {
-    index = MATERIAL_BEAM
+function BeamPlacement(_draw, _index=MATERIAL_BEAM) : MaterialPlacement(_draw) constructor {
+    index = _index
     PlaceA = 0
     PlaceB = 1
     PlaceDrag = 2
@@ -64,6 +119,8 @@ function BeamPlacement(_draw) : MaterialPlacement(_draw) constructor {
     a = new Vec2()
     b = new Vec2()
     d = BEAM_BASE_XOFFSET
+    
+    dir = 0
     
     s = new State(PlaceA)
     
@@ -117,6 +174,7 @@ function BeamPlacement(_draw) : MaterialPlacement(_draw) constructor {
     }
     
     
+    
     static _CheckCanPlace = function() {
         canPlace = true
         with(objPhyMaterial) {
@@ -129,13 +187,13 @@ function BeamPlacement(_draw) : MaterialPlacement(_draw) constructor {
         var line = PointsLine(a, b)
         
         var c = line.Center()
-        var dir = line.Direction()
+        dir = line.Direction()
 
        	var p = Rectangle(c, d, 4, dir);
         return PolygonFixture(c, p).
-            Density(0.125).
+            Density(1/16).
             Friction(0.2).
-            Restitution(0.75).
+            Restitution(0.25).
             Bullet().
             JoinCandidates(joinCandidates).
             Apply(c.x, c.y, new BeamBody(line, draw))

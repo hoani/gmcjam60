@@ -23,6 +23,10 @@ function PhyBuilder(_assembly) : ActiveController() constructor {
     toolbeltReady = false
     
     playMaterials = [
+        new MaterialShotput(), 
+        new MaterialBar(), 
+        new MaterialCrate(), 
+        new MaterialBowlingBall(),               
         new MaterialWheel(),
         new MaterialBeam(),
         new MaterialBall(),

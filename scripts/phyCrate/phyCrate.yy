@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"phyCrate",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"phyCrate",
+  "parent":{
+    "name":"material",
+    "path":"folders/Engines/physics/material.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

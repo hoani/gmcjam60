@@ -7,8 +7,8 @@ function BlockBody(_c, _p, _draw) : PolygonBodyDynamic(_c, _p, _draw) constructo
 
 function BlockJoiner(_polygon) : EdgeWeldJoiner(_polygon) constructor { }
 
-function MaterialBlock() : MaterialRectangle("Block") constructor {
-    draw = new BlockDraw()
+function MaterialBlock() : MaterialRectangle("Bricks") constructor {
+    draw = new RectangleSpriteDraw(sprBlock)
     
     static Placement = function() {
         return new BlockPlacement(draw)
@@ -16,7 +16,7 @@ function MaterialBlock() : MaterialRectangle("Block") constructor {
 }
 
 
-function BlockPlacement(draw) : RectanglePlacement(draw) constructor {
+function BlockPlacement(draw) : RectanglePlacement(draw, 64, 960, 16, 32) constructor {
     index = MATERIAL_BLOCK
     
     
@@ -31,16 +31,14 @@ function BlockPlacement(draw) : RectanglePlacement(draw) constructor {
 }
 
 
-
-
-function BlockDraw() : MaterialDraw() constructor {
+function RectangleSpriteDraw(_spr) : MaterialDraw() constructor {
+    spr = _spr
     static Placement = function(ctx, color=c_white) {
         ctx.DrawPoints()
         
-        var p = Rectangle(ctx.c, ctx.width-5, ctx.height-5, ctx.dir);
-        DrawPolygonOutline(ctx.c, p.points, 2, color)
-        p = Rectangle(ctx.c, ctx.width, ctx.height,  ctx.dir);
-        DrawPolygonOutline(ctx.c, p.points, 2, color)
+        var xscale = ctx.width/sprite_get_width(spr)
+        var yscale = ctx.height/sprite_get_height(spr)
+        draw_sprite_ext(spr, 0, ctx.c.x, ctx.c.y, xscale, yscale, ctx.dir, color, 0.75)
         
         if struct_exists(ctx, "s") && ctx.s.Get() == ctx.PlaceRotate {
             draw_sprite(sprTransform, 0, MouseX, MouseY)
@@ -48,6 +46,12 @@ function BlockDraw() : MaterialDraw() constructor {
         if struct_exists(ctx, "s") && ctx.s.Get() == ctx.PlaceDrag {
             draw_sprite(sprTransform, 1, MouseX, MouseY)
         }
+    }
+    
+    static Play = function(ctx) {
+        var xscale = ctx.placement.width/sprite_get_width(spr)
+        var yscale = ctx.placement.height/sprite_get_height(spr)
+        draw_sprite_ext(spr, 0, ctx.x, ctx.y, xscale, yscale, ctx.image_angle + ctx.placement.dir, c_white, 1)
     }
 }
 
@@ -65,7 +69,7 @@ function MaterialRectangle(_name) : Material(_name) constructor {
 }
 
 
-function RectanglePlacement(_draw = new MaterialDraw()) : MaterialPlacement(_draw) constructor {
+function RectanglePlacement(_draw = new MaterialDraw(), _wmin=32, _wmax=256, _hmin=16, _hmax=128) : MaterialPlacement(_draw) constructor {
     static PlaceA = 0
     static PlaceB = 1
     static PlaceRotate = 2
@@ -75,12 +79,19 @@ function RectanglePlacement(_draw = new MaterialDraw()) : MaterialPlacement(_dra
     
     a = new Vec2()
     b = new Vec2()
+    bdraw = new Vec2()
     c = new Vec2()
     o = new Vec2()
     dir = 0
     dirZero = 0
-    width = 32
-    height = 16
+    width = _wmin
+    height = _hmin
+    
+    wmin = _wmin
+    wmax = _wmax
+    hmin = _hmin 
+    hmax = _hmax
+    
     
     s = new State(PlaceA)
     
@@ -90,6 +101,7 @@ function RectanglePlacement(_draw = new MaterialDraw()) : MaterialPlacement(_dra
             case PlaceA:
                 a = new Vec2(x, y)
                 c = new Vec2(a.x + width/2, a.y + height/2)
+                bdraw = new Vec2(x, y)
                 break;
             case PlaceB:
                 b = new Vec2(x, y)
@@ -98,14 +110,14 @@ function RectanglePlacement(_draw = new MaterialDraw()) : MaterialPlacement(_dra
                 width = abs(delta.x)*2
                 height = abs(delta.y)*2
                 
-                if width < 16 {
-                    width = 16
-                    c.x = a.x + width/2
-                }
-                if height < 16 {
-                    height = 16
-                    c.y = a.y + height/2
-                }
+                width = clamp(width, wmin, wmax)
+                height = clamp(height, hmin, hmax)
+                
+                c.x = a.x + width/2
+                c.y = a.y + height/2
+                
+                var l = PointsLine(a, c).Multiply(2)
+                bdraw = l.p1.Subtract(a.Subtract(c).Multiply(0.5))
                 o = c.Subtract(b)
                 dirZero = (new Vec2(x, y)).Subtract(c).Direction()
                 break;
@@ -152,18 +164,22 @@ function RectanglePlacement(_draw = new MaterialDraw()) : MaterialPlacement(_dra
     static DrawPoints = function() {
         switch s.Get() {
             case PlaceA:
-                draw_circle(a.x, a.y, 5, true);
+                DrawCircleOutline(a, 5, 2);
                 break
             case PlaceB:
-                draw_circle(a.x, a.y, 3, true);
-                draw_circle(b.x, b.y, 5, true);
+                DrawCircleOutline(a, 3, 2);
+                DrawCircleOutline(bdraw, 5, 2);
+                var l = bdraw.Subtract(a)
+                var u = l.Unit()
+                for (var i = 0; i <l.Distance(); i+=16) {
+                    DrawLine(a.Add(u.Multiply(i)), a.Add(u.Multiply(i + 8)), 2)
+                }
                 break
             case PlaceDrag:
-                draw_line(c.x, c.y-8, c.x, c.y+8)
-                draw_line(c.x-8, c.y, c.x+8, c.y)
+                DrawPlus(c, 8, 2)
                 break
             case PlaceRotate:
-                draw_circle(c.x, c.y, 6, true);
+                DrawCircleOutline(c, 8, 2);
                 break
         }
     }

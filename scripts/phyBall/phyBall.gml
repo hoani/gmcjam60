@@ -100,7 +100,7 @@ function BallPlacement(_draw) : MaterialPlacement(_draw) constructor {
     
     static _Place = function() {
        	return CircleFixture(r).
-            Density(0.5).
+            Density(0.25).
             Restitution(0.5).
             Friction(1).
             LinearDamping(0.125).
