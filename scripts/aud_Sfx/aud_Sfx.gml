@@ -9,7 +9,7 @@ function SfxClass() constructor {
     }
     
     static Enable = function() {
-        enabled = false
+        enabled = true
     }
     
     static IsEnabled = function() {
@@ -51,7 +51,7 @@ function SfxEnable() {
 }
 
 function SfxIsEnabled() {
-	Sfx().IsEnabled()
+	return Sfx().IsEnabled()
 }
 
 function SfxToggle() {
@@ -118,6 +118,28 @@ function SfxPlayer(_x = room_width/2, _y = room_height/2) constructor {
         audio_emitter_free(e);
     }
 }
+
+
+
+function SfxSequence(_snds) constructor {
+    snds = _snds;
+    index = 0;
+    static With = function(snd) {
+        array_push(snds, snd);
+        return self;
+    }
+    
+    static Get = function() {
+        var snd = snds[index];
+        index = (index + 1) % array_length(snds);
+        return snd;
+    }
+    
+    static Randomize = function() {
+        index = irandom(array_length(snds)-1)
+    }
+}
+
 
 
 

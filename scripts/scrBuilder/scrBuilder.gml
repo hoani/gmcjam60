@@ -6,6 +6,13 @@ function PhyBuilder(_assembly) : ActiveController() constructor {
     static Grid = 16
     static GridOffset = 8
     
+    
+    placingSfx = sndPlacing
+    placeSfx = sndPlaced
+    placeErrorSfx = sndError
+    tickSfx = sndHover
+    deleteSfx = sndDelete
+    
     assembly = _assembly
     
     draftSurface = surface_create(room_width, room_height)
@@ -81,13 +88,11 @@ function PhyBuilder(_assembly) : ActiveController() constructor {
         active = index % array_length(materials)
         materialName.Set(materials[active].name)
         placeableChecker = materials[active].Placement()
+        
     }
     
     static SelectPrevious = function() {
         SelectIndex(active - 1)
-        active = (active + array_length(materials) - 1) % array_length(materials) 
-        materialName.Set(materials[active].name)
-        placeableChecker = materials[active].Placement()
     }
     
     static SelectNext = function() {
@@ -120,19 +125,25 @@ function PhyBuilder(_assembly) : ActiveController() constructor {
             
             
             if mouse_check_button_pressed(mb_left) && canPlace{ 
-                DebugMessage($"Placing {active}")
-                placement = materials[active].Placement()
-                placement.Drag(mouse.x, mouse.y)
-                PushControlStack(uid)
-                return
+                if (canPlace) {
+                    DebugMessage($"Placing {active}")
+                    placement = materials[active].Placement()
+                    placement.Drag(mouse.x, mouse.y)
+                    PushControlStack(uid)
+                    return
+                }
+                
+                CreateSfx(placeErrorSfx)
             }
             
             if mouse_wheel_up() {
                 SelectPrevious()
+                CreateSfx(tickSfx)
             }
             
             if mouse_wheel_down() {
                 SelectNext()
+                CreateSfx(tickSfx)
             }
             
             if mouse_check_button_pressed(mb_right) {
@@ -154,16 +165,22 @@ function PhyBuilder(_assembly) : ActiveController() constructor {
             placement.Drag(mouse.x, mouse.y)
             canPlace = placement.CanPlace() && _CanPlace()
             
-            if mouse_check_button_released(mb_left) && !cancelling && canPlace {
-                placed = placement.Confirm(mouse.x, mouse.y)
-                if placed != noone {
-                    placed.body.SetDeletable()
-                    placed = noone
-                    refreshAssembly = true
-                    assembly.Add(placement)
-                    placement = noone
-                    PopControlStack()
-                    
+            if mouse_check_button_released(mb_left) && !cancelling {
+                if !canPlace {
+                    CreateSfx(placeErrorSfx)
+                } else {
+                    placed = placement.Confirm(mouse.x, mouse.y)
+                    if placed != noone {
+                        placed.body.SetDeletable()
+                        placed = noone
+                        refreshAssembly = true
+                        assembly.Add(placement)
+                        placement = noone
+                        PopControlStack()
+                        CreateSfx(placeSfx)
+                    } else {
+                        CreateSfx(placingSfx)
+                    }
                 }
             }
             
@@ -174,6 +191,7 @@ function PhyBuilder(_assembly) : ActiveController() constructor {
             if mouse_check_button_released(mb_right) && cancelling {
                 cancelling = false
                 placement = noone
+                CreateSfx(deleteSfx)
                 PopControlStack()
             }
         }
@@ -194,6 +212,10 @@ function PhyBuilder(_assembly) : ActiveController() constructor {
                         instance_destroy()
                         other.refreshAssembly = true
                     }
+                }
+                
+                if refreshAssembly {
+                    CreateSfx(deleteSfx)
                 }
                 
                 PopControlStack()

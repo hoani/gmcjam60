@@ -6,7 +6,7 @@ function Title(_onTrigger) : ActiveController() constructor {
     callback.Set(_onTrigger)
     
     
-    
+    pressSfx = sndButton
     
     credits = new Credits()
 
@@ -26,6 +26,7 @@ function Title(_onTrigger) : ActiveController() constructor {
         if !cooldown.Active() && mouse_check_button_released(mb_left) && Mono() > 10 {
             cooldown.Trigger()
             PushControlStack(uid)
+            CreateSfx(pressSfx)
         }
         
         credits.Update()

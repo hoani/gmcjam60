@@ -59,6 +59,9 @@ function Selector(width=512, _ypos=room_height/2, _xpos = room_width/2) construc
     cmds = Cmds()
     font = f_test
     
+    hoverSfx = sndHover
+    pressSfx = sndButton
+    
     prim = new UiPrimitives()
     
     
@@ -125,6 +128,9 @@ function Selector(width=512, _ypos=room_height/2, _xpos = room_width/2) construc
         if hovered != -1 {
             options[hovered].s.ResetText();
         }
+        if hovered != i {
+            CreateSfx(hoverSfx)
+        }
         var opt = options[i]
         opt.s.GrowText();
         hovered = i;
@@ -165,6 +171,7 @@ function Selector(width=512, _ypos=room_height/2, _xpos = room_width/2) construc
         
         if CommandsContinueCheck() && hovered >= 0 {
             state.Set(state_selected)
+            CreateSfx(pressSfx)
             //var s = sndSelectorSelect;
             //if hasCancel && (hovered == (array_length(options) - 1)) {
                 //s = sndSelectorCancel

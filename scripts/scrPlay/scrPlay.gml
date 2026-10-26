@@ -25,6 +25,10 @@ function PhyPlay(_world) : ActiveController() constructor {
     
     canPublish = false
     
+
+    winSfx = sndWin
+    loseSfx = sndLose
+    
     retry = Button(new Vec2(room_width/2, room_height/2), sprRetry, function() {
         PopControlStack()
         Reset()
@@ -93,11 +97,7 @@ function PhyPlay(_world) : ActiveController() constructor {
             DebugMessage($"You win")
             onWin()
             state.Set(StateWin)
-            if canPublish {
-                EnableButtons([retry, publish])
-            } else {
-                EnableButtons(retry)
-            }
+            
         }
     }
     
@@ -106,7 +106,7 @@ function PhyPlay(_world) : ActiveController() constructor {
             return
         }
         DebugMessage("You lose")
-        EnableButtons(retry)
+        
         state.Set(StateLose)
     }
     
@@ -143,6 +143,22 @@ function PhyPlay(_world) : ActiveController() constructor {
                     EnableButtons(cancel)
                 }
                 break
+            case StateWin: 
+                if state.Mono() == 50 {
+                    CreateSfx(winSfx)
+                    if canPublish {
+                        EnableButtons([retry, publish])
+                    } else {
+                        EnableButtons(retry)
+                    }
+                }
+                break;
+            case StateLose: 
+                if state.Mono() == 50 {
+                    CreateSfx(loseSfx)
+                    EnableButtons(retry)
+                }
+                break;
         }
         
         
@@ -157,11 +173,15 @@ function PhyPlay(_world) : ActiveController() constructor {
             return
         }
         switch state.Get() {
-            case StateWin: 
-                draw_sprite(sprResult, 0, room_width/2, room_height/2)
+            case StateWin:
+                if state.Mono() > 50 {
+                    draw_sprite(sprResult, 0, room_width/2, room_height/2)
+                }
                 break;
             case StateLose:
-                draw_sprite(sprResult, 1, room_width/2, room_height/2)
+                if state.Mono() > 50 {
+                    draw_sprite(sprResult, 1, room_width/2, room_height/2)
+                }
                 break
         }
         

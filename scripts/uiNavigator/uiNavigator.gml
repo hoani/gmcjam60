@@ -17,6 +17,8 @@ function UiNavigator(width=512, _ypos=room_height/2, _xpos = room_width/2) const
     page = 0
     optionsPerPage = 8
     
+    
+    
     var pPos = pos.Add(new Vec2(-(width/2 + 16),0))
     var nPos = pos.Add(new Vec2((width/2 + 16), 0))
     

@@ -15,6 +15,9 @@ function ButtonClass(_pos, _sprite, _onPressed) : ActiveController() constructor
     cooldown = new Cooldown(15)
     hovered = false
     
+    hoverSfx = sndHover
+    pressSfx = sndButton
+    
     static StateIdle = 0
     static StateActive = 1
     
@@ -118,6 +121,7 @@ function ButtonClass(_pos, _sprite, _onPressed) : ActiveController() constructor
         if hovered != h {
             hovered = h
             if hovered {
+                CreateSfx(hoverSfx)
                 PushControlStack(uid)
             } else {
                 PopControlStack()
@@ -129,6 +133,7 @@ function ButtonClass(_pos, _sprite, _onPressed) : ActiveController() constructor
         
         if mouse_check_button_released(mb_left) {
             cooldown.Trigger()
+            CreateSfx(pressSfx)
         }
     }
     

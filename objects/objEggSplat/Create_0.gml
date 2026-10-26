@@ -7,6 +7,8 @@ cLight = #ffe9e8
 
 var multiplier = 1 + impulse.Distance()/10
 
+CreateSfx(sndEggBreak)
+
 //part_blood
 ps = part_system_create();
 part_system_draw_order(ps, true);

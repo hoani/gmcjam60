@@ -11,3 +11,5 @@ main = new Cooldown(15 + magnitude)
 flare = new Cooldown(magnitude/2)
 main.Trigger()
 flare.Trigger()
+
+CreateSfx(OutOfBoundsSfx())
