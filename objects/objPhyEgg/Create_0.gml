@@ -3,6 +3,7 @@ event_inherited();
 
 // Note hp = 2 by default
 maxhp = hp
+damageMultiplier = 1
 
 notifier = new DummyBreakNotifier()
 
@@ -11,6 +12,7 @@ Register = function(n) {
 }
 
 OnImpulse = function(impulse) {
+    impulse = impulse.Multiply(damageMultiplier)
     if impulse.Distance() < 0.5 {
         return
     }

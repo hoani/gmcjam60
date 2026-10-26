@@ -14,7 +14,9 @@
 #macro MATERIAL_BLACKHOLE (MATERIAL_YOGA + 1)
 #macro MATERIAL_PEG (MATERIAL_BLACKHOLE + 1)
 #macro MATERIAL_BUMPER (MATERIAL_PEG + 1)
-#macro MATERIAL_TOTAL (MATERIAL_BUMPER + 1)
+#macro MATERIAL_EASTER (MATERIAL_BUMPER + 1)
+#macro MATERIAL_SMALLEGG (MATERIAL_EASTER + 1)
+#macro MATERIAL_TOTAL (MATERIAL_SMALLEGG + 1)
 
 
 function MaterialFactory() constructor {
@@ -34,6 +36,8 @@ function MaterialFactory() constructor {
         new MaterialBlackHole(),
         new MaterialPeg(),
         new MaterialBumper(),
+        new MaterialEaster(),
+        new MaterialSmallEgg(),
     ]
     
     static PlaceEncoded = function(b64enc) {

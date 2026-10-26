@@ -45,6 +45,10 @@ function PhyBuilder(_assembly) : ActiveController() constructor {
     ]
     createMaterials = [
         new MaterialEgg(),
+        new MaterialSmallEgg(),
+    ]
+    createMaterialsAppend = [
+        new MaterialEaster(),
     ]
     
     materials = array_concat(playMaterials, [])
@@ -85,7 +89,7 @@ function PhyBuilder(_assembly) : ActiveController() constructor {
                 break;
             }
             case BuildModeCreate: {
-                materials = array_concat(createMaterials, playMaterials)
+                materials = array_concat(createMaterials, playMaterials, createMaterialsAppend)
                 break;
             }
         }

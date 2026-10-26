@@ -32,8 +32,8 @@
   "nineSlice":null,
   "origin":4,
   "parent":{
-    "name":"Spr",
-    "path":"folders/Engines/physics/Spr.yy",
+    "name":"material",
+    "path":"folders/Sprites/material.yy",
   },
   "preMultiplyAlpha":false,
   "resourceType":"GMSprite",
